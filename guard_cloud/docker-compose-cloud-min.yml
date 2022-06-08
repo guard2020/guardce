@@ -134,130 +134,6 @@ services:
       - idp
     restart: unless-stopped
 
-  kafka2:
-    image: ${GUARD_REPOSITORY}/kafka_confluent:latest
-    hostname: kafka2
-    ports:
-      - "${KAFKA_PORT_2}:${KAFKA_PORT_2}"
-      - "${KAFKA_PORT_INT_2}:${KAFKA_PORT_INT_2}"
-      - "${KAFKA_PORT_TLS_2}:${KAFKA_PORT_TLS_2}"
-      - "${KAFKA_PORT_SASL_2}:${KAFKA_PORT_SASL_2}"
-      - "${KAFKA_PORT_TLS_INT_2}:${KAFKA_PORT_TLS_INT_2}"
-    environment:
-      KAFKA_SSL_CLIENT_AUTH: none
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://:${KAFKA_PORT_INT_2},EXTERNAL://${GUARD_SERVER}:${KAFKA_PORT_SASL_2},PLAIN_SSL://${GUARD_SERVER}:${KAFKA_PORT_TLS_2},PLAIN://${GUARD_SERVER}:${KAFKA_PORT_2}, SSL_INTERNAL://:${KAFKA_PORT_TLS_INT_2}
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:SASL_SSL,PLAIN_SSL:SSL,PLAIN:PLAINTEXT,SSL_INTERNAL:SSL
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
- #     KAFKA_LISTENERS: INTERNAL://:${KAFKA_PORT_INT_2},EXTERNAL://:${KAFKA_PORT_SASL_2},PLAIN_SSL://:${KAFKA_PORT_TLS_2},PLAIN://:${KAFKA_PORT_2}, SSL_INTERNAL://:59093
-      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:${ZOO_K_PORT}"
-      KAFKA_BROKER_ID: 2
-      KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/secrets/kafka_server_jaas.conf"
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1    
-      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
-      KAFKA_TOPIC_CREATION_DEFAULT_REPLICATION_FACTOR: 3
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE : "true" 
-      KAFKA_SSL_ENABLED_PROTOCOLS: TLSv1.3,TLSv1.2
-      KAFKA_SECURITY_PROTOCOL: SASL_SSL
-      KAFKA_SSL_KEYSTORE_FILENAME: kafka2.server.keystore.jks
-      KAFKA_SSL_KEYSTORE_CREDENTIALS: kafka2_keystore_creds
-      KAFKA_SSL_KEY_CREDENTIALS: kafka2_sslkey_creds
-      KAFKA_SSL_TRUSTSTORE_FILENAME: kafka2.server.truststore.jks 
-      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: kafka2_truststore_creds 
-      KAFKA_SASL_ENABLED_MECHANISMS: OAUTHBEARER
-      KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL: OAUTHBEARER
-      KAFKA_LISTENER_NAME_INTERNAL_OAUTHBEARER_SASL_JAAS_CONFIG: "org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required;"
-      KAFKA_LISTENER_NAME_INTERNAL_OAUTHBEARER_SASL_LOGIN_CALLBACK_HANDLER_CLASS: org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateLoginCallbackHandler
-      KAFKA_LISTENER_NAME_INTERNAL_OAUTHBEARER_SASL_SERVER_CALLBACK_HANDLER_CLASS: org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateValidatorCallbackHandler
-      KAFKA_LISTENER_NAME_EXTERNAL_OAUTHBEARER_SASL_JAAS_CONFIG: "org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required;"
-      KAFKA_LISTENER_NAME_EXTERNAL_OAUTHBEARER_SASL_LOGIN_CALLBACK_HANDLER_CLASS: org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateLoginCallbackHandler
-      KAFKA_LISTENER_NAME_EXTERNAL_OAUTHBEARER_SASL_SERVER_CALLBACK_HANDLER_CLASS: org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateValidatorCallbackHandler
-      KAFKA_CONNECTIONS_MAX_REAUTH_MS: 60000
-      KAFKA_AUTHORIZER_CLASS_NAME: org.telematics.guard.aa.kafka.liboauthbearer.CustomAuthorizer
-      KAFKA_PRINCIPAL_BUILDER_CLASS: org.telematics.guard.aa.kafka.liboauthbearer.CustomPrincipalBuilder
-      OAUTH_SERVER_BASE_URI: "https://idp:10443/oauth2/"
-      OAUTH_SERVER_TOKEN_ENDPOINT_PATH: "/token"
-      OAUTH_SERVER_INTROSPECTION_ENDPOINT_PATH: "/introspect"
-      OAUTH_SERVER_CLIENT_ID: "kafka-broker"
-      OAUTH_SERVER_CLIENT_SECRET: "yGC8KxKYYQ_q1UbTBAwxivThaZIa"
-      OAUTH_SERVER_GRANT_TYPE: "client_credentials"
-      OAUTH_SERVER_SCOPES: "kafka:cluster:kafka-cluster:cluster_action"
-      OAUTH_SERVER_ACCEPT_UNSECURE_SERVER: "true"
-      OAUTH_SERVER_ENFORCE: "false"
-# KAFKA_LOG4J_LOGGERS: "org.telematics=DEBUG"
-      KAFKA_LOG4J_LOGGERS: "org.telematics=ERROR"
-      ZOOKEEPER_SASL_ENABLED: "false"
-    command: /etc/confluent/docker/dockerize -wait https://idp:10443 -skip-tls-verify -timeout 600s /etc/confluent/docker/run     
-    volumes:
-      - ${VOLUME_DIR}/data/kafka2/data:/var/lib/kafka/data
-      - ${VOLUME_DIR}/kafka-cluster-ssl/secrets:/etc/kafka/secrets
-#      - ${VOLUME_DIR}/kafka.jaas:/etc/kafka/secrets/kafka_server_jaas.conf
-    depends_on:
-      - zookeeper
-      - idp
-    restart: unless-stopped
-
-  kafka3:
-    image: ${GUARD_REPOSITORY}/kafka_confluent:latest
-    hostname: kafka3
-    ports:
-      - "${KAFKA_PORT_3}:${KAFKA_PORT_3}"
-      - "${KAFKA_PORT_INT_3}:${KAFKA_PORT_INT_3}"
-      - "${KAFKA_PORT_TLS_3}:${KAFKA_PORT_TLS_3}"
-      - "${KAFKA_PORT_SASL_3}:${KAFKA_PORT_SASL_3}"
-      - "${KAFKA_PORT_TLS_INT_3}:${KAFKA_PORT_TLS_INT_3}"
-    environment:
-      KAFKA_SSL_CLIENT_AUTH: none
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://:${KAFKA_PORT_INT_3},EXTERNAL://${GUARD_SERVER}:${KAFKA_PORT_SASL_3},PLAIN_SSL://${GUARD_SERVER}:${KAFKA_PORT_TLS_3},PLAIN://${GUARD_SERVER}:${KAFKA_PORT_3}, SSL_INTERNAL://:${KAFKA_PORT_TLS_INT_3}
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:SASL_SSL,PLAIN_SSL:SSL,PLAIN:PLAINTEXT,SSL_INTERNAL:SSL
-#      KAFKA_LISTENERS: INTERNAL://:${KAFKA_PORT_INT_3},EXTERNAL://:${KAFKA_PORT_SASL_3},PLAIN_SSL://:${KAFKA_PORT_TLS_3},PLAIN://:${KAFKA_PORT_3}, SSL_INTERNAL://:59094
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:${ZOO_K_PORT}"
-      KAFKA_BROKER_ID: 3
-      KAFKA_OPTS: "-Djava.security.auth.login.config=/etc/kafka/secrets/kafka_server_jaas.conf"
-      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
-      KAFKA_TOPIC_CREATION_DEFAULT_REPLICATION_FACTOR: 3
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1    
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE : "true" 
-      KAFKA_SSL_ENABLED_PROTOCOLS: TLSv1.3,TLSv1.2
-      KAFKA_SECURITY_PROTOCOL: SASL_SSL
-      KAFKA_SSL_KEYSTORE_FILENAME: kafka3.server.keystore.jks
-      KAFKA_SSL_KEYSTORE_CREDENTIALS: kafka3_keystore_creds
-      KAFKA_SSL_KEY_CREDENTIALS: kafka3_sslkey_creds
-      KAFKA_SSL_TRUSTSTORE_FILENAME: kafka3.server.truststore.jks 
-      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: kafka3_truststore_creds 
-      KAFKA_SASL_ENABLED_MECHANISMS: OAUTHBEARER 
-      KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL: OAUTHBEARER
-      KAFKA_LISTENER_NAME_INTERNAL_OAUTHBEARER_SASL_JAAS_CONFIG: "org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required;"
-      KAFKA_LISTENER_NAME_INTERNAL_OAUTHBEARER_SASL_LOGIN_CALLBACK_HANDLER_CLASS: org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateLoginCallbackHandler
-      KAFKA_LISTENER_NAME_INTERNAL_OAUTHBEARER_SASL_SERVER_CALLBACK_HANDLER_CLASS: org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateValidatorCallbackHandler
-      KAFKA_LISTENER_NAME_EXTERNAL_OAUTHBEARER_SASL_JAAS_CONFIG: "org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required;"
-      KAFKA_LISTENER_NAME_EXTERNAL_OAUTHBEARER_SASL_LOGIN_CALLBACK_HANDLER_CLASS: org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateLoginCallbackHandler
-      KAFKA_LISTENER_NAME_EXTERNAL_OAUTHBEARER_SASL_SERVER_CALLBACK_HANDLER_CLASS: org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateValidatorCallbackHandler
-      KAFKA_CONNECTIONS_MAX_REAUTH_MS: 60000
-      KAFKA_AUTHORIZER_CLASS_NAME: org.telematics.guard.aa.kafka.liboauthbearer.CustomAuthorizer
-      KAFKA_PRINCIPAL_BUILDER_CLASS: org.telematics.guard.aa.kafka.liboauthbearer.CustomPrincipalBuilder
-      OAUTH_SERVER_BASE_URI: "https://idp:10443/oauth2/"
-      OAUTH_SERVER_TOKEN_ENDPOINT_PATH: "/token"
-      OAUTH_SERVER_INTROSPECTION_ENDPOINT_PATH: "/introspect"
-      OAUTH_SERVER_CLIENT_ID: "kafka-broker"
-      OAUTH_SERVER_CLIENT_SECRET: "yGC8KxKYYQ_q1UbTBAwxivThaZIa"
-      OAUTH_SERVER_GRANT_TYPE: "client_credentials"
-      OAUTH_SERVER_SCOPES: "kafka:cluster:kafka-cluster:cluster_action"
-      OAUTH_SERVER_ACCEPT_UNSECURE_SERVER: "true"
-      OAUTH_SERVER_ENFORCE: "false"
-#      KAFKA_LOG4J_LOGGERS: "org.telematics=DEBUG"
-      KAFKA_LOG4J_LOGGERS: "org.telematics=ERROR"
-      ZOOKEEPER_SASL_ENABLED: "false"
-    command: /etc/confluent/docker/dockerize -wait https://idp:10443 -skip-tls-verify -timeout 600s /etc/confluent/docker/run     
-    volumes:
-      - ${VOLUME_DIR}/data/kafka3/data:/var/lib/kafka/data
-      - ${VOLUME_DIR}/kafka-cluster-ssl/secrets:/etc/kafka/secrets
-#      - ${VOLUME_DIR}/kafka.jaas:/etc/kafka/secrets/kafka_server_jaas.conf
-    depends_on:
-      - zookeeper
-      - idp
-    restart: unless-stopped
-
   akhq:
     image: ${GUARD_REPOSITORY}/akhq:latest
     environment:
@@ -327,47 +203,7 @@ services:
       - elastic
       - default
     restart: unless-stopped
-  es02:
-    image: ${GUARD_REPOSITORY}/elasticsearch:latest
-    container_name: es02
-    environment:
-      - node.name=es02
-      - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=es01,es03
-      - cluster.initial_master_nodes=es01,es02,es03
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - ${VOLUME_DIR}/elastic/data02:/usr/share/elasticsearch/data
-    networks:
-      - elastic
-      - default
-    restart: unless-stopped
-  es03:
-    image: ${GUARD_REPOSITORY}/elasticsearch:latest
-    container_name: es03
-    environment:
-      - node.name=es03
-      - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=es01,es02
-      - cluster.initial_master_nodes=es01,es02,es03
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - ${VOLUME_DIR}/elastic/data03:/usr/share/elasticsearch/data
-    networks:
-      - elastic
-      - default
-    restart: unless-stopped
-
+  
   kib01:
     image: ${GUARD_REPOSITORY}/kibana:cti
     container_name: kib01
@@ -460,20 +296,7 @@ services:
     restart: unless-stopped
 
 
-  openvas:
-    image: mikesplain/openvas
-    container_name: openvas
-    hostname: openvas
-    ports:
-      - "${OPENVAS_PORT}:443"
-      - "9390:9390"
-    expose:
-      - "${OPENVAS_PORT}"
-    environment:
-      - PUBLIC_HOSTNAME=${GUARD_SERVER}
-      - OV_PASSWORD=guard2020
-    restart: unless-stopped
- 
+
 # Following container are created dinamically on demand
 #  algo1.1.2:    
 #    container_name: algo1.1.2
@@ -567,6 +390,7 @@ volumes:
        o: bind
        type: none
        device: $PWD/${RELEASE_DIR}/core_framework/security_services/algo4/blockchain-connector/test-blockchain-connector-data
+
   algo5-scan_reports:
     driver: local
     driver_opts:
