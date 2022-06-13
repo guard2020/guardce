@@ -1,0 +1,9 @@
+alert_index: aminer-anomaly*
+deltas:
+- 30
+hosts: 10.0.0.7:9200
+query_interval: 30
+search_after:
+- 1655132577410
+storage: true
+threshold: 0.6
