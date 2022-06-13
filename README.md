@@ -5,15 +5,17 @@ GUARD Project Platform Community Edition
 
 ## Instructions to run GUARD PLATFORM on cloud machine
 
-Copy guard_cloud/docker-compose-cloud.yml and in parent directory prior to execute 
+Copy .env and fill the environment variables with your local value. In .env must be set {GUARD_REPOSITORY} with `<repository-name>` , {GUARD_SERVER}  and {GUARD_SERVER_ADDRESS} with proper value. Other instruction and example inside the .env file.
+Copy guard_cloud/docker-compose-cloud-*.yml and in parent directory prior to execute 
+Copy directories form guard_cloud/volumes in {VOLUME_DIR}.
+The minimal edition does'nt require any TLS certificate to run. 
 
 ```console
-$ docker-compose -f docker-compose-cloud.yml up -d [service]
+$ docker-compose -f docker-compose-cloud-min.yml up -d [service] (for minimal edition)
+or
+$ docker-compose -f docker-compose-cloud-std.yml up -d [service] (for standard edition)
+
 ```
-
-
-In .env must be set GUARD_REPOSITORY with `<repository-name>` , GUARD_SERVER  and GUARD_SERVER_ADDRESS with proper value
-
 
 ## Instructions to run GUARD PLATFORM on openshift platform
 
