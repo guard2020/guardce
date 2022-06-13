@@ -1,0 +1,127 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: cb-manager
+  namespace: guardce
+  labels:
+    app: cb-manager
+    app.kubernetes.io/component: cb-manager
+    app.kubernetes.io/instance: cb-manager
+    app.kubernetes.io/name: cb-manager
+    app.kubernetes.io/part-of: guard
+spec:
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: 80-tcp
+      protocol: TCP
+      port: 80
+      targetPort: 5000
+    - name: 5000-tcp
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: cb-manager
+    deploymentconfig: cb-manager
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: cb-manager
+  namespace: guardce
+  labels:
+    app: cb-manager
+    app.kubernetes.io/component: cb-manager
+    app.kubernetes.io/instance: cb-manager
+    app.kubernetes.io/name: cb-manager
+    app.kubernetes.io/part-of: guard
+spec:
+  host: cb-manager-guardce.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: cb-manager
+    weight: 100
+  port:
+    targetPort: 80-tcp
+  wildcardPolicy: None
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cb-manager
+  namespace: guardce
+data:
+  CB_MAN_LOG_CONFIG: log.yaml
+  CB_MAN_AUTH_SECRET_KEY: guard-secret-key
+  CB_MAN_PORT: '5000'
+  CB_MAN_HTTPS: 'false'
+  CB_MAN_HEARTBEAT_PERIOD: 1min
+  CB_MAN_AUTH: 'true'
+  CB_MAN_HOST: 0.0.0.0
+  CB_MAN_AUTH_ENABLED: 'true'
+  CB_MAN_OAUTH2_ENABLED: 'false'
+  CB_MAN_ELASTIC_APM_ENABLED: 'false'
+  CB_MAN_AUTH_HEADER_PREFIX: GUARD
+  CB_MAN_ELASTIC_APM_SERVER: 'http://es-cluster.guardce.svc:8200'
+  CB_MAN_HEARTBEAT_TIMEOUT: 10s
+  CB_MAN_ELASTICSEARCH_TIMEOUT: 20s
+  CB_MAN_ELASTICSEARCH_ENDPOINT: 'es-cluster.guardce.svc:9200'
+  CB_MAN_ELASTICSEARCH_RETRY_PERIOD: 1min
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: cb-manager
+  namespace: guardce
+  labels:
+    app: cb-manager
+    app.kubernetes.io/component: cb-manager
+    app.kubernetes.io/instance: cb-manager
+    app.kubernetes.io/name: cb-manager
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime: cb-manager
+    app.openshift.io/runtime-namespace: guardce
+    app.openshift.io/runtime-version: latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cb-manager
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: cb-manager
+        deploymentconfig: cb-manager
+    spec:
+      containers:
+        - name: cb-manager
+          image: guard2020/cb-manager:latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: cb-manager
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+---

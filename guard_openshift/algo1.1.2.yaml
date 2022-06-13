@@ -1,0 +1,110 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: algo112
+  namespace: guardce
+  labels:
+    app: algo112
+    app.kubernetes.io/component: algo112
+    app.kubernetes.io/instance: algo112
+    app.kubernetes.io/name: algo112
+    app.kubernetes.io/part-of: guard
+spec:
+  ports:
+    - name: 9999-tcp
+      protocol: TCP
+      port: 9999
+      targetPort: 9999
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: algo112
+    deploymentconfig: algo112
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: algo112
+  namespace: guardce
+  labels:
+    app: algo112
+    app.kubernetes.io/component: algo112
+    app.kubernetes.io/instance: algo112
+    app.kubernetes.io/name: algo112
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime-version: guardce
+spec:
+  host: algo112-guardce.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: algo112
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: algo112
+  namespace: guardce
+data:
+  KAFKA_PORT: '9092'
+  SERVER_ADDRESS: kafka-cluster-headless.guardce.svc
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: algo112
+  namespace: guardce
+  labels:
+    app: algo112
+    app.kubernetes.io/component: algo112
+    app.kubernetes.io/instance: algo112
+    app.kubernetes.io/name: algo112
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime: algo1.1.2
+    app.openshift.io/runtime-namespace: guardce
+    app.openshift.io/runtime-version: latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: algo112
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: algo112
+        deploymentconfig: algo112
+    spec:
+      containers:
+        - name: algo112
+          image: pierluca1/algo1.1.2:latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: algo112
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+---

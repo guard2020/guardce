@@ -1,0 +1,155 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: idm
+  namespace: guardce
+  labels:
+    app: idm
+    app.kubernetes.io/component: idm
+    app.kubernetes.io/instance: idm
+spec:
+  ports:
+   - name: 8080-tcp
+     protocol: TCP
+     port: 8080
+     targetPort: 10443
+   - name: 443-tcp
+     protocol: TCP
+     port: 443
+     targetPort: 10443
+   - name: 10443-tcp
+     protocol: TCP
+     port: 10443
+     targetPort: 10443
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  selector:
+    deployment: idm
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: idm
+  namespace: guardce
+data:
+  IDP_HOST: 'idm.guardce.svc:10443'
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: idm
+  namespace: guardce
+  labels:
+    app: idm
+    app.kubernetes.io/component: idm
+    app.kubernetes.io/instance: idm
+spec:
+  host: idm.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: idm
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: idm-sasl
+  namespace: guardce
+  labels:
+    app: idm
+    app.kubernetes.io/component: idm
+    app.kubernetes.io/instance: idm
+spec:
+  host: idm-sasl.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: idm
+    weight: 100
+  port:
+    targetPort: 443-tcp
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---
+
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: idm-pdb
+spec:
+  selector:
+    matchLabels:
+      app: idm
+  maxUnavailable: 1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: idm
+  namespace: guardce
+  labels:
+    app: idm
+    app.kubernetes.io/component: idm
+    app.kubernetes.io/instance: idm
+    app.kubernetes.io/part-of: guard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: idm
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        deployment: idm
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      volumes:
+        - name: idm
+          secret:
+            secretName: idm
+            defaultMode: 420
+      containers:
+        - name: idm
+          image: "guard2020/idm:latest"
+          ports:
+            - containerPort: 4000
+              protocol: TCP
+            - containerPort: 9443
+              protocol: TCP
+            - containerPort: 9763
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: idm
+          resources: {}
+          volumeMounts:
+            - name: idm
+              readOnly: true
+              mountPath: /home/wso2carbon/wso2is-5.7.0/repository/resources/security/wso2carbon.jks
+              subPath: wso2carbon.jks 
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext:
+        runAsUser: 802
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+

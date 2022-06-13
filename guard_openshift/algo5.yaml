@@ -1,0 +1,76 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: algo5
+  namespace: guardce
+  labels:
+    app: algo5
+    app.kubernetes.io/component: algo5
+    app.kubernetes.io/instance: algo5
+    app.kubernetes.io/name: algo5
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime-version: latest
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: algo5
+    deploymentconfig: algo5
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: algo5
+  namespace: guardce
+  labels:
+    app: algo5
+    app.kubernetes.io/component: algo5
+    app.kubernetes.io/instance: algo5
+    app.kubernetes.io/name: algo5
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime-namespace: guardce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: algo5
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: algo5
+        deploymentconfig: algo5
+    spec:
+      containers:
+        - name: algo5
+          image: pierluca1/algo5:latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+
+
+---
