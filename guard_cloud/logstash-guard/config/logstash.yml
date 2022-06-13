@@ -1,0 +1,18 @@
+http.host: 0.0.0.0
+config.reload:
+  automatic: true
+  interval: 60s
+
+log:
+  level: info
+
+path:
+  data: "/usr/share/logstash/lib"
+  logs: "/usr/share/logstash/logs"
+#  config: "/usr/share/logstash/pipeline"
+
+xpack.monitoring:
+  enabled: "false"
+  elasticsearch:
+    hosts: "${ELASTIC_SERVER}:${ELASTIC_PORT}"
+    sniffing: true

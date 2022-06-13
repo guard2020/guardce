@@ -1,0 +1,10 @@
+- pipeline.id: data
+  path.config: "/usr/share/logstash/pipeline/data.conf"
+- pipeline.id: event
+  path.config: "/usr/share/logstash/pipeline/event.conf"
+- pipeline.id: dashboard
+  path.config: "/usr/share/logstash/pipeline/dashboard.conf"  
+#- pipeline.id: aminer
+#  path.config: "/usr/share/logstash/pipeline/aminer.conf"  
+#- pipeline.id: aminer-alerts
+#  path.config: "/usr/share/logstash/pipeline/aminer-alerts.conf"  
