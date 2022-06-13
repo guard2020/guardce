@@ -1,9 +1,8 @@
-# guardce
+# Guard Community Edition (guardce)
 GUARD Project Platform Community Edition 
 
-# Final Release
 
-## Instructions to run GUARD PLATFORM on cloud machine
+## Instructions to run GUARD PLATFORM on cloud machine (or Linux virtual machine on PC - Minimal Edition only for demo purposes)
 
 1) Copy .env and fill the environment variables with your local value. In .env must be set {GUARD_REPOSITORY} with `<repository-name>` , {GUARD_SERVER}  and {GUARD_SERVER_ADDRESS} with proper value. Other instruction and example inside the .env file.
 2) Copy guard_cloud/docker-compose-cloud-*.yml and in parent directory prior to execute. 
