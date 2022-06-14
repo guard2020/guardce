@@ -28,7 +28,7 @@ $ ./start.sh
 
 ## Volumes for standard edition
 
-Preliminary operatione on volumes (for cloud) or persistent storage (Openshift)
+Preliminary operations on volumes (for cloud) or persistent storage (Openshift)
 Following volumes must be present for cloud (VOLUME_DIR in .env):
 - ${VOLUME_DIR}/certs/idp.jks (from aaa/identity_provider/idp.jks)
 - ${VOLUME_DIR}/data/zookeeper/data (empty)
