@@ -17,11 +17,11 @@ oc import-image guard2020/smart-controller:latest --confirm --scheduled=true --r
 oc import-image guard2020/mysql:latest --confirm --scheduled=true --reference-policy='local'
 oc import-image guard2020/security-dashboard:latest --confirm --scheduled=true --reference-policy='local'
 
-oc import-image guard2020/algo1.2:latest --confirm --scheduled=true --reference-policy='local'
+
 oc import-image guard2020/algo1.1.2:latest --confirm --scheduled=true --reference-policy='local'
 oc import-image guard2020/algo5:latest --confirm --scheduled=true --reference-policy='local'
 
-oc import-image guard2020/guard-platform_blockchain-connector:latest --confirm --scheduled=true --reference-policy='local' 
+
 oc import-image guard2020/logdata-anomaly-miner:latest --confirm --scheduled=true --reference-policy='local'
 oc import-image guard2020/openvas:latest --confirm --scheduled=true --reference-policy='local'
 oc import-image guard2020/kafdrop:latest --confirm --scheduled=true --reference-policy='local'
@@ -59,9 +59,6 @@ oc create secret generic aminer --from-file=/home/user/secrets/aminer
 mkdir /home/user/secrets/aminer-conf
 cp  guard-platform/local_sidercars/log_data_agents/logdata-anomaly-miner/source/root/etc/aminer/conf-available/generic/ApacheAccessModel.py /home/user/aminer/conf-enabled/
 oc create secret generic aminer-conf --from-file=/home/user/secrets/aminer/conf-enabled
-mkdir /home/user/algo1.2
-cp  certs /home/user/secrets/algo1.2
-oc create secret generic algo12 --from-file=/home/user/secrets/algo1.2
 mkdir /home/user/algo
 cp guardce/algo* /home/user/algo
 cp blockchain-connector.yaml /home/user/algo
@@ -76,11 +73,9 @@ oc apply -f es-cluster.yaml
 oc apply -f kibana.yaml
 oc apply -f cb-manager.yaml
 oc apply -f algo1.1.2.yaml 
-oc apply -f algo1.2.yaml 
 oc apply -f smart-controller.yaml
 oc apply -f logstash.yaml
 oc apply -f security-dashboard.yaml
-oc apply -f blockchain-connector.yaml
 oc apply -f algo5.yaml
 oc apply -f logdata-anomaly-miner.yaml
 oc apply -f guard-starter.yaml
