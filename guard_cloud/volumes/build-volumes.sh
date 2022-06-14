@@ -1,8 +1,8 @@
 #!/bin/bash
-### usage ./build-volumes-min.sh VOLUME_DIR  
+### usage ./build-volumes-min.sh VOLUME_DIR DNS_SERVER IP_SERVER
 
-if [ "$#" -ne 1 ]; then
-        echo "Usage: ./Usage build-volumes.sh VOLUME_DIR "
+if [ "$#" -ne 3 ]; then
+        echo "Usage: ./Usage build-volumes.sh VOLUME_DIR DNS_SERVER IP_SERVER"
         exit 1
     fi    
 
@@ -32,5 +32,12 @@ cp ../Aminer/config.yml $1/logdata-anomaly-miner/source/root/etc/aminer
 cp ../Aminer/ApacheAccessModel.py $1/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled
 
 mkdir -p $1/scan_reports
+
+mkdir -p $1/kafka-cluster-ssl/secrets
+cp ./gen_certs.sh $1/kafka-cluster-ssl/secrets
+cd $1/kafka-cluster-ssl/secrets
+chmod 755 $1/kafka-cluster-ssl/secrets/gen_certs.sh
+./gen_certs.sh $2 $3
+
 
 exit 0
