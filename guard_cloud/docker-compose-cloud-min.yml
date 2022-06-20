@@ -276,7 +276,7 @@ services:
 
   smart-controller:    
     container_name: smart-controller
-    image: ${GUARD_REPOSITORY}/smart-controller:latest
+    image: ${GUARD_REPOSITORY}/smart-controller:min
     ports:
       - "9000:9000"
     cpus: 1
