@@ -6,13 +6,14 @@
 ### RELEASE_DIR=guard-platform
 ### ZOO_K_PORT=2181
 ### KAFKA_PORT_1=29092
+### KAFKA_PORT_INT_1=9092
 ### VOLUME_DIR=/opt/guard
 ### GUARD_SERVER=example.server.com
 ### GUARD_SERVER_ADDRESS=internal address XXX.XXX.XXX.XXX
 ### LS_PORT=5044
 ### ELASTIC_PORT_1=9200
 ### CB_MAN_PORT=5000
-### DASHBOARD_PORT=83
+### DASHBOARD_PORT=84
 ### OPENVAS_PORT_1=9443
 ### BC_CONN_PORT=18080
 ### IDP_PORT=10443
@@ -269,6 +270,7 @@ services:
   alert-aggregation-generator:    
     container_name: alert-aggregation-generator
     image: ${GUARD_REPOSITORY}/alert-aggregation-generator:latest
+    network_mode: bridge
     volumes:
       - ${VOLUME_DIR}/alert/config.yaml/:/app/config.yaml 
     restart: unless-stopped  
@@ -276,7 +278,7 @@ services:
 
   smart-controller:    
     container_name: smart-controller
-    image: ${GUARD_REPOSITORY}/smart-controller:latest
+    image: ${GUARD_REPOSITORY}/smart-controller:min
     ports:
       - "9000:9000"
     cpus: 1
