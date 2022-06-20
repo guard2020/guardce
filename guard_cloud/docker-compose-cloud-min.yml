@@ -194,10 +194,10 @@ services:
       - APP_KEY=base64:EJRQ64KELsuW29GsBrqX5SI+7lktUytqkDdjevwKFWY=
       - APP_DEBUG=false
       - APP_URL=http://localhost
-      - CB_API=http://10.0.0.7:5000
-      - SC_API=http://10.0.0.7:9000/gfg
-      - ELASTICSEARCH_URL=http://10.0.0.7:9200
-      - KIBANA_URL=http://guard3.westeurope.cloudapp.azure.com:5601
+      - CB_API=http://${GUARD_SERVER_ADDRESS}:5000
+      - SC_API=http://${GUARD_SERVER_ADDRESS}:9000/gfg
+      - ELASTICSEARCH_URL=http://${GUARD_SERVER_ADDRESS}:9200
+      - KIBANA_URL=http://${GUARD_ADDRESS}:5601
       - DB_CONNECTION=mysql
       - DB_HOST=db
       - DB_PORT=3306
@@ -210,7 +210,7 @@ services:
       - QUEUE_CONNECTION=sync
       - SESSION_DRIVER=file
       - SESSION_LIFETIME=120
-      - MIX_DATA_TRACKING_API_URL=http://10.0.0.7:4001
+      - MIX_DATA_TRACKING_API_URL=http://${GUARD_SERVER_ADDRESS}:4001
     links:
       - mysql-db
     depends_on:
@@ -298,7 +298,7 @@ services:
     container_name: guard-agent
     environment:
       - KAFKA_ALGO_TOPIC=network-data
-      - KAFKA_BOOTSTRAP_SERVERS=10.0.0.7:9092
+      - KAFKA_BOOTSTRAP_SERVERS=${GUARD_SERVER_ADDRESS}:9092
       - LCP_HOST=0.0.0.0
       - LCP_PORT=4100
       - LCP_HTTPS=0
