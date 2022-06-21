@@ -15,6 +15,9 @@ And then:
 ```console
 $ docker-compose -f docker-compose-cloud-min.yml up -d [service] (for minimal edition)
 ```
+If all is OK and all containers are running, you can run: 'bash ./start_config.sh' for final configurations.
+
+
 
 ## How to run GUARD PLATFORM on cloud machine (Standard Edition) - Require at least 32Gb RAM, 8 VCPU and 100Gb storage on disk
 
@@ -30,6 +33,8 @@ And then:
 $ docker-compose -f docker-compose-cloud-std.yml up -d [service] (for standard edition)
 
 ```
+If all is OK and all containers are running, you can run: 'bash ./start_config.sh' for final configurations.
+
 
 ## How to run GUARD PLATFORM on openshift platform
 
