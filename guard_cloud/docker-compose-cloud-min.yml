@@ -128,8 +128,7 @@ services:
     environment:
       - node.name=es01
       - cluster.name=es-docker-cluster
-      - discovery.seed_hosts=es02,es03
-      - cluster.initial_master_nodes=es01,es02,es03
+      - cluster.initial_master_nodes=es01
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
@@ -153,7 +152,7 @@ services:
     environment:
       ELASTICSEARCH_URL: http://es01:9200
       ELASTICSEARCH_HOSTS: '["http://es01:9200"]'
-    network:
+    networks:
       - elastic
       
   cb-manager:    
@@ -197,7 +196,7 @@ services:
       - CB_API=http://${GUARD_SERVER_ADDRESS}:5000
       - SC_API=http://${GUARD_SERVER_ADDRESS}:9000/gfg
       - ELASTICSEARCH_URL=http://${GUARD_SERVER_ADDRESS}:9200
-      - KIBANA_URL=http://${GUARD_ADDRESS}:5601
+      - KIBANA_URL=http://${GUARD_SERVER}:5601
       - DB_CONNECTION=mysql
       - DB_HOST=db
       - DB_PORT=3306
@@ -286,7 +285,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
-     depends_on:
+    depends_on:
       - cb-manager
       - kafka1
     restart: unless-stopped    
