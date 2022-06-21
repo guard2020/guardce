@@ -16,7 +16,7 @@ And then:
 $ docker-compose -f docker-compose-cloud-min.yml up -d [service] (for minimal edition)
 ```
 
-## How to run GUARD PLATFORM on cloud machine (Standard Edition) - Require 32G RAM and 8 CPU
+## How to run GUARD PLATFORM on cloud machine (Standard Edition) - Require at least 32Gb RAM, 8 VCPU and 100Gb storage on disk
 
 1) Unzip the repo in a directory where you have rights with sudoers user:  unzip guardce-main.zip -d .
 2) cd guardce-main
