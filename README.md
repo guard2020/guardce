@@ -4,14 +4,29 @@ GUARD Project Platform Community Edition
 
 ## How to run GUARD PLATFORM on cloud machine (or Linux virtual machine on PC - Minimal Edition only for demo purposes)
 
-1) Copy .env and fill the environment variables with your local value. In .env must be set {GUARD_REPOSITORY} with `<repository-name>` , {GUARD_SERVER}  and {GUARD_SERVER_ADDRESS} with proper value. Other instruction and example inside the .env file.
-2) Copy guard_cloud/docker-compose-cloud-*.yml and in parent directory prior to execute. 
-3) Run ./volumes/build-volumes-min.sh {VOLUME_DIR} to create volumes (for minimal edition) or run volumes/build-volumes.sh.
+1) Unzip the repo in a directory where you have rights with sudoers user:  unzip guardce-main.zip -d .
+2) cd guardce-main
+3) cp guard_cloud/.env . (In .env must be set {GUARD_REPOSITORY} with `<repository-name>` , {GUARD_SERVER} and {GUARD_SERVER_ADDRESS} with proper value)
+5) cp guard_cloud/docker-compose-cloud-min.yml . 
+6) Run ./volumes/build-volumes-min.sh {VOLUME_DIR} to create volumes
+7) For elasticsearch, you need to run 'sudo sysctl -w vm.max_map_count=262144
 The minimal edition doesn't require any TLS certificate to run. 
-
+And then:
 ```console
 $ docker-compose -f docker-compose-cloud-min.yml up -d [service] (for minimal edition)
-or
+```
+
+## How to run GUARD PLATFORM on cloud machine (Standard Edition) - Require 32G RAM and 8 CPU
+
+1) Unzip the repo in a directory where you have rights with sudoers user:  unzip guardce-main.zip -d .
+2) cd guardce-main
+3) cp guard_cloud/.env . (In .env must be set {GUARD_REPOSITORY} with `<repository-name>` , {GUARD_SERVER} and {GUARD_SERVER_ADDRESS} with proper value)
+5) cp guard_cloud/docker-compose-cloud.yml . 
+6) Run ./volumes/build-volumes.sh {VOLUME_DIR} to create volumes
+7) For elasticsearch, you need to run 'sudo sysctl -w vm.max_map_count=262144
+
+And then:
+```console
 $ docker-compose -f docker-compose-cloud-std.yml up -d [service] (for standard edition)
 
 ```
