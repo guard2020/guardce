@@ -153,7 +153,7 @@ services:
     environment:
       ELASTICSEARCH_URL: http://es01:9200
       ELASTICSEARCH_HOSTS: '["http://es01:9200"]'
-    network:
+    networks:
       - elastic
       
   cb-manager:    
@@ -197,7 +197,7 @@ services:
       - CB_API=http://${GUARD_SERVER_ADDRESS}:5000
       - SC_API=http://${GUARD_SERVER_ADDRESS}:9000/gfg
       - ELASTICSEARCH_URL=http://${GUARD_SERVER_ADDRESS}:9200
-      - KIBANA_URL=http://${GUARD_ADDRESS}:5601
+      - KIBANA_URL=http://${GUARD_SERVER}:5601
       - DB_CONNECTION=mysql
       - DB_HOST=db
       - DB_PORT=3306
