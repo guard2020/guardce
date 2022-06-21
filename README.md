@@ -8,7 +8,7 @@ GUARD Project Platform Community Edition
 2) cd guardce-main
 3) cp guard_cloud/.env . (In .env must be set {GUARD_REPOSITORY} with `<repository-name>` , {GUARD_SERVER} and {GUARD_SERVER_ADDRESS} with proper value)
 5) cp guard_cloud/docker-compose-cloud-min.yml . 
-6) Run ./volumes/build-volumes-min.sh {VOLUME_DIR} to create volumes
+6) Run 'bash ./volumes/build-volumes-min.sh {VOLUME_DIR}' to create volumes
 7) For elasticsearch, you need to run 'sudo sysctl -w vm.max_map_count=262144
 The minimal edition doesn't require any TLS certificate to run. 
 And then:
@@ -22,7 +22,7 @@ $ docker-compose -f docker-compose-cloud-min.yml up -d [service] (for minimal ed
 2) cd guardce-main
 3) cp guard_cloud/.env . (In .env must be set {GUARD_REPOSITORY} with `<repository-name>` , {GUARD_SERVER} and {GUARD_SERVER_ADDRESS} with proper value)
 5) cp guard_cloud/docker-compose-cloud.yml . 
-6) Run ./volumes/build-volumes.sh {VOLUME_DIR} to create volumes
+6) Run 'bash ./volumes/build-volumes.sh {VOLUME_DIR}' to create volumes
 7) For elasticsearch, you need to run 'sudo sysctl -w vm.max_map_count=262144
 
 And then:
