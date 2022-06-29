@@ -517,9 +517,9 @@ services:
     restart: unless-stopped  
 
 
-  smart-controller:    
-    container_name: smart-controller
-    image: ${GUARD_REPOSITORY}/smart-controller:latest
+  security-controller:    
+    container_name: security-controller
+    image: ${GUARD_REPOSITORY}/security-controller:latest
     ports:
       - "9000:9000"
     cpus: 1
@@ -527,7 +527,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
-      - ~/${RELEASE_DIR}/docker-compose_algo.yml:/home/smartcontroller/SmartController/docker-compose_algo.yml
       - ~/${RELEASE_DIR}/.env:/home/smartcontroller/SmartController/.env
     depends_on:
       - cb-manager
