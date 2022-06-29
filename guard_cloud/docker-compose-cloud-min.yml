@@ -275,9 +275,9 @@ services:
     restart: unless-stopped  
 
 
-  smart-controller:    
-    container_name: smart-controller
-    image: ${GUARD_REPOSITORY}/smart-controller:min
+  security-controller:    
+    container_name: security-controller
+    image: ${GUARD_REPOSITORY}/security-controller:min
     ports:
       - "9000:9000"
     cpus: 1
