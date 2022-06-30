@@ -15,7 +15,7 @@ curl  -X PUT http://$1:9200/*/_settings -H 'kbn-xsrf: true' -H 'Content-Type: ap
 
 curl  -v -X POST  http://$1:5000/type/exec-env  -H 'Content-Type: application/json' -d @./cb-manager/db-ee-type.json
     
-curl  -v -X POST  http://$1:5000/catalog/algorithm  -H 'Content-Type: application/json' -d @./cb-manager/cnit.json
+curl  -v -X POST  http://$1:5000/catalog/algorithm  -H 'Content-Type: application/json' -d @./cb-manager/cnit-ml.json
 
 #curl -v -X POST -H "Content-Type: application/json" http://$1:4100/self/configuration -d @./cb-manager/guard-agent.json
 
