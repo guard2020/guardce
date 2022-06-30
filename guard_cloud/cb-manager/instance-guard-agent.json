@@ -1,0 +1,9 @@
+{
+  "hasAgentType": "Agent-Italtel",
+  "id": "agent@host",
+  "partner": "Italtel",
+  "status": "stopped",
+  "type": "AgentInstance",
+  "vendor": "Italtel",
+  "version": "x.y.z"
+}

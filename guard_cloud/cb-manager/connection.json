@@ -1,0 +1,6 @@
+{
+    "id": "Connection",
+    "exec_env_id": "agent-italtel",
+    "network_link_id": "eth0",
+    "description": "Connection Test"
+}
