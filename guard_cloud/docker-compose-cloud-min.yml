@@ -64,8 +64,8 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:${ZOO_K_PORT}"
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1    
-      KAFKA_TOPIC_CREATION_DEFAULT_REPLICATION_FACTOR: 3
-      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_TOPIC_CREATION_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE : "true" 
       KAFKA_LOG4J_LOGGERS: "org.telematics=ERROR"
       ZOOKEEPER_SASL_ENABLED: "false"
@@ -130,7 +130,7 @@ services:
       - cluster.name=es-docker-cluster
       - cluster.initial_master_nodes=es01
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
     ulimits:
       memlock:
         soft: -1
@@ -186,12 +186,12 @@ services:
     container_name: guard-dashboard
     user: 'www-data'
     ports:
-      - 84:8080
+      - 8400:8080
     environment:
       - APP_NAME="GUARD Security Dashboard"
       - APP_ENV=local
       - APP_KEY=base64:EJRQ64KELsuW29GsBrqX5SI+7lktUytqkDdjevwKFWY=
-      - APP_DEBUG=false
+      - APP_DEBUG=true
       - APP_URL=http://localhost
       - CB_API=http://${GUARD_SERVER_ADDRESS}:5000
       - SC_API=http://${GUARD_SERVER_ADDRESS}:9000/gfg
@@ -219,8 +219,14 @@ services:
   mysql-db:
     image: ${GUARD_REPOSITORY}/mysql:latest
     container_name: mysql-db
-    volumes:
-      - ${VOLUME_DIR}/security_dashboard/guard_docker/run/var:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=securerootpassword
+      - MYSQL_DATABASE=security_dashboard
+      - MYSQL_USER=sduser
+      - MYSQL_PASSWORD=rootguard2021
+#    volumes:
+     #- ../guard-platform/core_framework/security_dashboard/guard_docker/run/var:/var/lib/mysql 
+#     - ${VOLUME_DIR}/security_dashboard/guard_docker/run/var:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
@@ -275,11 +281,19 @@ services:
     restart: unless-stopped  
 
 
-  smart-controller:    
-    container_name: smart-controller
-    image: ${GUARD_REPOSITORY}/smart-controller:min
+  security-controller:    
+    container_name: security-controller
+    image: ${GUARD_REPOSITORY}/security-controller:min
     ports:
       - "9000:9000"
+    environment:
+      - kafkaEndpoint=${GUARD_SERVER_ADDRESS}:9092
+      - contextBrokerManagerEndpoint=${GUARD_SERVER_ADDRESS}:5000
+      - cnitMlAlgorithmEndpoint=${GUARD_SERVER_ADDRESS}:9999
+      - spring_kafka_consumer_bootstrap-servers=${GUARD_SERVER_ADDRESS}:9092
+      - spring_kafka_producer_bootstrap-servers=${GUARD_SERVER_ADDRESS}:9092
+      - BOOTSTRAP_SERVERS_CONFIG=${GUARD_SERVER_ADDRESS}:9092
+      - GUARD_SERVER_ADDRESS=${GUARD_SERVER_ADDRESS}:9092
     cpus: 1
     mem_limit: 1Gi
     volumes:
@@ -298,8 +312,10 @@ services:
     environment:
       - KAFKA_ALGO_TOPIC=network-data
       - KAFKA_BOOTSTRAP_SERVERS=${GUARD_SERVER_ADDRESS}:9092
+      - GUARD_SERVER_IP=${GUARD_SERVER_ADDRESS}
+      - CB_PORT=${CB_MAN_PORT} 
       - LCP_HOST=0.0.0.0
-      - LCP_PORT=4100
+      - LCP_PORT=${LCP_PORT}
       - LCP_HTTPS=0
       - LCP_AUTH_ENABLED=0
       - LCP_AUTH_HEADER_PREFIX=
