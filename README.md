@@ -33,7 +33,7 @@ And then:
 $ docker-compose -f docker-compose-cloud-std.yml up -d [service] (for standard edition)
 
 ```
-If all is OK and all containers are running, you can run: 'bash ./start_config.sh' for final configurations.
+If all is OK and all containers are running, you can run: 'bash ./guard_cloud/start_ini.sh' for final configurations.
 
 
 ## How to run GUARD PLATFORM on openshift platform
