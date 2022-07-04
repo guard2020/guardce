@@ -24,7 +24,7 @@ cp guard_cloud/docker-compose-cloud-min.yml .
 ```console
 bash ./volumes/build-volumes-min.sh {VOLUME_DIR}
 ```
-to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard).
+       to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard).
 6) For elasticsearch, you need to run:
 ```console
 sudo sysctl -w vm.max_map_count=262144
