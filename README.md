@@ -35,7 +35,7 @@ sudo sysctl -w vm.max_map_count=262144
 $ docker-compose -f docker-compose-cloud-min.yml up -d [service]
 ```
 > You can check the health of containers connecting to portainer (port 19100) and eventually check the logs.
-8) If all is OK and all containers are running, start final configuration:bash ./start_config.sh' for final configurations.
+8) If all is OK and all containers are running, start final configuration
 ```console
 cd guard_cloud
 bash ./start_config.sh'
