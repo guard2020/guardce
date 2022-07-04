@@ -37,6 +37,7 @@ $ docker-compose -f docker-compose-cloud-min.yml up -d [service]
 > You can check the health of containers connecting to portainer (port 19100).
 8) If all is OK and all containers are running, start final configuration:bash ./start_config.sh' for final configurations.
 ```console
+cd guard_cloud
 bash ./start_config.sh'
 ```
 Now you can connect to the Security Dashboard. Go to in Service Topology page and then click on Discover New Service Chain. Insert your internal IP Address and port 4100. In case of success, in page Security Pipeline you'll find a pipelina, tha you can start and stop as well.
