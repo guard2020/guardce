@@ -40,26 +40,52 @@ $ docker-compose -f docker-compose-cloud-min.yml up -d [service]
 cd guard_cloud
 bash ./start_config.sh'
 ```
-Now you can connect to the Security Dashboard (port 84). Go to in Service Topology page and then click on Discover New Service Chain. Insert your internal IP Address and port 4100. In case of success, in page Security Pipeline you'll find a pipelina, tha you can start and stop as well.
+```
+Now you can connect to the Security Dashboard (port 84). 
+Go to in Service Topology page and then click on Discover New Service Chain. 
+Insert your internal IP Address and port 4100. 
+In case of success, in page Security Pipeline you'll find a pipelina, then you can start and stop as well.
+The LCP generates some IP traffic simulating a DDos attack.
 In page Threat Notification will be shown the attaks! 
-
+```
 
 
 ## How to run GUARD PLATFORM on cloud machine (Standard Edition) - Require at least 32Gb RAM, 8 VCPU and 100Gb storage on disk
 
-1) Unzip the repo in a directory where you have rights with sudoers user:  unzip guardce-main.zip -d .
-2) cd guardce-main
-3) cp guard_cloud/.env . (In .env must be set {GUARD_REPOSITORY} with `<repository-name>` , {GUARD_SERVER} and {GUARD_SERVER_ADDRESS} with proper value)
-5) cp guard_cloud/docker-compose-cloud.yml . 
-6) Run 'bash ./volumes/build-volumes.sh {VOLUME_DIR}' to create volumes
-7) For elasticsearch, you need to run 'sudo sysctl -w vm.max_map_count=262144
-
-And then:
-```console
-$ docker-compose -f docker-compose-cloud-std.yml up -d [service] (for standard edition)
-
+1) Unzip the repo in a directory where you have rights with sudoers user.
+```console 
+unzip guardce-main.zip -d .
 ```
-If all is OK and all containers are running, you can run: 'bash ./guard_cloud/start_ini.sh' for final configurations.
+2) A new directory will be created: guardce-main. Please go to it.
+```console
+ cd guardce-main
+```
+3) Please copy the following files in this directory:
+```console
+cp guard_cloud/.env .
+cp guard_cloud/docker-compose-cloud.yml .
+```
+4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
+5) Run 
+```console
+bash ./volumes/build-volumes.sh {VOLUME_DIR} {GUARD_SERVER} {GUARD_SERVER_ADDRESS}
+```
+       to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard).
+6) For elasticsearch, you need to run:
+```console
+sudo sysctl -w vm.max_map_count=262144
+```
+7) Start the framework:
+```console
+$ docker-compose -f docker-compose-cloud.yml up -d [service]
+```
+> You can check the health of containers connecting to portainer (port 19100) and eventually check the logs.
+8) If all is OK and all containers are running, start final configuration
+```console
+cd guard_cloud
+bash ./start_config.sh'
+```
+Now the framework is ready to work!!!
 
 
 ## How to run GUARD PLATFORM on openshift platform
