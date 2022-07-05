@@ -85,7 +85,7 @@ services:
           connections:
             docker-kafka-server:
               properties:
-                bootstrap.servers: "kafka1:9092"
+                bootstrap.servers: "kafka1:${KAFKA_PORT_INT_1}"
               schema-registry:
                 url: "http://schema-registry:8085"
               connect:
@@ -150,8 +150,8 @@ services:
     ports:
       - 5601:5601
     environment:
-      ELASTICSEARCH_URL: http://es01:9200
-      ELASTICSEARCH_HOSTS: '["http://es01:9200"]'
+      ELASTICSEARCH_URL: http://es01:${KAFKA_PORT_INT_1}
+      ELASTICSEARCH_HOSTS: '["http://es01:${KAFKA_PORT_INT_1}"]'
     networks:
       - elastic
       
@@ -164,14 +164,14 @@ services:
       - CB_MAN_OAUTH2_ENABLED=false
       - CB_MAN_AUTH=true 
       - CB_MAN_HOST=0.0.0.0
-      - CB_MAN_PORT=5000
+      - CB_MAN_PORT=${CB_MAN_PORT}
       - CB_MAN_HTTPS=false
       - CB_MAN_AUTH_ENABLED=false
       - CB_MAN_AUTH_HEADER_PREFIX=GUARD
       - CB_MAN_AUTH_SECRET_KEY=guard-secret-key
       - CB_MAN_HEARTBEAT_TIMEOUT=10s
       - CB_MAN_HEARTBEAT_PERIOD=1min
-      - CB_MAN_ELASTICSEARCH_ENDPOINT=es01:9200
+      - CB_MAN_ELASTICSEARCH_ENDPOINT=es01:${ELASTIC_PORT_1}
       - CB_MAN_ELASTICSEARCH_TIMEOUT=20s
       - CB_MAN_ELASTICSEARCH_RETRY_PERIOD=1min
       - CB_MAN_ELASTIC_APM_ENABLED=false
@@ -193,9 +193,9 @@ services:
       - APP_KEY=base64:EJRQ64KELsuW29GsBrqX5SI+7lktUytqkDdjevwKFWY=
       - APP_DEBUG=true
       - APP_URL=http://localhost
-      - CB_API=http://${GUARD_SERVER_ADDRESS}:5000
+      - CB_API=http://${GUARD_SERVER_ADDRESS}:${CB_MAN_PORT}
       - SC_API=http://${GUARD_SERVER_ADDRESS}:9000/gfg
-      - ELASTICSEARCH_URL=http://${GUARD_SERVER_ADDRESS}:9200
+      - ELASTICSEARCH_URL=http://${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
       - KIBANA_URL=http://${GUARD_SERVER}:5601
       - DB_CONNECTION=mysql
       - DB_HOST=db
@@ -283,17 +283,17 @@ services:
 
   security-controller:    
     container_name: security-controller
-    image: ${GUARD_REPOSITORY}/security-controller:min
+    image: ${GUARD_REPOSITORY}/security-controller:min2
     ports:
       - "9000:9000"
     environment:
-      - kafkaEndpoint=${GUARD_SERVER_ADDRESS}:9092
-      - contextBrokerManagerEndpoint=${GUARD_SERVER_ADDRESS}:5000
+      - kafkaEndpoint=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
+      - contextBrokerManagerEndpoint=${GUARD_SERVER_ADDRESS}:${CB_MAN_PORT}
       - cnitMlAlgorithmEndpoint=${GUARD_SERVER_ADDRESS}:9999
-      - spring_kafka_consumer_bootstrap-servers=${GUARD_SERVER_ADDRESS}:9092
-      - spring_kafka_producer_bootstrap-servers=${GUARD_SERVER_ADDRESS}:9092
-      - BOOTSTRAP_SERVERS_CONFIG=${GUARD_SERVER_ADDRESS}:9092
-      - GUARD_SERVER_ADDRESS=${GUARD_SERVER_ADDRESS}:9092
+      - spring_kafka_consumer_bootstrap-servers=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
+      - spring_kafka_producer_bootstrap-servers=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
+      - BOOTSTRAP_SERVERS_CONFIG=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
+      - GUARD_SERVER_ADDRESS=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
     cpus: 1
     mem_limit: 1Gi
     volumes:
@@ -311,7 +311,7 @@ services:
     container_name: guard-agent
     environment:
       - KAFKA_ALGO_TOPIC=network-data
-      - KAFKA_BOOTSTRAP_SERVERS=${GUARD_SERVER_ADDRESS}:9092
+      - KAFKA_BOOTSTRAP_SERVERS=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
       - GUARD_SERVER_IP=${GUARD_SERVER_ADDRESS}
       - CB_PORT=${CB_MAN_PORT} 
       - LCP_HOST=0.0.0.0
