@@ -25,6 +25,6 @@ curl -v -X POST -H "Content-Type: application/json" http://$1:$3/agent/instance 
 
 curl -v -X POST -H "Content-Type: application/json" http://$1:$2/type/network-link -d @./network-type.json
 
-curl -v -X POST -H "Content-Type: application/json" http://$1:$2/network-link -d @./network-link.json
+#curl -v -X POST -H "Content-Type: application/json" http://$1:$2/network-link -d @./network-link.json
 
-curl -v -X POST -H "Content-Type: application/json" http://$1:$2/connection -d @connection.json
+#curl -v -X POST -H "Content-Type: application/json" http://$1:$2/connection -d @connection.json
