@@ -28,3 +28,5 @@ curl -v -X POST -H "Content-Type: application/json" http://$1:$2/type/network-li
 #curl -v -X POST -H "Content-Type: application/json" http://$1:$2/network-link -d @./network-link.json
 
 #curl -v -X POST -H "Content-Type: application/json" http://$1:$2/connection -d @connection.json
+
+#curl -X POST  -H "kbn-xsrf: true" " http://$1:5601/api/saved_objects/_import --form file=@aminer.ndjson"
