@@ -23,7 +23,7 @@ cp guard_cloud/docker-compose-cloud-min.yml .
 5) Run 
 ```console
 cd guard_cloud/volumes
-bash ./build-volumes-min.sh {VOLUME_DIR}
+sudo bash ./build-volumes-min.sh {VOLUME_DIR}
 ```
        to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard).
 6) For elasticsearch, you need to run:
@@ -31,7 +31,7 @@ bash ./build-volumes-min.sh {VOLUME_DIR}
 sudo sysctl -w vm.max_map_count=262144
 ```
 >The minimal edition doesn't require any TLS certificate to run. 
-7) Start the framework:
+7) Start the framework (docker-compose version: 2.2.3):
 ```console
 $ docker-compose -f docker-compose-cloud-min.yml up -d [service]
 ```
