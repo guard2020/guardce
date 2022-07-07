@@ -283,7 +283,7 @@ services:
 
   security-controller:    
     container_name: security-controller
-    image: ${GUARD_REPOSITORY}/security-controller:min2
+    image: ${GUARD_REPOSITORY}/security-controller:min
     ports:
       - "9000:9000"
     environment:
