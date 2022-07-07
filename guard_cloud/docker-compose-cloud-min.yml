@@ -295,7 +295,7 @@ services:
       - BOOTSTRAP_SERVERS_CONFIG=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
       - GUARD_SERVER_ADDRESS=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
     cpus: 1
-    mem_limit: 1Gi
+    mem_limit: 2Gi
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
