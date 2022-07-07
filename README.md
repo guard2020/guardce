@@ -22,7 +22,8 @@ cp guard_cloud/docker-compose-cloud-min.yml .
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
 5) Run 
 ```console
-bash ./volumes/build-volumes-min.sh {VOLUME_DIR}
+cd guard_cloud/volumes
+bash ./build-volumes-min.sh {VOLUME_DIR}
 ```
        to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard).
 6) For elasticsearch, you need to run:
