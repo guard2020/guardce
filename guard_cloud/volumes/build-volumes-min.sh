@@ -22,9 +22,9 @@ chmod 777 $1/logstash-cb/file-output
 
 mkdir -p $1/elastic/data01
 chmod 777 $1/elastic/data01
-mkdir -p $1/security_dashboard/guard_docker/run/var
-chmod 777 $1/security_dashboard/guard_docker/run/var
-cp -r ../security_dashboard/* $1/security_dashboard/guard_docker/run/var
+#mkdir -p $1/security_dashboard/guard_docker/run/var
+#chmod 777 $1/security_dashboard/guard_docker/run/var
+#cp -r ../security_dashboard/* $1/security_dashboard/guard_docker/run/var
 
 mkdir -p $1/alert
 cp ../alert/config.yaml $1/alert 
