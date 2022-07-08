@@ -12,6 +12,7 @@ docker pull guard2020/risk-assessment:latest
 
 cd cb-manager
 sed  -i -e "s/url\":X/url\": \"http:\/\/$1:$3\"/" guard-agent.json
+ curl -X PUT http://$1:$4/notification-index
 curl  -X PUT http://$1:$4/*/_settings -H 'kbn-xsrf: true' -H 'Content-Type: application/json' '-d {"index" : { "number_of_replicas":0 }}'{"acknowledged":true}
 
 curl  -v -X POST  http://$1:$2/type/exec-env  -H 'Content-Type: application/json' -d @./db-ee-type.json
