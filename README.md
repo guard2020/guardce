@@ -45,7 +45,7 @@ sudo bash ./start_ini.sh
 Now you can connect to the Security Dashboard (port 84). 
 Go to in Service Topology page and then click on Discover New Service Chain. 
 Insert your internal IP Address and port 4100. 
-In case of success, in page Security Pipeline you'll find a pipelina, then you can start and stop as well.
+In case of success, in page Security Pipeline you'll find a pipeline, that you can start and stop as well.
 The LCP generates some IP traffic simulating a DDos attack.
 In page Threat Notification will be shown the attaks! 
 ```
