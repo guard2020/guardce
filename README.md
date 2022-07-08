@@ -39,7 +39,7 @@ $ docker-compose -f docker-compose-cloud-min.yml up -d [service]
 8) If all is OK and all containers are running, start final configuration
 ```console
 cd guard_cloud
-bash ./start_config.sh'
+bash ./start_config.sh
 ```
 ```
 Now you can connect to the Security Dashboard (port 84). 
