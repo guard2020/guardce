@@ -8,16 +8,31 @@
 ### KAFKA_PORT_1=29092
 ### KAFKA_PORT_INT_1=9092
 ### VOLUME_DIR=/opt/guard
-### GUARD_SERVER=example.server.com
-### GUARD_SERVER_ADDRESS=internal address XXX.XXX.XXX.XXX
+### GUARD_SERVER="Your IP server DNS name or IP server external address"
+### GUARD_SERVER_ADDRESS="Your IP server local address"
 ### LS_PORT=5044
+### LS_PORT_1=9001
+### LS_PORT_2=9600
 ### ELASTIC_PORT_1=9200
 ### CB_MAN_PORT=5000
 ### DASHBOARD_PORT=84
-### OPENVAS_PORT_1=9443
+### DASHBOARD_PORT_INT=8080
+### OPENVAS_PORT=9443
 ### BC_CONN_PORT=18080
 ### IDP_PORT=10443
 ### GUARD_REPOSITORY=guard2020
+### COMPOSE_PROJECT_NAME=guardce
+### LCP_PORT=4100
+### PORTAINER_PORT_1=18000
+### PORTAINER_PORT_2=19000
+### PORTAINER_PORT_INT_1=8000
+### PORTAINER_PORT_INT_2=9000
+### AKHQ_PORT=19100
+### AKHQ_PORT_INT=8080
+### KIBANA_PORT=5601
+### MYSQL_PORT=3307
+### MYSQL_PORT_INT=3306
+### SC_PORT=9000
 
 version: '3.6'
 services:
@@ -25,8 +40,8 @@ services:
   portainer:
     image: ${GUARD_REPOSITORY}/portainer-ce:latest
     ports:
-      - "18000:8000"
-      - "19000:9000"
+      - "${PORTAINER_PORT_1}:${PORTAINER_PORT_1}"
+      - "${PORTAINER_PORT_2}:${PORTAINER_PORT_INT_2}"
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - /var/lib/docker/volumes:/var/lib/docker/volumes
@@ -36,7 +51,7 @@ services:
     image: ${GUARD_REPOSITORY}/idm:latest
     container_name: aa_module-idp
     ports:
-      - ${IDP_PORT}:10443
+      - ${IDP_PORT}:${IDP_PORT}
     tty: true
     restart: unless-stopped
      
@@ -69,7 +84,7 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE : "true" 
       KAFKA_LOG4J_LOGGERS: "org.telematics=ERROR"
       ZOOKEEPER_SASL_ENABLED: "false"
-    command: /etc/confluent/docker/dockerize -wait https://idp:10443 -skip-tls-verify -timeout 600s /etc/confluent/docker/run     
+    command: /etc/confluent/docker/dockerize -wait https://idp:${IDP_PORT} -skip-tls-verify -timeout 600s /etc/confluent/docker/run     
     volumes:
       - ${VOLUME_DIR}/data/kafka1/data:/var/lib/kafka/data
     depends_on:
@@ -92,7 +107,7 @@ services:
                 - name: "connect"
                   url: "http://connect:8083"
     ports:
-      - 19100:8080
+      - ${AKHQ_PORT}:${AKHQ_PORT_INT}
     links:
       - kafka1
       - schema-registry
@@ -111,13 +126,13 @@ services:
     - ${VOLUME_DIR}/logstash-guard/pipeline:/usr/share/logstash/pipeline
     - ${VOLUME_DIR}/logstash-cb/file-output:/var/logstash-file-output
     expose:
-    - "9001"
+    - "${LS_PORT_1}"
     - "${LS_PORT}"
-    - "9600"
+    - "${LS_PORT_1}"
     ports:
-    - "9001:9001"
+    - "{LS_PORT_1}:{LS_PORT_1}"
     - "${LS_PORT}:${LS_PORT}"
-    - "9600:9600"
+    - "${LS_PORT_1}:${LS_PORT_1}"
     depends_on:
       - kafka1
     restart: unless-stopped
@@ -148,7 +163,7 @@ services:
     image: ${GUARD_REPOSITORY}/kibana:cti
     container_name: kib01
     ports:
-      - 5601:5601
+      - ${KIBANA_PORT}:${KIBANA_PORT}
     environment:
       ELASTICSEARCH_URL: http://es01:${ELASTIC_PORT_1}
       ELASTICSEARCH_HOSTS: '["http://es01:${ELASTIC_PORT_1}"]'
@@ -163,7 +178,7 @@ services:
 #      - CB_MAN_ELASTICSEARCH_ENDPOINT=${GUARD_SERVER_ADDRESS}:${ELASTIC_PORT_1}
       - CB_MAN_OAUTH2_ENABLED=false
       - CB_MAN_AUTH=true 
-      - CB_MAN_HOST=0.0.0.0
+      - CB_MAN_HOST=${GUARD_SERVER_ADDRESS}
       - CB_MAN_PORT=${CB_MAN_PORT}
       - CB_MAN_HTTPS=false
       - CB_MAN_AUTH_ENABLED=false
@@ -175,7 +190,7 @@ services:
       - CB_MAN_ELASTICSEARCH_TIMEOUT=20s
       - CB_MAN_ELASTICSEARCH_RETRY_PERIOD=1min
       - CB_MAN_ELASTIC_APM_ENABLED=false
-      - CB_MAN_ELASTIC_APM_SERVER=http://es01:8200
+      - CB_MAN_ELASTIC_APM_SERVER=http://es01:${ELASTIC_PORT_1}
       - CB_MAN_LOG_CONFIG=log.yaml    
     ports:
       - ${CB_MAN_PORT}:${CB_MAN_PORT}
@@ -186,7 +201,7 @@ services:
     container_name: guard-dashboard
     user: 'www-data'
     ports:
-      - 84:8080
+      - ${DASHBOARD_PORT}:${DASHBOARD_PORT_INT}
     environment:
       - APP_NAME="GUARD Security Dashboard"
       - APP_ENV=local
@@ -196,7 +211,7 @@ services:
       - CB_API=http://${GUARD_SERVER_ADDRESS}:${CB_MAN_PORT}
       - SC_API=http://${GUARD_SERVER_ADDRESS}:9000/gfg
       - ELASTICSEARCH_URL=http://${GUARD_SERVER_ADDRESS}:${ELASTIC_PORT_1}
-      - KIBANA_URL=http://${GUARD_SERVER}:5601
+      - KIBANA_URL=http://${GUARD_SERVER}:${KIBANA_PORT}
       - DB_CONNECTION=mysql
       - DB_HOST=db
       - DB_PORT=3306
@@ -228,7 +243,7 @@ services:
      #- ../guard-platform/core_framework/security_dashboard/guard_docker/run/var:/var/lib/mysql 
 #     - ${VOLUME_DIR}/security_dashboard/guard_docker/run/var:/var/lib/mysql
     ports:
-      - "3307:3306"
+      - "${MYSQL_PORT}:${MYSQL_PORT}"
     networks:
       default:
         aliases:
@@ -285,7 +300,7 @@ services:
     container_name: security-controller
     image: ${GUARD_REPOSITORY}/security-controller:min
     ports:
-      - "9000:9000"
+      - "${SC_PORT}:${SC_PORT}"
     environment:
       - kafkaEndpoint=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
       - contextBrokerManagerEndpoint=${GUARD_SERVER_ADDRESS}:${CB_MAN_PORT}
@@ -294,8 +309,8 @@ services:
       - spring_kafka_producer_bootstrap-servers=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
       - BOOTSTRAP_SERVERS_CONFIG=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
       - GUARD_SERVER_ADDRESS=${GUARD_SERVER_ADDRESS}:${KAFKA_PORT_INT_1}
-    cpus: 1
-    mem_limit: 2Gi
+#    cpus: 1
+#    mem_limit: 2Gi
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
@@ -307,7 +322,7 @@ services:
   guard-agent:
     image: ${GUARD_REPOSITORY}/guard-agent:latest
     ports:
-      - "4100:4100"
+      - "${LCP_PORT}:${LCP_PORT}"
     container_name: guard-agent
     environment:
       - KAFKA_ALGO_TOPIC=network-data
