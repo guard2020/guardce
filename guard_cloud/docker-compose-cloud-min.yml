@@ -128,11 +128,11 @@ services:
     expose:
     - "${LS_PORT_1}"
     - "${LS_PORT}"
-    - "${LS_PORT_1}"
+    - "${LS_PORT_2}"
     ports:
-    - "{LS_PORT_1}:{LS_PORT_1}"
-    - "${LS_PORT}:${LS_PORT}"
     - "${LS_PORT_1}:${LS_PORT_1}"
+    - "${LS_PORT}:${LS_PORT}"
+    - "${LS_PORT_2}:${LS_PORT_2}"
     depends_on:
       - kafka1
     restart: unless-stopped
@@ -175,10 +175,9 @@ services:
     hostname: cb-manager
     container_name: cb-manager.master
     environment:
-#      - CB_MAN_ELASTICSEARCH_ENDPOINT=${GUARD_SERVER_ADDRESS}:${ELASTIC_PORT_1}
       - CB_MAN_OAUTH2_ENABLED=false
       - CB_MAN_AUTH=true 
-      - CB_MAN_HOST=${GUARD_SERVER_ADDRESS}
+      - CB_MAN_HOST=0.0.0.0
       - CB_MAN_PORT=${CB_MAN_PORT}
       - CB_MAN_HTTPS=false
       - CB_MAN_AUTH_ENABLED=false
