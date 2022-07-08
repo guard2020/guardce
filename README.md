@@ -33,13 +33,13 @@ sudo sysctl -w vm.max_map_count=262144
 >The minimal edition doesn't require any TLS certificate to run. 
 7) Start the framework (docker-compose version: 2.2.3):
 ```console
-$ docker-compose -f docker-compose-cloud-min.yml up -d [service]
+$ sudo docker-compose -f docker-compose-cloud-min.yml up -d [service]
 ```
 > You can check the health of containers connecting to portainer (port 19100) and eventually check the logs.
 8) If all is OK and all containers are running, start final configuration
 ```console
 cd guard_cloud
-bash ./start_config.sh
+sudo bash ./start_ini.sh
 ```
 ```
 Now you can connect to the Security Dashboard (port 84). 
