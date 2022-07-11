@@ -4,7 +4,14 @@ GUARD Project Platform Community Edition
 
 ## How to run GUARD PLATFORM on cloud machine (or Linux virtual machine on PC - Minimal Edition only for demo purposes)
 
-Minimal hardware requirements for virtual machine: 4 VCPUs, 16G RAM.
+Minimal hardware requirements for virtual machine: 4 VCPUs, 16G RAM. 
+Following ports must be accessible outside your firewall, VPN , ACL...
+```
+84
+5601
+19000
+19100
+```
 
 1) Unzip the repo in a directory where you have rights with sudoers user.
 ```console 
