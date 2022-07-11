@@ -43,7 +43,7 @@ sudo sysctl -w vm.max_map_count=262144
 cd <INSTALL_DIR>/guardce-main
 sudo docker-compose -f docker-compose-cloud-min.yml up -d [service]
 ```
-> You can check the health of containers connecting to portainer (port 19100) and eventually check the logs.
+> You can check the health of containers connecting to Portainer (port 19100) and eventually check the logs of all containers.
 8) If all is OK and all containers are running, start final configuration
 ```console
 cd <INSTALL_DIR>/guardce-main/guard_cloud
@@ -51,13 +51,14 @@ sudo bash ./start_ini.sh
 ```
 
 9) Now you can connect to the Security Dashboard (port 84).
-10) Create new pipeline
+10) How to create the new pipeline
 * Go to in Service Topology page and then click on Discover New Service Chain. 
 * Insert your internal IP Address and port 4100. 
-* In case of success, in page Security Pipeline you'll find a pipeline, that you can start and stop as well.
-* The LCP generates some IP traffic simulating a DDos attack.
-In page Threat Notification will be shown the attaks! 
+* After a few seconds, in page Security Pipeline you'll find a pipeline, that you can start and stop as well.
+* The agent generates some IP traffic simulating a DDos attack.
+* In page Threat Notification will be shown the attaks! 
 
+> For any further help or info, please e-mail us at guard.project@italtel.com
 
 ## How to run GUARD PLATFORM on cloud machine (Standard Edition) - Require at least 32Gb RAM, 8 VCPU and 100Gb storage on disk
 
