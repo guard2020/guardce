@@ -1,7 +1,7 @@
 #!/bin/bash
 ### usage ./build-volumes-min.sh 
 
-export $(cat ../.env | xargs)
+export $(cat ../../.env | xargs)
 
 mkdir -p $VOLUME_DIR/data/zookeeper/data
 chmod 777 $VOLUME_DIR/data/zookeeper/data
