@@ -26,7 +26,7 @@ mkdir -p $1/elastic/data01
 chmod 777 $1/elastic/data01
 
 mkdir -p $1/alert
-sed  -i -e "s/hosts\":X/hosts\": \"http:\/\/$GUARD_SERVER_ADDRESS:$ELASTIC_PORT_1\"/" guard-agent.json
+sed  -i -e "s/hosts:X/hosts: $GUARD_SERVER_ADDRESS:$ELASTIC_PORT_1/" ../alert/config.yaml
 cp ../alert/config.yaml $1/alert 
 
 mkdir -p $1/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled
