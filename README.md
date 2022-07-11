@@ -30,9 +30,9 @@ cp <INSTALL_DIR>/guardce-main/guard_cloud/docker-compose-cloud-min.yml .
 5) Run 
 ```console
 cd <INSTALL_DIR>/guardce-main/guard_cloud/volumes
-sudo bash ./build-volumes-min.sh {VOLUME_DIR}
+sudo bash ./build-volumes-min.sh
 ```
-       to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard).
+       to create required volumes. The {VOLUME_DIR} defined in .env will be the root directory (eg: /opt/guard).
 6) For elasticsearch, you need to run:
 ```console
 sudo sysctl -w vm.max_map_count=262144
