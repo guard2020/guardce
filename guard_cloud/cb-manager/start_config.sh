@@ -1,8 +1,8 @@
 #!/bin/bash
 #### Usage start_config.sh internal_ip_address cb-managet-port lcp-port es-port kibana-port
 
-if [ "$#" -ne 4 ]; then
-        echo "Usage: ./start_config.sh internal_ip_address cb-managet-port lcp-port kibana-port"
+if [ "$#" -ne 5 ]; then
+        echo "Usage: ./start_config.sh internal_ip_address cb-managet-port lcp-port es-port kibana-port"
         exit 1
 fi
 
