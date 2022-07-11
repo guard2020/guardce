@@ -40,8 +40,8 @@ sudo sysctl -w vm.max_map_count=262144
 >The minimal edition doesn't require any TLS certificate to run. 
 7) Start the framework (docker-compose version: 2.2.3):
 ```console
-$ cd <INSTALL_DIR>/guardce-main
-$ sudo docker-compose -f docker-compose-cloud-min.yml up -d [service]
+cd <INSTALL_DIR>/guardce-main
+sudo docker-compose -f docker-compose-cloud-min.yml up -d [service]
 ```
 > You can check the health of containers connecting to portainer (port 19100) and eventually check the logs.
 8) If all is OK and all containers are running, start final configuration
@@ -49,14 +49,14 @@ $ sudo docker-compose -f docker-compose-cloud-min.yml up -d [service]
 cd <INSTALL_DIR>/guardce-main/guard_cloud
 sudo bash ./start_ini.sh
 ```
-```
-Now you can connect to the Security Dashboard (port 84). 
-Go to in Service Topology page and then click on Discover New Service Chain. 
-Insert your internal IP Address and port 4100. 
-In case of success, in page Security Pipeline you'll find a pipeline, that you can start and stop as well.
-The LCP generates some IP traffic simulating a DDos attack.
+
+9) Now you can connect to the Security Dashboard (port 84).
+10) Create new pipeline
+* Go to in Service Topology page and then click on Discover New Service Chain. 
+* Insert your internal IP Address and port 4100. 
+* In case of success, in page Security Pipeline you'll find a pipeline, that you can start and stop as well.
+* The LCP generates some IP traffic simulating a DDos attack.
 In page Threat Notification will be shown the attaks! 
-```
 
 
 ## How to run GUARD PLATFORM on cloud machine (Standard Edition) - Require at least 32Gb RAM, 8 VCPU and 100Gb storage on disk
