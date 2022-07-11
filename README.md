@@ -61,7 +61,7 @@ sudo bash ./start_ini.sh
 > For any further help or info, please e-mail us at guard.project@italtel.com
 
 ## How to run GUARD PLATFORM on cloud machine (Standard Edition) - Require at least 32Gb RAM, 8 VCPU and 100Gb storage on disk
-
+### This is only a pre-release, not all is working!!!!
 1) Unzip the repo in a directory where you have rights with sudoers user.
 ```console 
 unzip guardce-main.zip -d .
@@ -99,7 +99,7 @@ Now the framework is ready to work!!!
 
 
 ## How to run GUARD PLATFORM on openshift platform
-
+### This is only a pre-release, not all is working!!!!
 Please before take a look on Volumes part.
 
 ```console
