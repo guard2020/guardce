@@ -13,23 +13,23 @@ Following ports must be accessible outside your firewall, VPN , ACL...
 19100
 ```
 
-1) Unzip the repo in a directory where you have rights with sudoers user.
+1) Unzip the repo in a directory <INSTALL_DIR> where you have rights with sudoers user.
 ```console 
 unzip guardce-main.zip -d .
 ```
 2) A new directory will be created: guardce-main. Please go to it.
 ```console
- cd guardce-main
+ cd <INSTALL_DIR>/guardce-main
 ```
 3) Please copy the following files in this directory:
 ```console
-cp guard_cloud/.env .
-cp guard_cloud/docker-compose-cloud-min.yml .
+cp <INSTALL_DIR>/guardce-main/guard_cloud/.env .
+cp <INSTALL_DIR>/guardce-main/guard_cloud/docker-compose-cloud-min.yml .
 ```
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
 5) Run 
 ```console
-cd guard_cloud/volumes
+cd <INSTALL_DIR>/guardce-main/guard_cloud/volumes
 sudo bash ./build-volumes-min.sh {VOLUME_DIR}
 ```
        to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard).
@@ -40,12 +40,13 @@ sudo sysctl -w vm.max_map_count=262144
 >The minimal edition doesn't require any TLS certificate to run. 
 7) Start the framework (docker-compose version: 2.2.3):
 ```console
+$ cd <INSTALL_DIR>/guardce-main
 $ sudo docker-compose -f docker-compose-cloud-min.yml up -d [service]
 ```
 > You can check the health of containers connecting to portainer (port 19100) and eventually check the logs.
 8) If all is OK and all containers are running, start final configuration
 ```console
-cd guard_cloud
+cd <INSTALL_DIR>/guardce-main/guard_cloud
 sudo bash ./start_ini.sh
 ```
 ```
