@@ -7,10 +7,10 @@ GUARD Project Platform Community Edition
 Minimal hardware requirements for virtual machine: 4 VCPUs, 16G RAM. 
 Following ports must be accessible outside your firewall, VPN , ACL...
 ```
-84
-5601
-19000
-19100
+84 (Dashboard)
+5601 (Kibana)
+19000 (Portainer)
+19100 (AKHQ)
 ```
 
 1) Unzip the repo in a directory <INSTALL_DIR> where you have rights with sudoers user.
@@ -27,12 +27,11 @@ cp <INSTALL_DIR>/guardce-1.0/guard_cloud/.env .
 cp <INSTALL_DIR>/guardce-1.0/guard_cloud/docker-compose-cloud-min.yml .
 ```
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
-5) Run 
+5) To create required volumes run following instructions. The {VOLUME_DIR} defined in .env will be the root directory (eg: /opt/guard).
 ```console
 cd <INSTALL_DIR>/guardce-1.0/guard_cloud/volumes
 sudo bash ./build-volumes-min.sh
 ```
-       to create required volumes. The {VOLUME_DIR} defined in .env will be the root directory (eg: /opt/guard).
 6) For elasticsearch, you need to run:
 ```console
 sudo sysctl -w vm.max_map_count=262144
