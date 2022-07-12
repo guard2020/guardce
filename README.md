@@ -17,19 +17,19 @@ Following ports must be accessible outside your firewall, VPN , ACL...
 ```console 
 unzip guardce.zip -d .
 ```
-2) A new directory will be created: guardce-main (or guardce-main). Please go to it.
+2) A new directory will be created: guardce-1.0. Please go to it.
 ```console
- cd <INSTALL_DIR>/guardce
+ cd <INSTALL_DIR>/guardce-1.0
 ```
 3) Please copy the following files in this directory:
 ```console
-cp <INSTALL_DIR>/guardce/guard_cloud/.env .
-cp <INSTALL_DIR>/guardce/guard_cloud/docker-compose-cloud-min.yml .
+cp <INSTALL_DIR>/guardce-1.0/guard_cloud/.env .
+cp <INSTALL_DIR>/guardce-1.0/guard_cloud/docker-compose-cloud-min.yml .
 ```
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
 5) Run 
 ```console
-cd <INSTALL_DIR>/guardce/guard_cloud/volumes
+cd <INSTALL_DIR>/guardce-1.0/guard_cloud/volumes
 sudo bash ./build-volumes-min.sh
 ```
        to create required volumes. The {VOLUME_DIR} defined in .env will be the root directory (eg: /opt/guard).
@@ -40,13 +40,13 @@ sudo sysctl -w vm.max_map_count=262144
 >The minimal edition doesn't require any TLS certificate to run. 
 7) Start the framework (docker-compose version: 2.2.3):
 ```console
-cd <INSTALL_DIR>/guardce
+cd <INSTALL_DIR>/guardce-1.0
 sudo docker-compose -f docker-compose-cloud-min.yml up -d [service]
 ```
 > You can check the health of containers connecting to Portainer (port 19100) and eventually check the logs of all containers.
 8) If all is OK and all containers are running, start final configuration
 ```console
-cd <INSTALL_DIR>/guardce/guard_cloud
+cd <INSTALL_DIR>/guardce-1.0/guard_cloud
 sudo bash ./start_ini.sh
 ```
 
@@ -68,19 +68,19 @@ sudo bash ./start_ini.sh
 ```console 
 unzip <INSTALL_DIR>/guardce.zip -d .
 ```
-2) A new directory will be created: guardce (or guardce-main). Please go to it.
+2) A new directory will be created: guardce-1.0. Please go to it.
 ```console
- cd guardce
+ cd guardce-1.0
 ```
 3) Please copy the following files in this directory:
 ```console
-cp <INSTALL_DIR>/guardce/guard_cloud/.env .
+cp <INSTALL_DIR>/guardce-1.0/guard_cloud/.env .
 cp guard_cloud/docker-compose-cloud.yml .
 ```
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
 5) Run 
 ```console
-cd <INSTALL_DIR>/guardce/guard_cloud/volumes
+cd <INSTALL_DIR>/guardce-1.0/guard_cloud/volumes
 bash ./volumes/build-volumes.sh
 ```
        to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard).
@@ -90,12 +90,13 @@ sudo sysctl -w vm.max_map_count=262144
 ```
 7) Start the framework:
 ```console
-$ docker-compose -f docker-compose-cloud.yml up -d [service]
+cd <INSTALL_DIR>/guardce-1.0
+docker-compose -f docker-compose-cloud.yml up -d [service]
 ```
 > You can check the health of containers connecting to portainer (port 19100) and eventually check the logs.
 8) If all is OK and all containers are running, start final configuration
 ```console
-cd <INSTALL_DIR>/guardce/guard_cloud
+cd <INSTALL_DIR>/guardce-1.0/guard_cloud
 bash ./start_config.sh'
 ```
 Now the framework is ready to work!!!
@@ -106,8 +107,8 @@ Now the framework is ready to work!!!
 Please before take a look on Volumes part.
 
 ```console
-$ cd <INSTALL_DIR>/guardce/guard-openshift
-$ ./start.sh
+cd <INSTALL_DIR>/guardce-1.0/guard-openshift
+./start.sh
 ```
 
 
