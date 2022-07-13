@@ -13,23 +13,29 @@ Following ports must be accessible outside your firewall, VPN , ACL...
 19100 (AKHQ)
 ```
 
-1) Unzip the repo in a directory <INSTALL_DIR> where you have rights with sudoers user.
+1) Download and unzip the repo in a directory <INSTALL_DIR> where you have rights with sudoers user.
 ```console 
+cd <INSTALL_DIR>
 unzip guardce.zip -d .
 ```
-2) A new directory will be created: guardce-1.0. Please go to it.
+or
 ```console
- cd <INSTALL_DIR>/guardce-1.0
+cd <INSTALL_DIR>
+git clone https://github.com/guard2020/guardce.git
+```
+2) A new directory will be created: guardce (or guardce-1.0 if you unzip the repo). Please go to it.
+```console
+ cd guardce
 ```
 3) Please copy the following files in this directory:
 ```console
-cp <INSTALL_DIR>/guardce-1.0/guard_cloud/.env .
-cp <INSTALL_DIR>/guardce-1.0/guard_cloud/docker-compose-cloud-min.yml .
+cp guard_cloud/.env .
+cp guard_cloud/docker-compose-cloud-min.yml .
 ```
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
 5) To create required volumes run following instructions. The {VOLUME_DIR} defined in .env will be the root directory (eg: /opt/guard).
 ```console
-cd <INSTALL_DIR>/guardce-1.0/guard_cloud/volumes
+cd <INSTALL_DIR>/guardce/guard_cloud/volumes
 sudo bash ./build-volumes-min.sh
 ```
 6) For elasticsearch, you need to run:
@@ -39,13 +45,13 @@ sudo sysctl -w vm.max_map_count=262144
 >The minimal edition doesn't require any TLS certificate to run. 
 7) Start the framework (docker-compose version: 2.2.3):
 ```console
-cd <INSTALL_DIR>/guardce-1.0
+cd <INSTALL_DIR>/guardce
 sudo docker-compose -f docker-compose-cloud-min.yml up -d [service]
 ```
 > You can check the health of containers connecting to Portainer (port 19100) and eventually check the logs of all containers.
 8) If all is OK and all containers are running, start final configuration
 ```console
-cd <INSTALL_DIR>/guardce-1.0/guard_cloud
+cd <INSTALL_DIR>/guardce/guard_cloud
 sudo bash ./start_ini.sh
 ```
 
@@ -63,23 +69,29 @@ sudo bash ./start_ini.sh
 
 ## How to run GUARD PLATFORM on cloud machine (Standard Edition) - Require at least 32Gb RAM, 8 VCPU and 100Gb storage on disk
 ### This is only a pre-release, not all yet is working!!!!
-1) Unzip the repo in a directory <INSTALL_DIR> where you have rights with sudoers user.
+1) Download and unzip the repo in a directory <INSTALL_DIR> where you have rights with sudoers user.
 ```console 
-unzip <INSTALL_DIR>/guardce.zip -d .
+cd <INSTALL_DIR>
+unzip guardce.zip -d .
 ```
-2) A new directory will be created: guardce-1.0. Please go to it.
+or
 ```console
- cd guardce-1.0
+cd <INSTALL_DIR>
+git clone https://github.com/guard2020/guardce.git
+```
+2) A new directory will be created: guardce (or guardce-1.0 if you unzip the repo). Please go to it.
+```console
+ cd guardce
 ```
 3) Please copy the following files in this directory:
 ```console
-cp <INSTALL_DIR>/guardce-1.0/guard_cloud/.env .
+cp guard_cloud/.env .
 cp guard_cloud/docker-compose-cloud.yml .
 ```
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
 5) Run 
 ```console
-cd <INSTALL_DIR>/guardce-1.0/guard_cloud/volumes
+cd <INSTALL_DIR>/guardce/guard_cloud/volumes
 bash ./volumes/build-volumes.sh
 ```
        to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard).
@@ -89,13 +101,13 @@ sudo sysctl -w vm.max_map_count=262144
 ```
 7) Start the framework:
 ```console
-cd <INSTALL_DIR>/guardce-1.0
+cd <INSTALL_DIR>/guardce
 docker-compose -f docker-compose-cloud.yml up -d [service]
 ```
 > You can check the health of containers connecting to portainer (port 19100) and eventually check the logs.
 8) If all is OK and all containers are running, start final configuration
 ```console
-cd <INSTALL_DIR>/guardce-1.0/guard_cloud
+cd <INSTALL_DIR>/guardce/guard_cloud
 bash ./start_config.sh'
 ```
 Now the framework is ready to work!!!
@@ -106,7 +118,7 @@ Now the framework is ready to work!!!
 Please before take a look on Volumes part.
 
 ```console
-cd <INSTALL_DIR>/guardce-1.0/guard-openshift
+cd <INSTALL_DIR>/guardce/guard-openshift
 ./start.sh
 ```
 
