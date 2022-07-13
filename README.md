@@ -48,7 +48,7 @@ sudo sysctl -w vm.max_map_count=262144
 cd <INSTALL_DIR>/guardce
 sudo docker-compose -f docker-compose-cloud-min.yml up -d [service]
 ```
-> You can check the health of containers connecting to Portainer (port 19100) and eventually check the logs of all containers.
+> You can check the health of containers connecting to Portainer (port 19000) and eventually check the logs of all containers.
 8) If all is OK and all containers are running, start final configuration
 ```console
 cd <INSTALL_DIR>/guardce/guard_cloud
@@ -104,7 +104,7 @@ sudo sysctl -w vm.max_map_count=262144
 cd <INSTALL_DIR>/guardce
 docker-compose -f docker-compose-cloud.yml up -d [service]
 ```
-> You can check the health of containers connecting to portainer (port 19100) and eventually check the logs.
+> You can check the health of containers connecting to portainer (port 19000) and eventually check the logs.
 8) If all is OK and all containers are running, start final configuration
 ```console
 cd <INSTALL_DIR>/guardce/guard_cloud
