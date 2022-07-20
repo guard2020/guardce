@@ -11,13 +11,24 @@ keytool -keystore kafka3.server.keystore.jks -certreq -file kafka3-cert-sign-req
 openssl req -new -newkey rsa:4096 -days 365 -x509 -subj "/CN=Kafka-Security-CA" -keyout ca-key -out ca-cert -nodes
 openssl x509 -req -CA ca-cert -CAkey ca-key -in kafka1-cert-sign-request -out kafka1-cert-signed -days 365 -CAcreateserial -passin pass:"password"  -extensions SAN \
   -extfile <(cat /tmp/openssl.cnf \
-    <(printf "\n[SAN]\nsubjectAltName=IP:$1,DNS:kafka1,DNS:kafka2,DNS:kafka3,DNS:$2")) \
+    <(printf "\n[SAN]\nsubjectAltName=IP:$1,DNS:kafka1,DNS:kafka2,DNS:kafka3,DNS:$2")) 
 openssl x509 -req -CA ca-cert -CAkey ca-key -in kafka2-cert-sign-request -out kafka2-cert-signed -days 365 -CAcreateserial -passin pass:"password"  -extensions SAN \
   -extfile <(cat /tmp/openssl.cnf \
-    <(printf "\n[SAN]\nsubjectAltName=IP:$1,DNS:kafka1,DNS:kafka2,DNS:kafka3,DNS:$2")) \
+    <(printf "\n[SAN]\nsubjectAltName=IP:$1,DNS:kafka1,DNS:kafka2,DNS:kafka3,DNS:$2")) 
 openssl x509 -req -CA ca-cert -CAkey ca-key -in kafka3-cert-sign-request -out kafka3-cert-signed -days 365 -CAcreateserial -passin pass:"password"  -extensions SAN \
   -extfile <(cat /tmp/openssl.cnf \
-    <(printf "\n[SAN]\nsubjectAltName=IP:$1,DNS:kafka1,DNS:kafka2,DNS:kafka3,DNS:$2")) \
+    <(printf "\n[SAN]\nsubjectAltName=IP:$1,DNS:kafka1,DNS:kafka2,DNS:kafka3,DNS:$2")) 
+
+## IDP ##
+keytool -genkey -keystore idp.jks -validity 365 -storepass "wso2carbon" -keypass "wso2carbon" -dname "CN=$1" -storetype jks -keyalg RSA -keysize 4096
+keytool -keystore idp.jks -certreq -file idp-cert-sign-request -storepass "wso2carbon" -keypass "wso2carbon" 
+openssl x509 -req -CA ca-cert -CAkey ca-key -in idp-cert-sign-request -out idp-cert-signed -days 365 -CAcreateserial -passin pass:"keytool -keystore idp.jks -certreq -file idp-cert-sign-request -storepass "wso2carbon" -keypass "wso2carbon" 
+"  -extensions SAN \
+  -extfile <(cat /tmp/openssl.cnf \
+    <(printf "\n[SAN]\nsubjectAltName=IP:$1,DNS:kafka1,DNS:kafka2,DNS:kafka3,DNS:$2")) 
+keytool -keystore idp.jks -alias CARoot -import -file ca-cert -storepass "wso2carbon" -keypass "wso2carbon" -noprompt
+keytool -keystore idp.jks -import -file idp-cert-signed -storepass "wso2carbon" -keypass "wso2carbon"  -noprompt
+
 
 keytool -keystore kafka.server.truststore.jks -alias CARoot -import -file ca-cert -storepass "password" -keypass "password" -noprompt
 keytool -keystore kafka1.server.keystore.jks -alias CARoot -import -file ca-cert -storepass "password" -keypass "password" -noprompt
