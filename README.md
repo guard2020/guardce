@@ -92,7 +92,7 @@ cp guard_cloud/docker-compose-cloud.yml .
 5) Run 
 ```console
 cd <INSTALL_DIR>/guardce/guard_cloud/volumes
-bash ./volumes/build-volumes.sh
+sudo bash ./build-volumes.sh
 ```
        to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard).
 6) For elasticsearch, you need to run:
