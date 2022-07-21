@@ -1,43 +1,58 @@
 #!/bin/bash
-### usage ./build-volumes-min.sh VOLUME_DIR DNS_SERVER IP_SERVER
+### usage ./build-volumes.sh
 
-if [ "$#" -ne 3 ]; then
-        echo "Usage: ./Usage build-volumes.sh VOLUME_DIR DNS_SERVER IP_SERVER"
-        exit 1
-    fi    
+export $(cat ../../.env | xargs)
 
-mkdir -p $1/data/zookeeper/data
-mkdir -p $1/data/zookeeper/datalog
+mkdir -p $VOLUME_DIR/data/zookeeper/data
+chmod 775 $VOLUME_DIR/data/zookeeper/data
+mkdir -p $VOLUME_DIR/data/zookeeper/datalog
+chmod 775 $VOLUME_DIR/data/zookeeper/datalog
 
-mkdir -p $1/data/kafka1/data
-mkdir -p $1/data/kafka2/data
-mkdir -p $1/data/kafka3/data
+mkdir -p $VOLUME_DIR/data/kafka1/data
+chmod 775 $VOLUME_DIR/data/kafka1/data
+mkdir -p $VOLUME_DIR/data/kafka2/data
+chmod 775 $VOLUME_DIR/data/kafka2/data
+mkdir -p $VOLUME_DIR/data/kafka3/data
+chmod 775 $VOLUME_DIR/data/kafka3/data
 
-mkdir -p $1/logstash-guard/config
-cp ../logstash-guard/config/* $1/logstash-guard/config
-mkdir -p $1/logstash-guard/pipeline
-cp ../logstash-guard/pipeline/* $1/logstash-guard/pipeline
-mkdir -p $1/logstash-cb/file-output
+mkdir -p $VOLUME_DIR/logstash-guard/config
+chmod 775 $VOLUME_DIR/logstash-guard/config
+cp ../logstash-guard/config/* $VOLUME_DIR/logstash-guard/config
+mkdir -p $VOLUME_DIR/logstash-guard/pipeline
+chmod 775 $VOLUME_DIR/logstash-guard/pipeline
+cp ../logstash-guard/pipeline/* $VOLUME_DIR/logstash-guard/pipeline
+mkdir -p $VOLUME_DIR/logstash-cb/file-output
+chmod 775 $VOLUME_DIR/logstash-cb/file-output
 
-mkdir -p $1/elastic/data01
-mkdir -p $1/elastic/data02
-mkdir -p $1/elastic/data03
-mkdir -p $1/security_dashboard/guard_docker/run/var
+mkdir -p $VOLUME_DIR/elastic/data01
+chmod 775 $VOLUME_DIR/elastic/data01
+mkdir -p $VOLUME_DIR/elastic/data02
+chmod 775 $VOLUME_DIR/elastic/data02
+mkdir -p $VOLUME_DIR/elastic/data03
+chmod 775 $VOLUME_DIR/elastic/data03
+mkdir -p $VOLUME_DIR/security_dashboard/guard_docker/run/var
+chmod 775 $VOLUME_DIR/security_dashboard/guard_docker/run/var
 
-mkdir -p $1/alert
-cp ../alert/config.yaml $1/alert 
-
-mkdir -p $1/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled
-cp ../Aminer/config.yml $1/logdata-anomaly-miner/source/root/etc/aminer
-cp ../Aminer/ApacheAccessModel.py $1/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled
-
-mkdir -p $1/scan_reports
-
-mkdir -p $1/kafka-cluster-ssl/secrets
-cp ./gen_certs.sh $1/kafka-cluster-ssl/secrets
-cd $1/kafka-cluster-ssl/secrets
-chmod 755 $1/kafka-cluster-ssl/secrets/gen_certs.sh
-./gen_certs.sh $2 $3
+mkdir -p $VOLUME_DIR/alert
+sed  -i -e "s/hosts:X/hosts: $GUARD_SERVER_ADDRESS:$ELASTIC_PORT_1/" ../alert/config.yaml
+cp ../alert/config.yaml $VOLUME_DIR/alert 
 
 
+mkdir -p $VOLUME_DIR/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled
+chmod 775 $VOLUME_DIR/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled
+cp ../Aminer/config.yml $VOLUME_DIR/logdata-anomaly-miner/source/root/etc/aminer
+cp ../Aminer/ApacheAccessModel.py v/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled
+
+mkdir -p $VOLUME_DIR/scan_reports
+chmod 775 $VOLUME_DIR/scan_reports
+
+mkdir -p $VOLUME_DIR/kafka-cluster-ssl/secrets
+chmod 775 $VOLUME_DIR/kafka-cluster-ssl/secrets
+cp ./gen_certs.sh $VOLUME_DIR/kafka-cluster-ssl/secrets
+cd $VOLUME_DIR/kafka-cluster-ssl/secrets
+chmod 755 $VOLUME_DIR/kafka-cluster-ssl/secrets/gen_certs.sh
+./gen_certs.sh $GUARD_SERVER $GUARD_SERVER_ADDRESS
+
+cp $VOLUME_DIR/kafka-cluster-ssl/secrets/idp.jks $VOLUME_DIR/certs/
 exit 0
+
