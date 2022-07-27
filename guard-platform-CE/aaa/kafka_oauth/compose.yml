@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+  kafka:
+    image: guard/aaa/base_kafka:oauth
+    container_name: aa_module-kafka
+    build:
+      context: kafka_oauth
+      args:
+        ZOOKEEPER_CONTAINER_NAME: aa_module-zookeeper
+    expose:
+      - 9092
+      - 9093
+    command: bin/dockerize -wait https://idp:10443 -skip-tls-verify -timeout 600s bin/kafka-server-start.sh config/server.properties
+    depends_on:
+      - zookeeper
+      - idp
+  zookeeper:
+    image: guard/aaa/base_kafka:oauth
+    container_name: aa_module-zookeeper
+    build:
+      context: kafka_oauth
+    expose:
+      - 2181
+    command: bin/zookeeper-server-start.sh config/zookeeper.properties

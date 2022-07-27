@@ -1,0 +1,41 @@
+# UC1
+
+DELETE {{cb_manager_endpoint}}/chain/ HTTP/1.1
+
+###
+
+# UC2
+
+@hostname_uc2 = ehealth-app-dep1.uc2.guard-project.eu
+@id_uc2 = root-{{hostname_uc2}}
+
+POST {{cb_manager_endpoint}}/exec-env HTTP/1.1
+
+[
+    {
+        "hostname": "{{hostname_uc2}}",
+        "id": "{{id_uc2}}",
+        "lcp": {
+            "https": false,
+            "port": 80
+        },
+        "type_id": "bare-metal",
+        "enabled": true
+    }
+]
+
+###
+
+GET {{{{cb_manager_endpoint}}/network-link
+
+###
+
+GET {{{{cb_manager_endpoint}}/connection
+
+###
+
+GET {{{{cb_manager_endpoint}}/connection
+
+###
+
+DELETE {{cb_manager_endpoint}}/chain/{{id_uc2}} HTTP/1.1

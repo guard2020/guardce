@@ -1,0 +1,78 @@
+@uri = exec-env
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": ["id", "root", "discovered"]
+}
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": ["id", "lcp", "partner"],
+    "where": {
+        "equals": {
+            "target": "hostname",
+            "expr": "10.0.0.7"
+        }
+    }
+}
+
+###
+
+POST {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+# < ./db-ee-data/dept_0-vuln_scanner.json
+< ./db-ee-data/fiware.json
+# < ./db-ee-data/fiware-2.json
+# < ./db-ee-data/ait.json
+# < ./db-ee-data/cnit.json
+# < ./db-ee-data/dummy.json
+# < ./db-ee-data/forth.json
+# < ./db-ee-data/nask.json
+# < ./db-ee-data/wob.json
+# < ./db-ee-data/ait.json
+# < ./db-ee-data/cnit/user-vm.json
+# < ./db-ee-data/cnit/user-vm-local.json
+
+###
+
+PUT {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "id": "root-mobility-portal.uc1.guard-project.eu",
+    "test": true
+}
+
+###
+
+DELETE {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "where": {
+        "equals": {
+            "target": "id",
+            "expr": "lcp:chirpstack-webservice"
+        }
+    }
+}
+
+###
+
+GET http://loragw3.uc1.guard-project.eu:80/poll
+
+###
+
+GET http://chirpstack-ws.uc1.guard-project.eu/poll
+
+###
+
+GET https://wolfsburg-management.lab.fiware.org:443/poll
+
+###
+
+GET https://lcp.integration.staging.iot.wolfsburg.digital:443/poll

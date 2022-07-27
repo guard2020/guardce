@@ -1,0 +1,2 @@
+volume_dir/*
+!volume_dir/.gitkeep

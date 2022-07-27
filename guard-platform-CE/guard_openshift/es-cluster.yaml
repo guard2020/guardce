@@ -1,0 +1,203 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: es-cluster
+  namespace: guardce
+  labels:
+    app: es-cluster
+  annotations:
+spec:
+  clusterIP: None
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: rest
+      protocol: TCP
+      port: 9200
+      targetPort: 9200
+    - name: 80-tcp
+      protocol: TCP
+      port: 80
+      targetPort: 9200
+    - name: inter-node
+      protocol: TCP
+      port: 9300
+      targetPort: 9300
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - None
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: es-cluster
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: es-cluster
+  namespace: guardce
+  labels:
+    app: es-cluster
+  annotations:
+spec:
+  host: es-cluster-guardce.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: es-cluster
+    weight: 100
+  port:
+    targetPort: 80-tcp
+  wildcardPolicy: None
+---
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  annotations:
+  name: es-cluster
+  namespace: guardce
+  labels:
+    app.kubernetes.io/part-of: guard
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: es-cluster
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: es-cluster
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - es-cluster
+              topologyKey: "kubernetes.io/hostname"      
+      initContainers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: fix-permissions
+          command:
+            - sh
+            - '-c'
+            - 'chown -R 1000:1000 /usr/share/elasticsearch/data'
+          securityContext:
+            privileged: true
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: data
+              mountPath: /usr/share/elasticsearch/data
+          terminationMessagePolicy: File
+          image: busybox
+          imagePullSecrets:
+          - name: pierluca1-docker
+        - name: increase-vm-max-map
+          image: busybox
+          imagePullSecrets:
+          - name: pierluca1-docker
+          command:
+            - sysctl
+            - '-w'
+            - vm.max_map_count=262144
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+          securityContext:
+            privileged: true
+        - name: increase-fd-ulimit
+          image: busybox
+          imagePullSecrets:
+          - name: pierluca1-docker
+
+          command:
+            - sh
+            - '-c'
+            - ulimit -n 65536
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+          securityContext:
+            privileged: true
+      containers:
+        - resources:
+            limits:
+              cpu: '1'
+              memory: 2Gi
+            requests:
+              cpu: 100m
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          name: es-cluster
+          imagePullSecrets:
+          - name: pierluca1-docker
+          env:
+            - name: cluster.name
+              value: k8s-logs
+            - name: node.name
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: discovery.seed_hosts
+              value: >-
+                es-cluster-0.es-cluster,
+                es-cluster-1.es-cluster,es-cluster-2.es-cluster
+            - name: cluster.initial_master_nodes
+              value: 'es-cluster-0,es-cluster-1,es-cluster-2'
+            - name: ES_JAVA_OPTS
+              value: '-Xms1g -Xmx1g'
+          securityContext:
+            runAsUser: 1000
+          ports:
+            - name: rest
+              containerPort: 9200
+              protocol: TCP
+            - name: inter-node
+              containerPort: 9300
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: data
+              mountPath: /usr/share/elasticsearch/data
+          terminationMessagePolicy: File
+          image: 'guard2020/elasticsearch:latest'
+          imagePullSecrets:
+          - name: pierluca1-docker
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  volumeClaimTemplates:
+    - kind: PersistentVolumeClaim
+      apiVersion: v1
+      metadata:
+        name: data
+        creationTimestamp: null
+        labels:
+          app: es-cluster
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  serviceName: es-cluster
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  revisionHistoryLimit: 10
+

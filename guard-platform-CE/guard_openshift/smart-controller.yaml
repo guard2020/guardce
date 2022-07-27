@@ -1,0 +1,135 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: smart-controller
+  namespace: guardce
+  labels:
+    app: smart-controller
+    app.kubernetes.io/component: smart-controller
+    app.kubernetes.io/instance: smart-controller
+    app.kubernetes.io/name: smart-controller
+    app.kubernetes.io/part-of: guard
+spec:
+  ports:
+    - name: 80-tcp
+      protocol: TCP
+      port: 80
+      targetPort: 9000
+    - name: 9000-tcp
+      protocol: TCP
+      port: 9000
+      targetPort: 9000
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: smart-controller
+    deploymentconfig: smart-controller
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: smart-controller
+  namespace: guardce
+  labels:
+    app: smart-controller
+    app.kubernetes.io/component: smart-controller
+    app.kubernetes.io/instance: smart-controller
+    app.kubernetes.io/name: smart-controller
+    app.kubernetes.io/part-of: guard
+  annotations:
+    openshift.io/host.generated: 'true'
+spec:
+  host: smart-controller-guardce.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: smart-controller
+    weight: 100
+  port:
+    targetPort: 80-tcp
+  wildcardPolicy: None
+---
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  resourceVersion: '82629454'
+  name: smart-controller
+  namespace: guardce
+  labels:
+    app: smart-controller
+    app.kubernetes.io/component: smart-controller
+    app.kubernetes.io/instance: smart-controller
+    app.kubernetes.io/name: smart-controller
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime: smart-controller
+    app.openshift.io/runtime-namespace: guardce
+    app.openshift.io/runtime-version: latest
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+  serviceAccountName: rest-api-edit
+  replicas: 1
+  revisionHistoryLimit: 10
+  test: false
+  selector:
+    app: smart-controller
+    deploymentconfig: smart-controller
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: smart-controller
+        deploymentconfig: smart-controller
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+    spec:
+      containers:
+        - name: smart-controller
+          env:
+            - name: kafkaEndpoint
+              value: 'kafka-headless.guardce.svc:9092'
+            - name: contextBrokerManagerEndpoint
+              value: 'cb-manager.guardce.svc:5000'
+            - name: cnitMlAlgorithmEndpoint
+              value: 'algo112.guardce.svc:9999'
+          image: guard2020/smart-controller:latest
+          ports:
+            - containerPort: 9000
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: smart-controller
+              mountPath: /home/smartcontroller/SmartController/algo
+      serviceAccount: rest-api-edit
+      volumes:
+        - name: smart-controller
+          secret:
+            defaultMode: 420
+            secretName: smart-controller
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext:
+#        runAsUser: 999
+      schedulerName: default-scheduler
+
+
+
+
+---
+
+---

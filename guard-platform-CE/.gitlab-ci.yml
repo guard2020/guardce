@@ -1,0 +1,20 @@
+
+include:
+  - local: '/core_framework/security_services/algo4/blockchain_connector/go.gitlab-ci.yml'
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+stages:
+  - build
+  - test
+
+blockchain-connector_compile:
+  script:
+    - echo "running blockchain-connector_compile"
+  rules:
+    - allow_failure: false
+    - if: $CI_MERGE_REQUEST_ID               # Execute jobs in merge request context
+    - if: $CI_COMMIT_BRANCH == 'master'      # Execute jobs when a new commit is pushed to master branch
+    - changes:
+      - /core_framework/security_services/algo4/blockchain_connector/*

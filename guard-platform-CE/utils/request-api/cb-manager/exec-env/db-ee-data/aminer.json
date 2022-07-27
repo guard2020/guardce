@@ -1,0 +1,15 @@
+[
+    {
+        "id": "aminer",
+        "partner": "ait",
+        "type_id": "container-k8s",
+        "description": "AMiner",
+        "hostname": "lcp.aminer.staging.iot.wolfsburg.digital",
+        "enabled": true,
+        "lcp": {
+            "port": 443,
+            "https": true
+        },
+        "stage": "production"
+    }
+]

@@ -1,0 +1,47 @@
+{
+    "rest-client.defaultHeaders": {
+        "User-Agent": "VSCode REST Client",
+        // "Authorization": "GUARD eyJ4NXQiOiJOV0ZrWkdJNE9UbGtNVFl4TnpZMFpqa3pNRFJpTVRWalpqUmlaR1EzWkdNNFpXWTJPVFE0WWciLCJraWQiOiJOV0ZrWkdJNE9UbGtNVFl4TnpZMFpqa3pNRFJpTVRWalpqUmlaR1EzWkdNNFpXWTJPVFE0WWciLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbkBjYXJib24uc3VwZXIiLCJhdWQiOiJuUTdqWnZkMUhEUW1NZTFCRnB6dVNIb1dGMXNhIiwibmJmIjoxNjQ5NzcxMDU0LCJhenAiOiJuUTdqWnZkMUhEUW1NZTFCRnB6dVNIb1dGMXNhIiwiaXNzIjoiaHR0cHM6XC9cL2xvY2FsaG9zdDoxMDQ0M1wvb2F1dGgyXC90b2tlbiIsImV4cCI6MTY0OTc3NDY1NCwiaWF0IjoxNjQ5NzcxMDU0LCJqdGkiOiJmM2Q3M2U4Yi1kNmMwLTQ1YjUtYTZiMC1jOTQxMDE2NzQ4ODkifQ.PRuuVSL4cF9PLLfxntp7o3Xef7Vt4_YqqUUeftfCsrBpQ6lJEPy7MrkKxffkwFWkyQE8JBKK4osnH3QmRNjgYyQZ1xKwxWbg_UIJFQMeHKkJvZ9yfzqNSqwdGQK0BLi_KXtkaSPVCALkRgA2QzSyTdup0ZocqpTR0_1EDpLwSw_nocry-Qgx22x7nW_WS9VpytVEKCYV8UxQH0zXJA_k8iPkpsFbUfSgqQ9B5XgviiQH1xB7fqidwCwwnybCenLEluwUXvQjHxOwZztXp6ZqT3rKkuf2_zNfayFVqPZCAwMfBFWdYR0EAGYLjseD601-5wf_5YU-3hYf_mkdwj8H0Q",
+        "Authorization": "GUARD eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOiIxNjQ4NTQ1MjkzIiwiZXhwIjoiMTY4MDA4MTI5MyIsIm5iZiI6MTY0ODU0NTI5M30.ClcYD2xgDogP75p7IyxZ7Zn1fPIxNS3qQ6LsTMENqUg",
+        "Content-Type": "application/json"
+    },
+    "rest-client.environmentVariables": {
+        "$shared": {
+            "instance_agent_uri": "instance/agent",
+            "catalog_agent_uri": "catalog/agent",
+            "instance_algorithm_uri": "instance/algorithm",
+            "catalog_algorithm_uri": "catalog/algorithm",
+            "instance_ebpf_program_uri": "instance/ebpf-program",
+            "catalog_ebpf_program_uri": "catalog/ebpf-program",
+            "type_exec_env_uri": "type/exec-env",
+            "exec_env_uri": "exec-env",
+            "type_network_link_uri": "type/network-link",
+            "network_link_uri": "network-link",
+            "connection_uri": "connection",
+            "data_uri": "data",
+            "event_uri": "event",
+            "pipeline_uri": "pipeline"
+        },
+        "CNIT / OpenStack": {
+            "cb_manager_endpoint": "http://130.251.17.130:5000",
+            "elasticsearch_endpoint": "http://130.251.17.130:9200",
+            "token_endpoint": "https://guard3.westeurope.cloudapp.azure.com:10443"
+        },
+        "Darkstar": {
+            "cb_manager_endpoint": "http://0.0.0.0:5000",
+            "elasticsearch_endpoint": "http://guard3.westeurope.cloudapp.azure.com:9200",
+            "token_endpoint": "https://guard3.westeurope.cloudapp.azure.com:10443"
+        },
+        "ItalTel / Azure": {
+            "cb_manager_endpoint": "http://guard3.westeurope.cloudapp.azure.com:5000",
+            "elasticsearch_endpoint": "http://guard3.westeurope.cloudapp.azure.com:9200",
+            "token_endpoint": "https://guard3.westeurope.cloudapp.azure.com:10443"
+        },
+        "ItalTel / Azure / New": {
+            "cb_manager_endpoint": "http://cb-manager.guardce.svc:5000",
+            "elasticsearch_endpoint": "http: //cb-manager.guardce.svc:9200",
+            "token_endpoint": "https://guard3.westeurope.cloudapp.azure.com:10443"
+        }
+    },
+    "restructuredtext.confPath": "docs\\conf.py"
+}

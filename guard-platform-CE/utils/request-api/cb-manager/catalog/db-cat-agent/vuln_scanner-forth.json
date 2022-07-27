@@ -1,0 +1,52 @@
+{
+    "id": "vuln-scanner",
+    "partner": "forth",
+    "parameters": [
+        {
+            "id": "host",
+            "type": "string",
+            "example": "172.28.128.3",
+            "description": "<insert here some description of the parameter>",
+            "config": {
+                "schema": "json",
+                "source": "/opt/vuln_agent/src/input/{config}.json",
+                "path": [
+                    "hosts",
+                    "0",
+                    "host"
+                ]
+            }
+        }
+    ],
+    "resources": [
+        {
+            "id": "config-file",
+            "description": "<insert here some description of the resource>",
+            "config": {
+                "path": "/opt/vuln_agent/src/input/{config}.json"
+            },
+            "example": "<insert here a simple example>"
+        }
+    ],
+    "actions": [
+        {
+            "id": "start",
+            "status": "started",
+            "config": {
+                "cmd": "/opt/vuln_agent/launch.py --config /opt/vuln_agent/src/input/{config}.json"
+            }
+        },
+        {
+            "id": "setup",
+            "config": {
+                "cmd": "/opt/vuln_agent/launch.py --status"
+            }
+        },
+        {
+            "id": "clean",
+            "config": {
+                "cmd": "/opt/vuln_agent/launch.py --delete"
+            }
+        }
+    ]
+}

@@ -1,0 +1,73 @@
+{
+    "id": "filebeat",
+    "partner": "cnit",
+    "parameters": [
+        {
+            "id": "log-enabled",
+            "type": "boolean",
+            "example": true,
+            "description": "Enable/disable the collection of log data",
+            "config": {
+                "schema": "yaml",
+                "source": "/opt/guard/filebeat/config/log.yml",
+                "path": [
+                    "0",
+                    "enabled"
+                ]
+            }
+        },
+        {
+            "id": "log-period",
+            "type": "time-duration",
+            "example": "10s",
+            "description": "Period to collect the log data",
+            "config": {
+                "schema": "yaml",
+                "source": "/opt/guard/filebeat/config/log.yml",
+                "path": [
+                    "0",
+                    "backoff"
+                ]
+            }
+        }
+    ],
+    "resources": [
+        {
+            "id": "config-file",
+            "description": "Configuration file to collect log data",
+            "config": {
+                "path": "/opt/guard/filebeat/config/log.yml"
+            },
+            "example": "https://gitlab.com/guard2/guard-platform/-/blob/developmentCNIT/local_sidercars/monitoring/filebeat/settings/7.8.0/config/log.yml"
+        }
+    ],
+    "actions": [
+        {
+            "id": "init",
+            "config": {
+                "cmd": "/opt/guard/commands/filebeat/init.sh"
+            }
+        },
+        {
+            "id": "start",
+            "status": "started",
+            "config": {
+                "cmd": "/opt/guard/commands/filebeat/start.sh",
+                "daemon": true
+            }
+        },
+        {
+            "id": "stop",
+            "status": "stopped",
+            "config": {
+                "cmd": "/opt/guard/commands/filebeat/stop.sh"
+            }
+        },
+        {
+            "id": "health",
+            "config": {
+                "cmd": "/opt/guard/commands/filebeat/health.sh"
+            }
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/core_framework/context_broker/cb-manager/src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/core_framework/parser_generator/aecid-parsergenerator" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/local_sidercars/local_control_management/lcp/src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/local_sidercars/log_data_agents/logdata-anomaly-miner" vcs="Git" />
+  </component>
+</project>

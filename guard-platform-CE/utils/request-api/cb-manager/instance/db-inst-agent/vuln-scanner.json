@@ -1,0 +1,7 @@
+{
+    "id": "vuln-scanner@dept_0_vuln_scanner",
+    "exec_env_id": "dept_0_vuln_scanner",
+    "agent_catalog_id": "vuln-scanner",
+    "status": "stopped",
+    "partner": "maggioli"
+}

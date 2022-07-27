@@ -1,0 +1,94 @@
+@uri = instance/agent
+
+###
+
+
+@select = "id", "partner", "description", "discovered"
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": [{{select}}]
+}
+
+###
+
+@select =
+@operator = equals
+@target = partner
+@expr = cnit
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": [{{select}}],
+    "where": {
+        "{{operator}}": {
+            "target": "{{target}}",
+            "expr": "{{expr}}"
+        }
+    }
+}
+
+###
+
+POST {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+#< ../db-inst-agent.json
+
+{
+    "id": "dev@user-vm",
+    "exec_env_id": "user-vm",
+    "agent_catalog_id": "dev",
+    "status": "stopped",
+    "partner": "cnit"
+}
+
+###
+
+PUT {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+# {
+#     "id": "dev@user-vm",
+#     "operations": [
+#          {
+#              "actions": [
+#                  {
+#                      "id": "test",
+#                      "run": "lsp"
+#                  }
+#              ]
+#          }
+#      ]
+# }
+
+{
+    "id": "dev@user-vm",
+    "operations": [
+        {
+            "resources": [
+                {
+                    "id": "config-file",
+                    "content": "<insert here the content>"
+                }
+
+            ]
+    ]
+}
+
+###
+
+@operator = equals
+@target = partner
+@expr = cnit
+
+DELETE {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "where": {
+        "{{operator}}": {
+            "target": "{{target}}",
+            "expr": "{{expr}}"
+        }
+    }
+}

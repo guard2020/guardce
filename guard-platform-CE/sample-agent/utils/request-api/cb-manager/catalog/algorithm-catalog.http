@@ -1,0 +1,55 @@
+@uri = catalog/algorithm
+
+###
+
+@select = 
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": [{{select}}]
+}
+
+
+###
+
+@operator = equals
+@target = partner
+@expr = cnit
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": [{{select}}],
+    "where": {
+        "{{operator}}": {
+            "target": "{{target}}",
+            "expr": "{{expr}}"
+        }
+    }
+}
+
+###
+
+POST {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+< ./db-cat-algorithm/others/resource-monitoring.json
+
+###
+
+PUT {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+< ./db-cat-algorithm.json
+
+###
+
+DELETE {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "where": {
+        "{{operator}}": {
+            "target": "{{target}}",
+            "expr": "{{expr}}"
+        }
+    }
+}

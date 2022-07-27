@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="${project.name}">
+
+    <!-- Author: Giovanni Grieco <giovanni.grieco@poliba.it> -->
+
+    <featureManager>
+        <feature>microProfile-3.3</feature>
+    </featureManager>
+
+    <httpEndpoint id="defaultHttpEndpoint"
+                  host="*"
+                  httpPort="19081"
+                  httpsPort="19444"/>
+
+    <webApplication location="${project.name}.war" contextRoot="/">
+        <classloader apiTypeVisibility="+third-party" />
+    </webApplication>
+    <mpMetrics authentication="false"/>
+
+    <!-- This is the keystore that will be used by SSL and by JWT. -->
+    <!--keyStore id="defaultKeyStore" location="public.jks" type="JKS" password="atbash" /-->
+    <keyStore id="defaultKeyStore"
+              location="/opt/project/src/main/liberty/config/resources/security/key.jks"
+              type="JKS"
+              password="wso2carbon"
+    />
+
+    <!-- The MP JWT configuration that injects the caller's JWT into a ResourceScoped bean for inspection. -->
+    <!--mpJwt id="jwtUserConsumer" keyName="theKeyId" audiences="targetService" issuer="${jwt.issuer}"/-->
+    <mpJwt id="jetUserConsumer"
+           keyName="${jwt.keyName}"
+           audiences="${jwt.audiences}"
+           issuer="${jwt.issuer}"
+           jwksUri="${jwt.jwksEndpoint}"
+           userNameAttribute="sub"
+    />
+</server>

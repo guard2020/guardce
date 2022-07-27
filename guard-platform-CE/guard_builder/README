@@ -1,0 +1,8 @@
+Copy following files in parent directory. 
+- buildONE.sh
+- .env
+- docker-compose-builder.yml 
+
+Then run:
+
+./buildONE.sh repository_name [component]

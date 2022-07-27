@@ -1,0 +1,23 @@
+{
+    "id": "pgafilter@pgafilter-gcloud",
+    "operations": [
+        {
+            "parameters": [
+                {
+                    "id": "firewall-rules",
+                    "value": [
+                        "sid:1|name:goldeneye1|saddr:1.2.3.4|daddr:8.8.8.8|dport:443|proto:tcp"
+                    ]
+                }
+            ]
+        },
+        {
+            "actions": [
+                {
+                    "id": "restart",
+                    "output_format": "lines"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+/bin
+/certs
+/chaincode/packaging/storage-chaincode-guard.tgz
+/chaincode/packaging/code.tar.gz
+/crypto-config
+/data
+/output
+/channel-artifacts

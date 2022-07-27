@@ -1,0 +1,17 @@
+{
+   "hosts": [
+   		{
+	   		"host" : "139.91.71.10",
+	   		 "openvas" : {
+	   		 	"ports" : {
+	   		 		"tcp" : [23]
+	   		 	},
+	   		 	"qod" : 30,
+	   		 	"scan" : "fast"
+	   		 },
+	   		 "w3af" : {}
+	   	}
+
+   	],
+   "task_name": "generic_scan"
+}

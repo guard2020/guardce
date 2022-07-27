@@ -1,0 +1,31 @@
+# Install python/pip
+#FROM alpine:latest
+FROM ubuntu:18.04
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y jq bash curl wget net-tools procps strace file vim less nano iputils-ping host openssh-client
+#RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python && apk add jq bash curl wget net-tools procps strace file
+#RUN python3 -m ensurepip
+#RUN pip3 install --no-cache --upgrade pip setuptools && pip3 install kafka-python && pip3 install joblib
+RUN apt-get install -y python3-pip python3-joblib python3-kafka
+COPY simulate_data.py /tmp
+COPY vdpi_output_13Apr21.log /tmp
+COPY create_topics_openshift.py /tmp
+COPY delete_topics_openshift.py /tmp
+COPY mytopics.txt /tmp
+RUN mkdir /opt/guard
+COPY lcp /opt/guard/lcp
+COPY commands /opt/guard/commands
+######ADD ./elasticsearch-backup-restore/ /opt/guard/elasticsearch-backup-restore
+######RUN pip3 install -r /opt/guard/elasticsearch-backup-restore/requirements.txt
+ADD ./utils/request-api/cb-manager/ /opt/guard/cb-manager
+ENV DOCKERVERSION=20.10.5
+RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKERVERSION}.tgz \
+  && tar xzvf docker-${DOCKERVERSION}.tgz --strip 1 -C /usr/local/bin docker/docker \
+  && rm docker-${DOCKERVERSION}.tgz
+RUN curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+RUN chmod +x /usr/local/bin/docker-compose
+RUN wget -q https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.10.9/openshift-client-linux-4.10.9.tar.gz && \
+    tar xvzf openshift-client-linux-4.10.9.tar.gz -C /usr/local/bin  && \
+     chmod +x /usr/local/bin/oc && chmod +x /usr/local/bin/kubectl
+ENTRYPOINT ["tail", "-f", "/dev/null"]

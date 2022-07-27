@@ -1,0 +1,12 @@
+{
+    "id": "aminer@aminer",
+    "operations": [
+        {
+            "actions": [
+                {
+                    "id": "start"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,131 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: blockchain-connector
+  namespace: guardce
+  labels:
+    app: blockchain-connector
+    app.kubernetes.io/component: blockchain-connector
+    app.kubernetes.io/instance: blockchain-connector
+    app.kubernetes.io/name: blockchain-connector
+    app.kubernetes.io/part-of: guard
+spec:
+  ports:
+    - name: 80-tcp
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: blockchain-connector
+    deploymentconfig: blockchain-connector
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: blockchain-connector
+  namespace: guardce
+  labels:
+    app: blockchain-connector
+    app.kubernetes.io/component: blockchain-connector
+    app.kubernetes.io/instance: blockchain-connector
+    app.kubernetes.io/name: blockchain-connector
+    app.kubernetes.io/part-of: guard
+spec:
+  host: blockchain-connector-guardce.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: blockchain-connector
+    weight: 100
+  port:
+    targetPort: 80-tcp
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: blockchain-connector
+  namespace: guardce
+data:
+  PEER_URLS: >-
+    peer1.germanywestcentral.cloudapp.azure.com:8050,peer2.germanywestcentral.cloudapp.azure.com:8050,peer3.germanywestcentral.cloudapp.azure.com:8050
+  PEERS_USER_PRIVATE_KEY_PATH: /crypto-materials/priv_sk
+  ORDERERS_URLS: >-
+    orderer1.germanywestcentral.cloudapp.azure.com:7050,orderer2.germanywestcentral.cloudapp.azure.com:7050,orderer3.germanywestcentral.cloudapp.azure.com:7050
+  PEER_TLSCA_PEM_PATH: /crypto-materials/peers-tlsca-cert.pem
+  PEERS_USER_CERTIFICATE_PATH: /crypto-materials/cert.pem
+  ORDERER_TLSCA_PEM_PATH: /crypto-materials/orderers-tlsca-cert.pem
+  http_proxy: 'http://10.193.42.232:3128'
+  https_proxy: 'http://10.193.42.232:3128'
+  JAVA_OPTS: >-
+    -Dhttp.proxyHost=10.193.42.232 -Dhttp.proxyPort=3128
+    -Dhttps.proxyHost=10.193.42.232 -Dhttps.proxyPort=3128
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: blockchain-connector
+  namespace: guardce
+  labels:
+    app: blockchain-connector
+    app.kubernetes.io/component: blockchain-connector
+    app.kubernetes.io/instance: blockchain-connector
+    app.kubernetes.io/name: blockchain-connector
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime: guard-platform_blockchain-connector
+    app.openshift.io/runtime-namespace: guardce
+    app.openshift.io/runtime-version: latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blockchain-connector
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: blockchain-connector
+        deploymentconfig: blockchain-connector
+    spec:
+      volumes:
+        - name: blockchain-connector-data
+          secret:
+            defaultMode: 420
+            secretName: blockchain-connector-data
+      containers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: blockchain-connector
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: blockchain-connector-data
+              mountPath: /crypto-materials
+          terminationMessagePolicy: File
+          envFrom:
+            - configMapRef:
+                name: blockchain-connector
+          image: guard2020/guard-platform_blockchain-connector:latest
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+
+---

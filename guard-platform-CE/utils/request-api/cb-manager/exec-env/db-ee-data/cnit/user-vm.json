@@ -1,0 +1,13 @@
+{
+    "id": "user-vm",
+    "partner": "cnit",
+    "type_id": "vm",
+    "description": "User Virtual Machine",
+    "hostname": "10.0.0.7",
+    "enabled": true,
+    "lcp": {
+        "port": 4567,
+        "https": false
+    },
+    "stage": "development"
+}

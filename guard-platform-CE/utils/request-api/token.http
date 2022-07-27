@@ -1,0 +1,1 @@
+GET {{token_endpoint}}/oauth2/token HTTP/1.1

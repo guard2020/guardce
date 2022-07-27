@@ -1,0 +1,179 @@
+[
+    {
+        "id": "actc-resource-monitoring",
+        "name": "ACTC Resource Monitoring",
+        "description": "Announce with Change and Time Consideration",
+        "parameters": [
+            {
+                "id": "changes-dyn-threshold",
+                "description": "Dynamic Threshold of number of changes",
+                "type": "integer",
+                "example": 10
+            },
+            {
+                "id": "changes-min-threshold",
+                "description": "Minimum Threshold of number of changes",
+                "type": "integer",
+                "example": 5
+            },
+            {
+                "id": "timer",
+                "description": "Timer for the algorithm execution",
+                "type": "time-duration",
+                "example": "10s"
+            }
+        ],
+        "actions": [
+            {
+                "id": "start",
+                "description": "Start the algorithm"
+            },
+            {
+                "id": "stop",
+                "description": "Stop the algorithm"
+            },
+            {
+                "id": "restart",
+                "description": "Restart the algorithm"
+            },
+            {
+                "id": "status",
+                "description": "Status the algorithm"
+            },
+            {
+                "id": "autorestart",
+                "description": "Start the algorithm with automatic restart is the configuration changed"
+            },
+            {
+                "id": "log-level",
+                "description": "Set the level of log messages to show"
+            },
+            {
+                "id": "log-format",
+                "description": "Set the format of the log-messages"
+            }
+        ]
+    },
+    {
+        "id": "apg-resource-monitor",
+        "name": "APG Resource Monitor",
+        "description": " Adaptive Polling of Grid Resource Monitor",
+        "parameters": [
+            {
+                "id": "poll-interval",
+                "description": "Polling interval",
+                "type": "time-duration",
+                "example": "10s"
+            },
+            {
+                "id": "changes-degree",
+                "description": "Change degree level",
+                "type": "integer",
+                "example": 10
+            }
+        ],
+        "actions": [
+            {
+                "id": "start",
+                "description": "Start the algorithm"
+            },
+            {
+                "id": "stop",
+                "description": "Stop the algorithm"
+            },
+            {
+                "id": "restart",
+                "description": "Restart the algorithm"
+            },
+            {
+                "id": "status",
+                "description": "Status the algorithm"
+            },
+            {
+                "id": "autorestart",
+                "description": "Start the algorithm with automatic restart is the configuration changed"
+            },
+            {
+                "id": "log-level",
+                "description": "Set the level of log messages to show"
+            },
+            {
+                "id": "log-format",
+                "description": "Set the format of the log-messages"
+            }
+        ]
+    },
+    {
+        "id": "p&p-resource-monitor",
+        "name": "P&P Resource Monitor",
+        "description": "Pull-Push Resource Monitor",
+        "parameters": [
+            {
+                "id": "push-interval",
+                "description": "Pushing interval for algorithm execution",
+                "type": "time-duration",
+                "example": "10s"
+            },
+            {
+                "id": "min",
+                "description": "Max possible value of status",
+                "type": "integer",
+                "example": 2
+            },
+            {
+                "id": "max",
+                "description": "Max possible value of status",
+                "type": "integer",
+                "example": 20
+            },
+            {
+                "id": "utd",
+                "description": "User Tolerant Degree",
+                "type": "integer",
+                "example": 10
+            },
+            {
+                "id": "pull-interval-min",
+                "description": "Min value of Pulling Interval",
+                "type": "time-duration",
+                "example": "2s"
+            },
+            {
+                "id": "pull-interval-max",
+                "description": "Max value of Pulling interval",
+                "type": "integer",
+                "example": "20s"
+            }
+        ],
+        "actions": [
+            {
+                "id": "start",
+                "description": "Start the algorithm"
+            },
+            {
+                "id": "stop",
+                "description": "Stop the algorithm"
+            },
+            {
+                "id": "restart",
+                "description": "Restart the algorithm"
+            },
+            {
+                "id": "status",
+                "description": "Status the algorithm"
+            },
+            {
+                "id": "autorestart",
+                "description": "Start the algorithm with automatic restart is the configuration changed"
+            },
+            {
+                "id": "log-level",
+                "description": "Set the level of log messages to show"
+            },
+            {
+                "id": "log-format",
+                "description": "Set the format of the log-messages"
+            }
+        ]
+    }
+]

@@ -1,0 +1,12 @@
+Chiprstack
+aminer
+chirpstack_as
+data
+data-italtel
+detection-results
+event
+event-italtel
+lora-notifications
+network-data
+vuln_scanner
+wobcom-logs

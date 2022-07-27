@@ -1,0 +1,294 @@
+2022-06-12 13:21:33,395 INFO o.s.b.StartupInfoLogger [main] Starting SpringBootKafkaAppApplication on DESKTOP-SAR866P with PID 11488 (C:\Users\manos\Dropbox\PC\Documents\FORTH\Guard\FinalTests\VeryLastTests\scAlgosTestAllPolicies8\scAlgosTestAllPolicies\spring-boot-kafka-app\target\classes started by manos in C:\Users\manos\Dropbox\PC\Documents\FORTH\Guard\FinalTests\VeryLastTests\scAlgosTestAllPolicies8\scAlgosTestAllPolicies\spring-boot-kafka-app)
+2022-06-12 13:21:33,407 INFO o.s.b.SpringApplication [main] No active profile set, falling back to default profiles: default
+2022-06-12 13:21:34,744 INFO o.s.b.w.e.t.TomcatWebServer [main] Tomcat initialized with port(s): 9000 (http)
+2022-06-12 13:21:34,774 INFO o.a.j.l.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-9000"]
+2022-06-12 13:21:34,775 INFO o.a.j.l.DirectJDKLog [main] Starting service [Tomcat]
+2022-06-12 13:21:34,775 INFO o.a.j.l.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.35]
+2022-06-12 13:21:34,913 INFO o.a.j.l.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2022-06-12 13:21:34,914 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1444 ms
+2022-06-12 13:21:35,134 INFO o.d.c.k.b.i.ClasspathKieProject [main] Found kmodule: file:/C:/Users/manos/Dropbox/PC/Documents/FORTH/Guard/FinalTests/VeryLastTests/scAlgosTestAllPolicies8/scAlgosTestAllPolicies/spring-boot-kafka-app/target/classes/META-INF/kmodule.xml
+2022-06-12 13:21:35,226 INFO o.d.c.k.b.i.KieRepositoryImpl [main] KieModule was added:FileKieModule[ ReleaseId=eu.smartcontroller:spring-boot-kafka-app:0.0.1-SNAPSHOTfile=C:\Users\manos\Dropbox\PC\Documents\FORTH\Guard\FinalTests\VeryLastTests\scAlgosTestAllPolicies8\scAlgosTestAllPolicies\spring-boot-kafka-app\target\classes]
+2022-06-12 13:21:36,516 INFO e.s.g.d.c.Config [main] env variable kafkaEndpoint is null!
+2022-06-12 13:21:36,516 INFO e.s.g.d.c.Config [main] kafkaEndpoint is set to 10.0.0.7:9092
+2022-06-12 13:21:36,661 INFO e.s.g.d.c.Config [main] env variable kafkaEndpoint is null!
+2022-06-12 13:21:36,661 INFO e.s.g.d.c.Config [main] kafkaEndpoint is set to 10.0.0.7:9092
+2022-06-12 13:21:36,849 INFO o.s.s.c.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2022-06-12 13:21:37,287 INFO o.a.k.c.c.AbstractConfig [main] ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [10.0.0.7:9092]
+	check.crcs = true
+	client.dns.lookup = default
+	client.id = 
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = node
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.2
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2022-06-12 13:21:37,389 INFO o.a.k.c.u.AppInfoParser$AppInfo [main] Kafka version: 2.5.0
+2022-06-12 13:21:37,389 INFO o.a.k.c.u.AppInfoParser$AppInfo [main] Kafka commitId: 66563e712b0b9f84
+2022-06-12 13:21:37,389 INFO o.a.k.c.u.AppInfoParser$AppInfo [main] Kafka startTimeMs: 1655029297384
+2022-06-12 13:21:37,394 INFO o.a.k.c.c.KafkaConsumer [main] [Consumer clientId=consumer-node-1, groupId=node] Subscribed to topic(s): aminer-alerts
+2022-06-12 13:21:37,397 INFO o.s.s.c.ExecutorConfigurationSupport [main] Initializing ExecutorService
+2022-06-12 13:21:37,404 INFO o.a.k.c.c.AbstractConfig [main] ConsumerConfig values: 
+	allow.auto.create.topics = true
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [10.0.0.7:9092]
+	check.crcs = true
+	client.dns.lookup = default
+	client.id = 
+	client.rack = 
+	connections.max.idle.ms = 540000
+	default.api.timeout.ms = 60000
+	enable.auto.commit = false
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = node2
+	group.instance.id = null
+	heartbeat.interval.ms = 3000
+	interceptor.classes = []
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 30000
+	retry.backoff.ms = 100
+	sasl.client.callback.handler.class = null
+	sasl.jaas.config = null
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.login.callback.handler.class = null
+	sasl.login.class = null
+	sasl.login.refresh.buffer.seconds = 300
+	sasl.login.refresh.min.period.seconds = 60
+	sasl.login.refresh.window.factor = 0.8
+	sasl.login.refresh.window.jitter = 0.05
+	sasl.mechanism = GSSAPI
+	security.protocol = PLAINTEXT
+	security.providers = null
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2]
+	ssl.endpoint.identification.algorithm = https
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLSv1.2
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.springframework.kafka.support.serializer.JsonDeserializer
+
+2022-06-12 13:21:37,424 INFO o.a.k.c.u.AppInfoParser$AppInfo [main] Kafka version: 2.5.0
+2022-06-12 13:21:37,424 INFO o.a.k.c.u.AppInfoParser$AppInfo [main] Kafka commitId: 66563e712b0b9f84
+2022-06-12 13:21:37,424 INFO o.a.k.c.u.AppInfoParser$AppInfo [main] Kafka startTimeMs: 1655029297423
+2022-06-12 13:21:37,425 INFO o.a.k.c.c.KafkaConsumer [main] [Consumer clientId=consumer-node2-2, groupId=node2] Subscribed to topic(s): detection-results
+2022-06-12 13:21:37,426 INFO o.s.s.c.ExecutorConfigurationSupport [main] Initializing ExecutorService
+2022-06-12 13:21:37,428 INFO o.a.j.l.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-9000"]
+2022-06-12 13:21:37,449 INFO o.s.b.w.e.t.TomcatWebServer [main] Tomcat started on port(s): 9000 (http) with context path ''
+2022-06-12 13:21:37,463 INFO o.s.b.StartupInfoLogger [main] Started SpringBootKafkaAppApplication in 4.744 seconds (JVM running for 6.603)
+2022-06-12 13:21:37,466 INFO e.s.g.d.SpringBootKafkaAppApplication [main] Initial lastSuccessfulRuleUpdate = 
+2022-06-12 13:21:37,466 INFO e.s.g.d.SpringBootKafkaAppApplication [main] kafkaEndpoint: 10.0.0.7:9092
+2022-06-12 13:21:37,466 INFO e.s.g.d.SpringBootKafkaAppApplication [main] topologyChangesTopic: TopologyChanges
+2022-06-12 13:21:37,467 INFO e.s.g.d.SpringBootKafkaAppApplication [main] contextBrokerManagerEndpoint: 10.0.0.7:5000
+2022-06-12 13:21:37,467 INFO e.s.g.d.SpringBootKafkaAppApplication [main] cnitMlAlgorithmEndpoint: 10.0.0.7:9999
+2022-06-12 13:21:37,467 INFO e.s.g.d.SpringBootKafkaAppApplication [main] pgasigEndpoint: 35.193.65.139:8000
+2022-06-12 13:21:43,910 INFO o.a.j.l.DirectJDKLog [http-nio-9000-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-06-12 13:21:43,910 INFO o.s.w.s.FrameworkServlet [http-nio-9000-exec-1] Initializing Servlet 'dispatcherServlet'
+2022-06-12 13:21:43,918 INFO o.s.w.s.FrameworkServlet [http-nio-9000-exec-1] Completed initialization in 8 ms
+2022-06-12 13:21:44,003 INFO e.s.g.d.c.KafkaProducerController [http-nio-9000-exec-1] Security policy 1 
+
+rule "Rulefile" 
+when 
+$rulefile: Rulefile2() 
+then 
+String agentId = "pgafilter@lcp-mitigation"; 
+ContextBrokerUpdateAgentResponse response = $rulefile.sendRulefilecontentToContextBroker(agentId); 
+KafkaProducerController.logger.info("sendRulefilecontentToContextBroker method is called. Response: " + response.toString());
+end is appended into externalrules folder.
+2022-06-12 13:21:44,338 INFO e.s.g.d.c.ContextBrokerHandler2 [http-nio-9000-exec-1] contextBrokerManagerEndpoint: 10.0.0.7:5000
+2022-06-12 13:21:58,659 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:21:58,659 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:21:58,660 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:21:58,660 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:22:05,462 INFO e.s.g.d.c.ContextBrokerHandler2 [http-nio-9000-exec-1] Connect to 10.0.0.7:5000 [/10.0.0.7] failed: Connection timed out: connect during request to CB update agent instance API.
+2022-06-12 13:22:05,476 INFO r.Rule_UpdateAgentInstance2024945666 [http-nio-9000-exec-1] sendUpdateRequestToContextBroker method of Agent-Italtel@101 agent instance is called. Response: ContextBrokerUpdateAgentResponse{subjectUuid='null', code=0, error=false, message='null', status='null', lcp_response=null}
+2022-06-12 13:22:05,476 INFO r.Rule_UpdateAgentInstance2024945666 [http-nio-9000-exec-1] sendUpdateRequestToContextBroker method of Agent-Italtel@101 agent instance is called.
+2022-06-12 13:22:05,479 INFO r.Rule_StartStopPipelineUnsuccessfullyAgent928207524 [http-nio-9000-exec-1] Agent Agent-Italtel@101 of pipeline Agent-Italtel-1654069841 - fb69ec5c-3681-43f1-ad26-412bc65e9dbb failed to be updated.
+2022-06-12 13:22:05,480 INFO r.Rule_StartStopPipelineUnsuccessfullyAgent928207524 [http-nio-9000-exec-1] Pipeline Agent-Italtel-1654069841 - fb69ec5c-3681-43f1-ad26-412bc65e9dbb is retracted
+2022-06-12 13:22:05,484 INFO r.Rule_RetractAgentInstances1854067246 [http-nio-9000-exec-1] Agent Agent-Italtel@101 of pipeline fb69ec5c-3681-43f1-ad26-412bc65e9dbb is retracted
+2022-06-12 13:22:05,485 INFO e.s.g.d.c.KafkaProducerController [http-nio-9000-exec-1] Request to Security Controller startSecurityPipeline API for pipeline Agent-Italtel-1654069841 is ended.
+2022-06-12 13:22:17,920 INFO o.d.c.k.b.i.ClasspathKieProject [pool-3-thread-1] Found kmodule: file:/C:/Users/manos/Dropbox/PC/Documents/FORTH/Guard/FinalTests/VeryLastTests/scAlgosTestAllPolicies8/scAlgosTestAllPolicies/spring-boot-kafka-app/target/classes/META-INF/kmodule.xml
+2022-06-12 13:22:17,927 INFO o.d.c.k.b.i.KieRepositoryImpl [pool-3-thread-1] KieModule was added:FileKieModule[ ReleaseId=eu.smartcontroller:spring-boot-kafka-app:0.0.1-SNAPSHOTfile=C:\Users\manos\Dropbox\PC\Documents\FORTH\Guard\FinalTests\VeryLastTests\scAlgosTestAllPolicies8\scAlgosTestAllPolicies\spring-boot-kafka-app\target\classes]
+2022-06-12 13:22:17,962 WARN o.k.s.e.MavenSettings [pool-3-thread-1] Environment variable M2_HOME is not set
+2022-06-12 13:22:19,306 INFO o.d.c.k.b.i.KieRepositoryImpl [pool-3-thread-1] KieModule was added:MemoryKieModule[ ReleaseId=org.drools.example:fetch-external-resource:1.0.0-SNAPSHOT]
+2022-06-12 13:22:19,524 INFO o.d.c.k.b.i.KieRepositoryImpl [pool-3-thread-1] KieModule was added:MemoryKieModule[ ReleaseId=org.drools.example:fetch-external-resource:1.0.0-SNAPSHOT]
+2022-06-12 13:22:19,810 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:22:19,810 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:22:19,811 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:22:19,811 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:22:19,817 WARN o.k.s.MavenRepository [pool-3-thread-1] Unable to resolve artifact: org.drools.example:fetch-external-resource:1.0.0-SNAPSHOT
+org.sonatype.aether.resolution.ArtifactResolutionException: Could not transfer artifact org.drools.example:fetch-external-resource:jar:1.0.0-SNAPSHOT from/to centralhttps (https://repo1.maven.org/maven2/): No connector available to access repository centralhttps (https://repo1.maven.org/maven2/) of type  using the available factories FileRepositoryConnectorFactory, WagonRepositoryConnectorFactory
+	at org.sonatype.aether.impl.internal.DefaultArtifactResolver.resolve(DefaultArtifactResolver.java:538) ~[aether-impl-1.13.1.jar:?]
+	at org.sonatype.aether.impl.internal.DefaultArtifactResolver.resolveArtifacts(DefaultArtifactResolver.java:216) ~[aether-impl-1.13.1.jar:?]
+	at org.sonatype.aether.impl.internal.DefaultArtifactResolver.resolveArtifact(DefaultArtifactResolver.java:193) ~[aether-impl-1.13.1.jar:?]
+	at org.sonatype.aether.impl.internal.DefaultRepositorySystem.resolveArtifact(DefaultRepositorySystem.java:286) ~[aether-impl-1.13.1.jar:?]
+	at org.kie.scanner.MavenRepository.resolveArtifact(MavenRepository.java:205) [kie-ci-6.1.0.Final.jar:6.1.0.Final]
+	at org.kie.scanner.MavenRepository.resolveArtifact(MavenRepository.java:194) [kie-ci-6.1.0.Final.jar:6.1.0.Final]
+	at org.kie.scanner.ArtifactResolver.resolveArtifact(ArtifactResolver.java:51) [kie-ci-6.1.0.Final.jar:6.1.0.Final]
+	at org.kie.scanner.KieRepositoryScannerImpl.getArtifactVersion(KieRepositoryScannerImpl.java:108) [kie-ci-6.1.0.Final.jar:6.1.0.Final]
+	at org.drools.compiler.kie.builder.impl.KieRepositoryImpl$KieModuleRepo.load(KieRepositoryImpl.java:281) [drools-compiler-6.1.0.Final.jar:6.1.0.Final]
+	at org.drools.compiler.kie.builder.impl.KieRepositoryImpl$KieModuleRepo.load(KieRepositoryImpl.java:267) [drools-compiler-6.1.0.Final.jar:6.1.0.Final]
+	at org.drools.compiler.kie.builder.impl.KieRepositoryImpl.getKieModule(KieRepositoryImpl.java:90) [drools-compiler-6.1.0.Final.jar:6.1.0.Final]
+	at org.drools.compiler.kie.builder.impl.KieRepositoryImpl.getKieModule(KieRepositoryImpl.java:77) [drools-compiler-6.1.0.Final.jar:6.1.0.Final]
+	at org.drools.compiler.kie.builder.impl.KieServicesImpl.newKieContainer(KieServicesImpl.java:97) [drools-compiler-6.1.0.Final.jar:6.1.0.Final]
+	at eu.smartcontroller.guard.demo.model.runtimeRules.KieFileSystemExample.createKieBase(KieFileSystemExample.java:80) [classes/:?]
+	at eu.smartcontroller.guard.demo.model.runtimeRules.KieFileSystemExample.insertAllFacts(KieFileSystemExample.java:103) [classes/:?]
+	at eu.smartcontroller.guard.demo.SpringBootKafkaAppApplication$1.run(SpringBootKafkaAppApplication.java:94) [classes/:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [?:1.8.0_302]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) [?:1.8.0_302]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) [?:1.8.0_302]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) [?:1.8.0_302]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [?:1.8.0_302]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [?:1.8.0_302]
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_302]
+Caused by: org.sonatype.aether.transfer.ArtifactTransferException: Could not transfer artifact org.drools.example:fetch-external-resource:jar:1.0.0-SNAPSHOT from/to centralhttps (https://repo1.maven.org/maven2/): No connector available to access repository centralhttps (https://repo1.maven.org/maven2/) of type  using the available factories FileRepositoryConnectorFactory, WagonRepositoryConnectorFactory
+	at org.sonatype.aether.impl.internal.DefaultArtifactResolver.resolve(DefaultArtifactResolver.java:468) ~[aether-impl-1.13.1.jar:?]
+	... 22 more
+Caused by: org.sonatype.aether.transfer.NoRepositoryConnectorException: No connector available to access repository centralhttps (https://repo1.maven.org/maven2/) of type  using the available factories FileRepositoryConnectorFactory, WagonRepositoryConnectorFactory
+	at org.sonatype.aether.impl.internal.DefaultRemoteRepositoryManager.getRepositoryConnector(DefaultRemoteRepositoryManager.java:400) ~[aether-impl-1.13.1.jar:?]
+	at org.sonatype.aether.impl.internal.DefaultArtifactResolver.resolve(DefaultArtifactResolver.java:453) ~[aether-impl-1.13.1.jar:?]
+	... 22 more
+2022-06-12 13:22:19,834 INFO e.s.g.d.c.ContextBrokerHandler2 [pool-3-thread-1] contextBrokerManagerEndpoint: 10.0.0.7:5000
+2022-06-12 13:22:40,880 INFO e.s.g.d.c.ContextBrokerHandler2 [pool-3-thread-1] Connect to 10.0.0.7:5000 [/10.0.0.7] failed: Connection timed out: connect during request to CB update agent instance API.
+2022-06-12 13:22:40,882 INFO o.d.e.Rule_Rulefile2007706035 [pool-3-thread-1] sendRulefilecontentToContextBroker method is called. Response: ContextBrokerUpdateAgentResponse{subjectUuid='5a77bcfd-5214-4a52-b98f-5b430ec78ab5', code=0, error=false, message='null', status='null', lcp_response=null}
+2022-06-12 13:22:41,015 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:22:41,015 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:22:41,016 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:22:41,016 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:23:02,269 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:23:02,269 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:23:02,332 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:23:02,332 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:23:23,658 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:23:23,659 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:23:23,780 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:23:23,780 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:23:45,530 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:23:45,531 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:23:45,650 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:23:45,651 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:24:07,584 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:24:07,585 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:24:07,645 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:24:07,646 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:24:29,592 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:24:29,592 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:24:29,639 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:24:29,639 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:24:51,591 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:24:51,591 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:24:51,880 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:24:51,880 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:25:13,769 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:25:13,770 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:25:13,769 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:25:13,770 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:25:35,727 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:25:35,728 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:25:35,817 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:25:35,818 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:25:57,880 WARN o.a.k.c.NetworkClient [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:25:57,880 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:25:57,910 WARN o.a.k.c.NetworkClient [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Connection to node -1 (/10.0.0.7:9092) could not be established. Broker may not be available.
+2022-06-12 13:25:57,911 WARN o.a.k.c.NetworkClient$DefaultMetadataUpdater [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Bootstrap broker 10.0.0.7:9092 (id: -1 rack: null) disconnected
+2022-06-12 13:26:05,935 INFO o.a.k.c.c.KafkaConsumer [assigned_listener_id2-0-C-1] [Consumer clientId=consumer-node2-2, groupId=node2] Unsubscribed all topics or patterns and assigned partitions
+2022-06-12 13:26:05,935 INFO o.a.k.c.c.KafkaConsumer [assigned_listener_id-0-C-1] [Consumer clientId=consumer-node-1, groupId=node] Unsubscribed all topics or patterns and assigned partitions
+2022-06-12 13:26:05,935 INFO o.s.s.c.ExecutorConfigurationSupport [assigned_listener_id-0-C-1] Shutting down ExecutorService
+2022-06-12 13:26:05,935 INFO o.s.s.c.ExecutorConfigurationSupport [assigned_listener_id2-0-C-1] Shutting down ExecutorService
+2022-06-12 13:26:05,945 INFO o.s.c.l.LogAccessor [assigned_listener_id2-0-C-1] node2: Consumer stopped
+2022-06-12 13:26:05,945 INFO o.s.c.l.LogAccessor [assigned_listener_id-0-C-1] node: Consumer stopped
+2022-06-12 13:26:05,949 INFO o.s.s.c.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'

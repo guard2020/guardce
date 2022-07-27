@@ -1,0 +1,16 @@
+{
+    "folders": [
+        {
+            "name": "GUARD Plaftorm",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "cSpell.words": [
+            "autorestart"
+        ],
+        "esbonio.server.enabled": false,
+        "esbonio.sphinx.buildDir": "docs/.build",
+        "esbonio.sphinx.confDir": "docs/conf.py"
+    }
+}

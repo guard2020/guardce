@@ -1,0 +1,6 @@
+{
+	"task_name" : "Example Task",
+	"hosts" : [
+		{"host" : "192.168.1.10", "ports" : [22, 25, 8080], "web" : [80], "scan" : "fast"}
+	]
+}

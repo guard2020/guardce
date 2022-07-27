@@ -1,0 +1,606 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-headless
+  labels:
+    app: kafka-cluster
+spec:
+  ports:
+  - port: 9092
+    name: server
+  clusterIP: None
+  selector:
+    app: kafka-cluster
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-cluster
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
+spec:
+  ports:
+    - name: internal
+      protocol: TCP
+      port: 9092
+      targetPort: 9092
+    - name: tls
+      protocol: TCP
+      port: 29094
+      targetPort: 29094
+    - name: sasl
+      protocol: TCP
+      port: 29092
+      targetPort: 29092
+  selector:
+    app: kafka-cluster
+    component: kafka-cluster
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-cluster-0-tls
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
+spec:
+  ports:
+    - name: tls
+      protocol: TCP
+      port: 29094
+      targetPort: 29094
+  selector:
+    statefulset.kubernetes.io/pod-name: kafka-cluster-0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-cluster-1-tls
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
+spec:
+  ports:
+    - name: tls
+      protocol: TCP
+      port: 29094
+      targetPort: 29094
+  selector:
+    statefulset.kubernetes.io/pod-name: kafka-cluster-1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-cluster-2-tls
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
+spec:
+  ports:
+    - name: tls
+      protocol: TCP
+      port: 29094
+      targetPort: 29094
+  selector:
+    statefulset.kubernetes.io/pod-name: kafka-cluster-2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-cluster-0-sasl
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
+spec:
+  ports:
+    - name: sasl
+      protocol: TCP
+      port: 29092
+      targetPort: 29092
+  selector:
+    statefulset.kubernetes.io/pod-name: kafka-cluster-0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-cluster-1-sasl
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
+spec:
+  ports:
+    - name: sasl
+      protocol: TCP
+      port: 29092
+      targetPort: 29092
+  selector:
+    statefulset.kubernetes.io/pod-name: kafka-cluster-1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-cluster-2-sasl
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
+spec:
+  ports:
+    - name: sasl
+      protocol: TCP
+      port: 29092
+      targetPort: 29092
+  selector:
+    statefulset.kubernetes.io/pod-name: kafka-cluster-2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-cluster-plain
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
+spec:
+  ports:
+    - name: plain
+      protocol: TCP
+      port: 29092
+      targetPort: 29093
+  selector:
+    app: kafka-cluster
+    component: kafka-cluster
+  type: LoadBalancer
+---
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kafka-cluster-sasl
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+spec:
+  host: kafka-cluster-sasl.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: kafka-cluster
+    weight: 100
+  port:
+    targetPort: sasl
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kafka-cluster-plain
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+spec:
+  host: kafka-cluster-plain.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: kafka-cluster-plain
+    weight: 100
+  port:
+    targetPort: plain
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kafka-cluster-tls
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+spec:
+  host: kafka-cluster-tls.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: kafka-cluster
+    weight: 100
+  port:
+    targetPort: tls
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kafka-cluster-0-sasl
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+spec:
+  host: kafka-cluster-0-sasl.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: kafka-cluster-0-sasl
+    weight: 100
+  port:
+    targetPort: sasl
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---  
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kafka-cluster-1-sasl
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+spec:
+  host: kafka-cluster-1-sasl.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: kafka-cluster-1-sasl
+    weight: 100
+  port:
+    targetPort: sasl
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kafka-cluster-2-sasl
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+spec:
+  host: kafka-cluster-2-sasl.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: kafka-cluster-2-sasl
+    weight: 100
+  port:
+    targetPort: sasl
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kafka-cluster-0-tls
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+spec:
+  host: kafka-cluster-0-tls.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: kafka-cluster-0-tls
+    weight: 100
+  port:
+    targetPort: tls
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kafka-cluster-1-tls
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+spec:
+  host: kafka-cluster-1-tls.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: kafka-cluster-1-tls
+    weight: 100
+  port:
+    targetPort: tls
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kafka-cluster-2-tls
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+spec:
+  host: kafka-cluster-2-tls.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: kafka-cluster-2-tls
+    weight: 100
+  port:
+    targetPort: tls
+  tls:
+    termination: passthrough
+    insecureEdgeTerminationPolicy: None
+  wildcardPolicy: None
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: kafka-cluster
+  namespace: guardce
+data:
+#  KAFKA_ADVERTISED_LISTENERS: >-
+#    INTERNAL://kafka-cluster.guardce.svc:9092,PLAIN_SSL://$(MY_POD_NAME)-tls.apps.ocp4.italtel.com:443,EXTERNAL://$(MY_POD_NAME)-sasl.apps.ocp4.italtel.com:443
+  KAFKA_LISTENERS: >-
+    INTERNAL://0.0.0.0:9092,PLAIN://0.0.0.0:29093,PLAIN_SSL://0.0.0.0:29094,EXTERNAL://0.0.0.0:29092
+  KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'INTERNAL:PLAINTEXT,PLAIN:PLAINTEXT,PLAIN_SSL:SSL,EXTERNAL:SASL_SSL'
+  KAFKA_LOG4J_LOGGERS: org.telematics=ERROR
+  KAFKA_LISTENER_NAME_EXTERNAL_OAUTHBEARER_SASL_SERVER_CALLBACK_HANDLER_CLASS: >-
+    org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateValidatorCallbackHandler
+  KAFKA_LISTENER_NAME_INTERNAL_OAUTHBEARER_SASL_JAAS_CONFIG: >-
+    org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule
+    required;
+#  KAFKA_BROKER_ID: '1'
+  KAFKA_DEFAULT_REPLICATION_FACTOR: '3'
+  KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '1'
+  KAFKA_PRINCIPAL_BUILDER_CLASS: org.telematics.guard.aa.kafka.liboauthbearer.CustomPrincipalBuilder
+  KAFKA_SSL_KEYSTORE_CREDENTIALS: kafka_keystore_creds
+  KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+  KAFKA_CONNECTIONS_MAX_REAUTH_MS: '60000'
+  OAUTH_SERVER_ENFORCE: 'false'
+  KAFKA_AUTHORIZER_CLASS_NAME: org.telematics.guard.aa.kafka.liboauthbearer.CustomAuthorizer
+  OAUTH_SERVER_ACCEPT_UNSECURE_SERVER: 'true'
+  KAFKA_LISTENER_NAME_INTERNAL_OAUTHBEARER_SASL_LOGIN_CALLBACK_HANDLER_CLASS: >-
+    org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateLoginCallbackHandler
+  KAFKA_SSL_CLIENT_AUTH: required
+  KAFKA_SSL_KEY_CREDENTIALS: kafka_sslkey_creds
+  OAUTH_SERVER_CLIENT_SECRET: yGC8KxKYYQ_q1UbTBAwxivThaZIa
+  KAFKA_SSL_ENABLED_PROTOCOLS: 'TLSv1.3,TLSv1.2'
+  KAFKA_SSL_TRUSTSTORE_FILENAME: kafka.server.truststore.jks
+  OAUTH_SERVER_GRANT_TYPE: client_credentials
+  KAFKA_SSL_TRUSTSTORE_CREDENTIALS: kafka_truststore_creds
+  OAUTH_SERVER_BASE_URI: 'https://idm.guardce.svc:10443/oauth2/'
+  KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+  OAUTH_SERVER_SCOPES: 'kafka:cluster:kafka-cluster:cluster_action'
+  KAFKA_LISTENER_NAME_INTERNAL_OAUTHBEARER_SASL_SERVER_CALLBACK_HANDLER_CLASS: >-
+    org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateValidatorCallbackHandler
+  OAUTH_SERVER_TOKEN_ENDPOINT_PATH: /token
+  KAFKA_SASL_MECHANISM_INTER_BROKER_PROTOCOL: OAUTHBEARER
+  OAUTH_SERVER_INTROSPECTION_ENDPOINT_PATH: /introspect
+  KAFKA_SASL_ENABLED_MECHANISMS: OAUTHBEARER
+  KAFKA_SSL_KEYSTORE_FILENAME: kafka.server.keystore.jks
+  KAFKA_LISTENER_NAME_EXTERNAL_OAUTHBEARER_SASL_JAAS_CONFIG: >-
+    org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule
+    required;
+  KAFKA_OPTS: '-Djava.security.auth.login.config=/etc/kafka/secrets/kafka_server_jaas.conf'
+  OAUTH_SERVER_CLIENT_ID: kafka-broker
+  ZOOKEEPER_SASL_ENABLED: 'false'
+  KAFKA_LISTENER_NAME_EXTERNAL_OAUTHBEARER_SASL_LOGIN_CALLBACK_HANDLER_CLASS: >-
+    org.telematics.guard.aa.kafka.liboauthbearer.OAuthAuthenticateLoginCallbackHandler
+  KAFKA_SECURITY_PROTOCOL: SASL_SSL
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: kafka-pdb
+spec:
+  selector:
+    matchLabels:
+      app: kafka-cluster
+  maxUnavailable: 1
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  name: kafka-cluster
+  namespace: guardce
+  labels:
+    app: kafka-cluster
+    app.kubernetes.io/part-of: guard
+    component: kafka-cluster
+    template: kafka-cluster
+spec:
+  selector:
+    matchLabels:
+      app: kafka-cluster
+      component: kafka-cluster
+  serviceName: kafka-headless
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: kafka-cluster
+        component: kafka-cluster
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - kafka-cluster
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+        - resources:
+            limits:
+              cpu: 300m
+              memory: 512M
+            requests:
+              cpu: 300m
+              memory: 512M
+          terminationMessagePath: /dev/termination-log
+          name: kafka-cluster
+          env:
+            - name: KAFKA_REPLICAS
+              value: '3'
+            - name: KAFKA_ZK_LOCAL
+              value: 'false'
+            - name: KAFKA_HEAP_OPTS
+              value: '-Xmx256M -Xms256M'
+            - name: SERVER_num_partitions
+              value: '1'
+            - name: SERVER_delete_topic_enable
+              value: 'true'
+            - name: SERVER_log_retention_hours
+              value: '2147483647'
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              value: 'zookeeper-headless.guardce.svc:2181'
+            - name: SERVER_log_dirs
+              value: /opt/kafka/data/logs
+            - name: SERVER_zookeeper_connection_timeout_ms
+              value: '6000'
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: 'INTERNAL://$(MY_POD_IP):9092,PLAIN://$(MY_POD_NAME)-plain.apps.ocp4.italtel.com:29092,PLAIN_SSL://$(MY_POD_NAME)-tls.apps.ocp4.italtel.com:443,EXTERNAL://$(MY_POD_NAME)-sasl.apps.ocp4.italtel.com:443'
+          ports:
+            - name: internal
+              containerPort: 9092
+              protocol: TCP
+            - name: plain
+              containerPort: 29093
+              protocol: TCP
+            - name: tls
+              containerPort: 29094
+              protocol: TCP
+            - name: sasl
+              containerPort: 29092
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: kafka-data
+              mountPath: /var/lib/kafka/data
+            - name: kafka-secrets
+              mountPath: /etc/kafka/secrets
+          terminationMessagePolicy: File
+          envFrom:
+            - configMapRef:
+                name: kafka-cluster
+          image: 'guard2020/kafka_confluent:latest'
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      schedulerName: default-scheduler
+      volumes:
+        - name: kafka-secrets
+          secret:
+            defaultMode: 420
+            secretName: kafka-secrets
+  volumeClaimTemplates:
+    - kind: PersistentVolumeClaim
+      apiVersion: v1
+      metadata:
+        name: kafka-data
+        creationTimestamp: null
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        selector: {}
+        resources:
+          requests:
+            storage: 10Gi
+        volumeMode: Filesystem
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  revisionHistoryLimit: 10

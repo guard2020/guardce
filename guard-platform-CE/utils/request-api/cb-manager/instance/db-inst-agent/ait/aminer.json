@@ -1,0 +1,9 @@
+[
+    {
+        "agent_catalog_id": "aminer",
+        "exec_env_id": "network-manager",
+        "id": "aminer@network-manager",
+        "partner": "ait",
+        "status": "stopped"
+    }
+]

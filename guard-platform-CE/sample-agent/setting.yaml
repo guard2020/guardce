@@ -1,0 +1,64 @@
+# cat settings.yaml
+# Copyright (c) 2020-2029 GUARD <guard-project.eu>
+# author: Alex Carrega <alessandro.carrega@cnit.it>
+
+port: 9999
+debug: True
+project: GUARD
+title: CNIT ML
+description: CNIT Machine Learning Algorithm Controller.
+commands:
+  start:
+    script: bash scripts/start.sh
+    daemon: true
+  stop:
+    script: bash scripts/stop.sh
+    daemon: false
+  restart:
+    script: bash scripts/restart.sh
+    daemon: false
+  autorestart:
+    script: bash scripts/autorestart.sh
+    daemon: true
+  status:
+    script: bash scripts/status.sh
+    daemon: false
+  reset:
+    script: bash scripts/reset.sh
+    daemon: false
+configurations:
+  config:
+    path: config.yaml
+    format: yaml
+parameters:
+  kafka-bootstrap-servers:
+    source: config.yaml
+    format: yaml
+    xpath:
+      - kafka
+      - bootstrap-servers
+  kafka-topic:
+    source: config.yaml
+    format: yaml
+    xpath:
+      - kafka
+      - topic
+  kafka-group-id:
+    source: config.yaml
+    format: yaml
+    xpath:
+      - kafka
+      - group-id
+  log-level:
+    source: config.yaml
+    format: yaml
+    xpath:
+      - log
+      - level
+  log-format:
+    source: config.yaml
+    format: yaml
+    xpath:
+      - log
+      - format
+

@@ -1,0 +1,79 @@
+{
+    "id": "guard-vdpi",
+    "partner": "8bells",
+    "parameters": [
+        {
+            "id": "interface",
+            "type": "string",
+            "example": "eth0",
+            "description": "target interface for vdpi",
+            "config": {
+                "schema": "properties",
+                "source": "/opt/guard-vdpi/guard-lcp-vdpi-wrapper.properties",
+                "path": [
+                    "target",
+                    "iface"
+                ]
+            }
+        },
+        {
+            "id": "demo-mode",
+            "type": "boolean",
+            "example": "True",
+            "description": "if True, a pcap file will be loaded instead of targeting an interface in real time",
+            "config": {
+                "schema": "properties",
+                "source": "/opt/guard-vdpi/guard-lcp-vdpi-wrapper.properties",
+                "path": [
+                    "target",
+                    "demo-mode"
+                ]
+            }
+        },
+        {
+            "id": "demo-mode-pcap-file",
+            "type": "string",
+            "example": "/tmp/Friday-WorkingHours.pcap",
+            "description": "Used in conjunction with demo-mode property, if True, load the current pcap file (abs path of the file located on actual target host) to get vdpi statistics",
+            "config": {
+                "schema": "properties",
+                "source": "/opt/guard-vdpi/guard-lcp-vdpi-wrapper.properties",
+                "path": [
+                    "target",
+                    "demo-mode",
+                    "pcap-file"
+                ]
+            }
+        }
+    ],
+    "actions": [
+        {
+            "id": "start",
+            "status": "started",
+            "config": {
+                "cmd": "/opt/guard-vdpi/guard-lcp-vdpi-wrapper --start --properties /opt/guard-vdpi/guard-lcp-vdpi-wrapper.properties"
+            }
+        },
+        {
+            "id": "stop",
+            "status": "stopped",
+            "config": {
+                "cmd": "/opt/guard-vdpi/guard-lcp-vdpi-wrapper --stop"
+            }
+        },
+        {
+            "id": "force-stop",
+            "status": "stopped",
+            "config": {
+                "cmd": "/opt/guard-vdpi/guard-lcp-vdpi-wrapper --force-stop"
+            }
+        },
+        {
+            "id": "restart",
+            "status": "started",
+            "config": {
+                "cmd": "/opt/guard-vdpi/guard-lcp-vdpi-wrapper --restart"
+            }
+        }
+    ]
+}

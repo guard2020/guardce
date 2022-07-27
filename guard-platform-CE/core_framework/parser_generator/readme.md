@@ -1,0 +1,1 @@
+The up-to-date Readme and installation instructions can be found here https://github.com/ait-aecid/aecid-parsergenerator/blob/master/README.md.

@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: pv-clean
+spec:
+  template:
+    spec:
+      containers:
+      - name: pv-clean
+        image: alpine:latest
+        command: ["sh", "-c", 
+        "
+        set -x && \
+        find /pv-data/ && \
+        rm -rf /pv-data/* && \
+        find /pv-data/
+        "]
+        volumeMounts:
+          - name: pv-data
+            mountPath: /pv-data
+      restartPolicy: Never
+      volumes:
+        - name: pv-data
+          hostPath:
+            #path must be same as path prefix in pv yamls in sample-pv directory
+            path: "/mnt/data/"
+  backoffLimit: 0

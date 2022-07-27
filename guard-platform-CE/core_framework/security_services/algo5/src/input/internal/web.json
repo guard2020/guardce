@@ -1,0 +1,14 @@
+{
+   "hosts": [
+   		{
+	   		"host" : "139.91.71.10",
+	   		 "openvas" : {},
+	   		 "w3af" : {
+				"ports" : [80],
+				"scan" : "fast_scan"
+			 }
+	   	}
+
+   	],
+   "task_name": "test_scan2"
+}

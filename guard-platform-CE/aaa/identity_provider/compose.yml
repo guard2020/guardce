@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+  idp:
+    image: guard/aaa/idm
+    build: identity_provider
+    container_name: aa_module-idp
+    ports:
+      - 10443:10443
+    tty: true
+    environment:
+      IDP_HOST: "guard3.westeurope.cloudapp.azure.com:10443"

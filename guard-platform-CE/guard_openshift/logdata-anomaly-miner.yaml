@@ -1,0 +1,157 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: logdata-anomaly-miner
+  namespace: guardce
+  labels:
+    app: logdata-anomaly-miner
+    app.kubernetes.io/component: logdata-anomaly-miner
+    app.kubernetes.io/instance: logdata-anomaly-miner
+    app.kubernetes.io/name: logdata-anomaly-miner
+    app.kubernetes.io/part-of: guard
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: logdata-anomaly-miner
+    deploymentconfig: logdata-anomaly-miner
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: logdata-anomaly-miner
+  namespace: guardce
+  labels:
+    app: logdata-anomaly-miner
+    app.kubernetes.io/component: logdata-anomaly-miner
+    app.kubernetes.io/instance: logdata-anomaly-miner
+    app.kubernetes.io/name: logdata-anomaly-miner
+    app.kubernetes.io/part-of: guard
+spec:
+  host: logdata-anomaly-miner-guardce.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: logdata-anomaly-miner
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: logdata-anomaly-miner-lib
+  namespace: guardce
+  labels:
+    app: logdata-anomaly-miner
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+  volumeMode: Filesystem
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: logdata-anomaly-miner-log
+  namespace: guardce
+  labels:
+    app: logdata-anomaly-miner
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+  volumeMode: Filesystem
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: logdata-anomaly-miner
+  namespace: guardce
+  labels:
+    app: logdata-anomaly-miner
+    app.kubernetes.io/component: logdata-anomaly-miner
+    app.kubernetes.io/instance: logdata-anomaly-miner
+    app.kubernetes.io/name: logdata-anomaly-miner
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime: logdata-anomaly-miner
+    app.openshift.io/runtime-namespace: guardce
+    app.openshift.io/runtime-version: latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logdata-anomaly-miner
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: logdata-anomaly-miner
+        deploymentconfig: logdata-anomaly-miner
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+    spec:
+      volumes:
+        - name: logdata-anomaly-miner
+          secret:
+            defaultMode: 420
+            secretName: aminer
+        - name: logdata-anomaly-miner-conf
+          secret:
+            defaultMode: 420
+            secretName: aminer-conf
+        - name: logdata-anomaly-miner-lib
+          persistentVolumeClaim:
+            claimName: logdata-anomaly-miner-lib
+        - name: logdata-anomaly-miner-log
+          persistentVolumeClaim:
+            claimName: logdata-anomaly-miner-log
+      containers:
+        - name: logdata-anomaly-miner
+          image: pierluca1/logdata-anomaly-miner:latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - name: logdata-anomaly-miner
+              mountPath: /etc/aminer
+            - name: logdata-anomaly-miner-conf
+              mountPath: /etc/aminer/conf-enabled
+            - name: logdata-anomaly-miner-lib
+              mountPath: /var/lib/aminer
+            - name: logdata-anomaly-miner-log
+              mountPath: /logs
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext:
+        runAsUser: 1000
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+---
+
+---

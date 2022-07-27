@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  kafka_spring_client_oauth:
+    image: guard/aaa/kafka_spring_client_oauth:latest
+    container_name: aa_module-kafka_spring_client_oauth
+    build:
+      context: kafka_spring_client_oauth
+    command: java -jar producer.jar
+    ports:
+      - 18080:8080
+    environment:
+      KAFKA_BROKERS: "kafka1:9093"
+      CLIENT_ID: "kafka_spring_client_oauth"
+      KAFKA_SECURITY_PROTOCOL: "SASL_SSL"
+      KAFKA_SSL_TRUSTSTORE_LOCATION: "/var/private/ssl/kafka.truststore.jks"
+      KAFKA_SSL_TRUSTSTORE_PASSWORD: "javacaps"
+      OAUTH_SERVER_BASE_URI: "https://idp:10443/oauth2/"
+      OAUTH_SERVER_TOKEN_ENDPOINT_PATH: "/token"
+      OAUTH_SERVER_INTROSPECTION_ENDPOINT_PATH: "/introspect"
+      OAUTH_SERVER_CLIENT_ID: "kafka-spring-client-oauth"
+      OAUTH_SERVER_CLIENT_SECRET: "iV8vTaWP_OH4pxBGoNVOV4rZOQ4b"
+      OAUTH_SERVER_GRANT_TYPE: "client_credentials"
+      OAUTH_SERVER_SCOPES: "kafka:topic:test:describe kafka:topic:test:write kafka:topic:test:create"
+      OAUTH_SERVER_ACCEPT_UNSECURE_SERVER: "true"
+    depends_on:
+      - kafka1
+      - idp

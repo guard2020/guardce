@@ -1,0 +1,5 @@
+{
+    "id": "eth0",
+    "type_id": "eth",
+    "description":"Ethernet Network Link"
+}

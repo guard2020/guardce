@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+    kafka_tls_python:
+        image: guard/aaa/kafka_tls_python:latest
+        container_name: aa_module-kafka_tls_python
+        build:
+            context: kafka_tls_python
+        command: python producer.py
+        environment:
+            KAFKA_BOOTSTRAP_SERVERS: kafka1:9094
+            KAFKA_CLIENT_ID: kafka-producer-example
+            KAFKA_SECURITY_PROTOCOL: SSL
+            KAFKA_SSL_CAFILE: truststore.pem
+            KAFKA_SSL_CERTFILE: keystore.pem
+        depends_on:
+            - kafka1
+            - idp

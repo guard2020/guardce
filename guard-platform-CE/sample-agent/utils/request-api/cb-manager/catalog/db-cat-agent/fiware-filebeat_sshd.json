@@ -1,0 +1,38 @@
+{
+    "actions": [
+        {
+            "config": {
+                "cmd": "systemctl start filebeat_sshd"
+            },
+            "id": "start",
+            "status": "started"
+        },
+        {
+            "config": {
+                "cmd": "systemctl stop filebeat_sshd"
+            },
+            "id": "stop",
+            "status": "stopped"
+        }
+    ],
+    "description": "Filebeat for SSH files",
+    "id": "filebeat_sshd",
+    "parameters": [
+        {
+            "config": {
+                "path": [
+                    "filebeat",
+                    "inputs",
+                    "paths"
+                ],
+                "schema": "yaml",
+                "source": "/home/kolla/GUARD/filebeat/filebeat.yaml"
+            },
+            "description": "Paths for sshd authentication logs",
+            "id": "filebeat.inputs.paths",
+            "type": "string"
+        }
+    ],
+    "partner": "guard-partner",
+    "type": "AgentType"
+}

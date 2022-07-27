@@ -1,0 +1,8 @@
+version: '3.3'
+
+# Filesystem anchor to compose your environment in a flexible manner.
+# Include this file as your first .yml file, then all the others relative to this directory.
+#
+# Example:
+#   docker-compose -f compose.yml -f identity_provider/compose.yml -f ... up --build
+#

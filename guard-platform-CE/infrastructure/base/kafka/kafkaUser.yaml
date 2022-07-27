@@ -1,0 +1,115 @@
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaUser
+metadata:
+  name: chirpstack-as-kafka
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: guard-cluster
+spec:
+  authentication:
+    type: scram-sha-512
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: chirpstack_as
+          patternType: literal
+        operation: Read
+        host: "*"
+      - resource:
+          type: topic
+          name: chirpstack_as
+          patternType: literal
+        operation: Describe
+        host: "*"
+      - resource:
+          type: group
+          name: chirpstack
+          patternType: literal
+        operation: Read
+        host: "*"
+      - resource:
+          type: topic
+          name: chirpstack_as
+          patternType: literal
+        operation: Write
+        host: "*"
+      - resource:
+          type: topic
+          name: chirpstack_as
+          patternType: literal
+        operation: Create
+        host: "*"
+      - resource:
+          type: topic
+          name: chirpstack_as
+          patternType: literal
+        operation: Describe
+        host: "*"
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaUser
+metadata:
+  name: guard-nask-0
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: guard-cluster
+spec:
+  authentication:
+    type: scram-sha-512
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: chirpstack_as
+          patternType: literal
+        operation: Read
+        host: "*"
+      - resource:
+          type: topic
+          name: chirpstack_as
+          patternType: literal
+        operation: Describe
+        host: "*"
+      - resource:
+          type: group
+          name: nask
+          patternType: literal
+        operation: Read
+        host: "*"
+
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaUser
+metadata:
+  name: guard-wobcom-0
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: guard-cluster
+spec:
+  authentication:
+    type: scram-sha-512
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: chirpstack_as
+          patternType: literal
+        operation: Read
+        host: "*"
+      - resource:
+          type: topic
+          name: chirpstack_as
+          patternType: literal
+        operation: Describe
+        host: "*"
+      - resource:
+          type: group
+          name: gwobcom
+          patternType: literal
+        operation: Read
+        host: "*"

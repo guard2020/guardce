@@ -1,0 +1,13 @@
+2022-06-14 05:57:10,364 INFO o.s.b.StartupInfoLogger [main] Starting SpringBootKafkaAppApplication on DESKTOP-SAR866P with PID 43196 (C:\Users\manos\Dropbox\PC\Documents\FORTH\Guard\FinalTests\VeryLastTests\RiskAssessment\riskAssessment_v5\target\classes started by manos in C:\Users\manos\Dropbox\PC\Documents\FORTH\Guard\FinalTests\VeryLastTests\RiskAssessment\riskAssessment_v5)
+2022-06-14 05:57:10,376 INFO o.s.b.SpringApplication [main] No active profile set, falling back to default profiles: default
+2022-06-14 05:57:11,730 INFO o.s.b.w.e.t.TomcatWebServer [main] Tomcat initialized with port(s): 9001 (http)
+2022-06-14 05:57:11,893 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 1433 ms
+2022-06-14 05:57:14,081 INFO o.s.s.c.ExecutorConfigurationSupport [main] Initializing ExecutorService 'applicationTaskExecutor'
+2022-06-14 05:57:14,700 INFO o.s.s.c.ExecutorConfigurationSupport [main] Initializing ExecutorService
+2022-06-14 05:57:14,733 INFO o.s.b.w.e.t.TomcatWebServer [main] Tomcat started on port(s): 9001 (http) with context path ''
+2022-06-14 05:57:14,747 INFO o.s.b.StartupInfoLogger [main] Started SpringBootKafkaAppApplication in 5.044 seconds (JVM running for 6.88)
+2022-06-14 05:57:15,182 INFO o.s.c.l.LogAccessor [assigned_listener_id-0-C-1] node: partitions assigned: [vuln_scanner-0]
+2022-06-14 06:01:03,229 INFO o.s.c.l.LogAccessor [assigned_listener_id-0-C-1] node: partitions revoked: [vuln_scanner-0]
+2022-06-14 06:01:03,233 INFO o.s.s.c.ExecutorConfigurationSupport [assigned_listener_id-0-C-1] Shutting down ExecutorService
+2022-06-14 06:01:03,247 INFO o.s.c.l.LogAccessor [assigned_listener_id-0-C-1] node: Consumer stopped
+2022-06-14 06:01:03,250 INFO o.s.s.c.ExecutorConfigurationSupport [SpringContextShutdownHook] Shutting down ExecutorService 'applicationTaskExecutor'

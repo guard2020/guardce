@@ -1,0 +1,18 @@
+{
+	"task_name" : "Check Setup",
+	"hosts" : [
+		{"host" : "127.0.0.1",
+		 "openvas" : {
+			"ports" : {
+				"tcp" : [22]
+		 	},
+		  "qod" : 30,
+		  "scan" : "fast"
+		  },
+		 "w3af" : {
+		 	"ports" : [80],
+		 	"scan" : "web_infrastructure"
+		 }
+		}
+	]
+}

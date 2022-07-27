@@ -1,0 +1,12 @@
+{
+    "id": "bpfflowmon@docker",
+    "operations": [
+        {
+            "actions": [
+                {
+                    "id": "check"
+                }
+            ]
+        }
+    ]
+}

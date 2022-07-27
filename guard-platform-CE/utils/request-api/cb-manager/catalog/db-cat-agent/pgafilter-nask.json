@@ -1,0 +1,96 @@
+{
+    "id": "pgafilter",
+    "partner": "nask",
+    "description": "eBPF+XDP rule-based detection of packets generated with PGA",
+    "parameters": [
+        {
+            "id": "kafka-interval",
+            "type": "integer",
+            "example": 1,
+            "description": "Interval of Kafka messages in seconds",
+            "config": {
+                "schema": "yaml",
+                "source": "/opt/pgafilter/config.yml",
+                "path": [
+                    "0",
+                    "kafka-interval"
+                ]
+            }
+        },
+        {
+            "id": "kafka-topic",
+            "type": "string",
+            "example": "data-pgafilter",
+            "description": "Kafka topic for sending the messages",
+            "config": {
+                "schema": "yaml",
+                "source": "/opt/pgafilter/config.yml",
+                "path": [
+                    "0",
+                    "kafka-topic"
+                ]
+            }
+        },
+        {
+            "id": "threshold",
+            "type": "integer",
+            "example": "1",
+            "description": "Threshold rule pps to send kafka message",
+            "config": {
+                "schema": "yaml",
+                "source": "/opt/pgafilter/config.yml",
+                "path": [
+                    "0",
+                    "threshold"
+                ]
+            }
+        },
+        {
+            "id": "rules",
+            "type": "string",
+            "list": "true",
+            "example": "['rule1', 'rule2', 'rule3']",
+            "description": "Enabled rules",
+            "config": {
+                "schema": "yaml",
+                "source": "/opt/pgafilter/config.yml",
+                "path": [
+                    "0",
+                    "rules"
+                ]
+            }
+        }
+    ],
+    "resources": [
+        {
+            "id": "config-file",
+            "description": "pgafilter configuration file",
+            "config": {
+                "path": "/opt/pgafilter/config.yml"
+            }
+        }
+    ],
+    "actions": [
+        {
+            "id": "start",
+            "status": "started",
+            "config": {
+                "cmd": "pgafilter start"
+            }
+        },
+        {
+            "id": "stop",
+            "status": "stopped",
+            "config": {
+                "cmd": "pgafilter stop"
+            }
+        },
+        {
+            "id": "restart",
+            "status": "started",
+            "config": {
+                "cmd": "pgafilter restart"
+            }
+        }
+    ]
+}

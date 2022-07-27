@@ -1,0 +1,15 @@
+[
+    {
+        "id": "chirpstack-kafka",
+        "partner": "wob",
+        "type_id": "container-k8s",
+        "description": "Chirpstack MQTT to Kafka Bridge",
+        "hostname": "lcp.integration.staging.iot.wolfsburg.digital",
+        "enabled": true,
+        "lcp": {
+            "port": 443,
+            "https": true
+        },
+        "stage": "production"
+    }
+]

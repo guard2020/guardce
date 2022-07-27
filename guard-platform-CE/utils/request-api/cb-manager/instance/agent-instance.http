@@ -1,0 +1,118 @@
+@uri = instance/agent
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": ["id"]
+}
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": [],
+    "where": {
+        "equals": {
+            "target": "id",
+            "expr": "pgafilter@lcp-mitigation"
+        }
+    }
+}
+
+###
+
+POST {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+# < ./db-inst-agent/nask/pgafilter-rules.json
+# {
+#     "id": "dev@user-vm-local",
+#     "exec_env_id": "user-vm-local",
+#     "agent_catalog_id": "dev",
+#     "status": "stopped",
+#     "partner": "cnit"
+# }
+
+
+###
+
+@content = "test: 2"
+
+PUT {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+# < ./db-inst-agent/ait/aminer-stop.json
+# < ./db-inst-agent/ait/aminer-config.json
+# < ./db-inst-agent/ait/aminer-start.json
+# < ./db-inst-agent/cnit/bpfflowmon-check.json
+# < ./db-inst-agent/cnit/dev-run.json
+# < ./db-inst-agent/pgafilter-rules.json
+# < ./db-inst-agent/pgafilter-status.json
+# < ./db-inst-agent/nask/pgafilter-status.json
+# < ./db-inst-agent/ait/ablocker-unblock.json
+
+{
+    "id": "dev@user-vm-local",
+    "operations": [
+        {
+            "parameters": [{
+                "id": "param-yaml",
+                "value": "ciao"
+            }]
+        },
+        {
+            "actions": [
+                {
+                    "id": "test",
+                    "run": "ls"
+                }
+            ]
+        },
+        {
+            "resources": []
+        }
+    ]
+}
+
+# {
+#   "id": "bpfflowmon@docker",
+#   "operations": [
+#     {
+#       "actions": [
+#         {
+#           "id": "start",
+#           "dev": "eth0",
+#           "int": "10",
+#           "dir": "ingress"
+#         }
+#       ]
+#     }
+#   ]
+# }
+
+# {
+#     "id": "pgafilter@lcp-mitigation",
+#     "operations": [
+#         {
+#             "actions": [
+#                 {
+#                     "id": "stop"
+#                 }
+#             ]
+#         }
+#     ]
+# }
+
+###
+
+DELETE {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "where": {
+        "equals": {
+            "target": "exec_env_id",
+            "expr": "lcp:ScrubbingCenter"
+        }
+    }
+}

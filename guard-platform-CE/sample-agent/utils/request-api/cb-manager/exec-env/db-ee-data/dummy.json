@@ -1,0 +1,34 @@
+[
+    {
+        "id": "digit-cyber",
+        "type_id": "cloud",
+        "description": "Digit Cyber",
+        "hostname": "digit-cyber.com",
+        "enabled": true,
+        "stage": "production"
+    },
+    {
+        "id": "alpha-service",
+        "type_id": "cloud",
+        "description": "Alpha Service",
+        "hostname": "alpha-service.io",
+        "enabled": true,
+        "stage": "production"
+    },
+    {
+        "id": "vision-tech",
+        "type_id": "cloud",
+        "description": "Vision Tech",
+        "hostname": "vision-tech.me",
+        "enabled": true,
+        "stage": "production"
+    },
+    {
+        "id": "titan-tech",
+        "type_id": "application",
+        "description": "Titan Tech",
+        "hostname": "45.32.34.34",
+        "enabled": true,
+        "stage": "production"
+    }
+]

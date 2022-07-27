@@ -1,0 +1,16 @@
+[
+    {
+        "id": "dept_0_vuln_scanner",
+        "partner": "maggioli",
+        "type_id": "container-k8s",
+        "description": "Departiment 0 - Vulnerability Scanner",
+        "hostname": "guard-test-department-0.maggiolicloud.it",
+        "enabled": true,
+        "lcp": {
+            "endpoint": "vuln-agent",
+            "port": 443,
+            "https": true
+        },
+        "stage": "production"
+    }
+]

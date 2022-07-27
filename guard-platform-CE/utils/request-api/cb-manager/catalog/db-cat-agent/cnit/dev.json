@@ -1,0 +1,120 @@
+{
+    "id": "dev",
+    "partner": "cnit",
+    "stage": "development",
+    "description": "Agent entry for development purpose.",
+    "actions": [
+        {
+            "id": "test",
+            "config": {
+                "cmd": "{run}"
+            }
+        },
+        {
+            "id": "ls",
+            "config": {
+                "cmd": "ls",
+                "args": [
+                    "-l",
+                    "-a"
+                ]
+            }
+        }
+    ],
+    "parameters": [
+        {
+            "id": "param-yaml",
+            "type": "boolean",
+            "example": true,
+            "description": "Test field",
+            "config": {
+                "schema": "yaml",
+                "source": "test.yml",
+                "path": [
+                    "test",
+                    "0",
+                    "enabled"
+                ]
+            }
+        },
+        {
+            "id": "param-yaml-2",
+            "type": "boolean",
+            "example": true,
+            "description": "Test field",
+            "config": {
+                "schema": "yaml",
+                "source": "test.yml",
+                "path": "test/0/enabled"
+            }
+        },
+        {
+            "id": "param-json",
+            "type": "string",
+            "example": "plain",
+            "description": "Test field",
+            "config": {
+                "schema": "json",
+                "source": "test.json",
+                "path": [
+                    "test",
+                    "format"
+                ]
+            }
+        },
+        {
+            "id": "param-xml",
+            "type": "integer",
+            "example": 35,
+            "description": "Test field",
+            "config": {
+                "schema": "xml",
+                "source": "test.xml",
+                "path": [
+                    "test",
+                    "counter"
+                ]
+            }
+        },
+        {
+            "id": "param-properties",
+            "type": "string",
+            "example": "ssl",
+            "description": "Test field",
+            "config": {
+                "schema": "properties",
+                "source": "test.ini",
+                "path": [
+                    "test",
+                    "enhanced"
+                ]
+            }
+        }
+    ],
+    "resources": [
+        {
+            "id": "resource-yaml",
+            "description": "Configuration file",
+            "config": {
+                "path": "resource.yml"
+            },
+            "example": "..."
+        },
+        {
+            "id": "resource-properties",
+            "description": "Configuration file",
+            "config": {
+                "path": "resource.ini"
+            },
+            "example": "..."
+        },
+        {
+            "id": "resource-xml",
+            "description": "Configuration file",
+            "config": {
+                "path": "resource.xml"
+            },
+            "example": "..."
+        }
+    ]
+}

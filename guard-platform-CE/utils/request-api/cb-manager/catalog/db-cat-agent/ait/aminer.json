@@ -1,0 +1,29 @@
+{
+    "id": "aminer",
+    "partner": "ait",
+    "resources": [
+        {
+            "id": "config-file",
+            "description": "AMiner configuration file",
+            "config": {
+                "path": "/etc/aminer/config.yml"
+            }
+        }
+    ],
+    "actions": [
+        {
+            "id": "start",
+            "status": "started",
+            "config": {
+                "cmd": "supervisorctl start aminer"
+            }
+        },
+        {
+            "id": "stop",
+            "status": "stopped",
+            "config": {
+                "cmd": "supervisorctl stop aminer"
+            }
+        }
+    ]
+}

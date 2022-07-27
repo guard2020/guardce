@@ -1,0 +1,61 @@
+@uri = catalog/agent
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": ["id", "description"]
+}
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": [],
+    "where": {
+        "equals": {
+            "target": "id",
+            "expr": "filebeat_sshd"
+        }
+    }
+}
+
+###
+
+POST {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+< ./db-cat-agent/cnit/dev.json
+# < ./db-cat-agent/cnit/filebeat.json
+# < ./db-cat-agent/cnit/logstash.json
+# < ./db-cat-agent/cnit/metricbeat.json
+# < ./db-cat-agent/cnit/packetbeat.json
+# < ./db-cat-agent/cnit/termux-api.json
+# < ./db-cat-agent/8bells-vdpi.json
+# < ./db-cat-agent/ait/aminer.json
+# < ./db-cat-agent/ait/ablocker.json
+# < ./db-cat-agent/chirpstack-kafka-wob.json
+# < ./db-cat-agent/pgafilter-nask.json
+# < ./db-cat-agent/vuln_scanner-forth.json
+
+###
+
+PUT {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    
+}
+
+###
+
+DELETE {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "where": {
+        "equals": {
+            "target": "id",
+            "expr": "os_vm_sensor"
+        }
+    }
+}

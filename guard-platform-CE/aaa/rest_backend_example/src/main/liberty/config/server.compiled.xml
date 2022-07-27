@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="testcase-one">
+
+    <!-- Author: Giovanni Grieco <giovanni.grieco@poliba.it> -->
+
+    <featureManager>
+        <feature>microProfile-3.3</feature>
+    </featureManager>
+
+    <httpEndpoint id="defaultHttpEndpoint"
+                  host="*"
+                  httpPort="19081"
+                  httpsPort="19444"/>
+
+    <webApplication location="testcase-one.war" contextRoot="/">
+        <classloader apiTypeVisibility="+third-party" />
+    </webApplication>
+    <mpMetrics authentication="false"/>
+
+    <!-- This is the keystore that will be used by SSL and by JWT. -->
+    <!--keyStore id="defaultKeyStore" location="public.jks" type="JKS" password="atbash" /-->
+    <keyStore id="defaultKeyStore"
+              location="${server.config.dir}/resources/security/key.jks"
+              type="JKS"
+              password="wso2carbon"
+    />
+
+    <!-- The MP JWT configuration that injects the caller's JWT into a ResourceScoped bean for inspection. -->
+    <!--mpJwt id="jwtUserConsumer" keyName="theKeyId" audiences="targetService" issuer="${jwt.issuer}"/-->
+    <mpJwt id="jetUserConsumer"
+           keyName="wso2carbon"
+           audiences="xYaTz_5XfphvBLBbcpRWoQC8VOca"
+           issuer="https://localhost:9443/oauth2/token"
+           jwksUri="https://idp:10443/oauth2/jwks"
+           userNameAttribute="sub"
+    />
+</server>

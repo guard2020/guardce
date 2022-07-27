@@ -1,0 +1,7 @@
+@uri = chain
+
+###
+
+@id = root-ehealth-app-dep1.uc2.guard-project.eu
+
+DELETE {{cb_manager_endpoint}}/{{uri}}/{{id}} HTTP/1.1

@@ -1,0 +1,46 @@
+@uri = connection
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": ["id"],
+    "where": {
+        "equals": {
+            "target": "partner",
+            "expr": "cnit"
+        }
+    }
+}
+
+###
+
+POST {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+< ./db-connection.json
+
+###
+
+PUT {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    
+}
+
+###
+
+DELETE {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "where": {
+        "equals": {
+            "target": "exec_env_id",
+            "expr": "lcp:ScrubbingCenter"
+        }
+    }
+}

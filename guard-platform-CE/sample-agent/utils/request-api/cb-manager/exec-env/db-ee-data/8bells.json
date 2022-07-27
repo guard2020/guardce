@@ -1,0 +1,15 @@
+[
+    {
+        "id": "web-server",
+        "partner": "8bells",
+        "type_id": "application",
+        "description": "Web Server",
+        "hostname": "guard-lcp01.8bellsresearch.com",
+        "enabled": true,
+        "lcp": {
+            "port": 4000,
+            "https": false
+        },
+        "stage": "production"
+    }
+]

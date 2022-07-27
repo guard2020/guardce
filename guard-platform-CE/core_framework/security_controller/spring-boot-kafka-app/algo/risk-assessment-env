@@ -1,0 +1,4 @@
+kafkaEndpoint=10.0.0.7:9092
+GUARD_SERVER_ADDRESS=10.0.0.7:9092
+topicName=vuln_scanner
+TOPICNAME=vuln_scanner

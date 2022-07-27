@@ -1,0 +1,23 @@
+from kafka.admin import KafkaAdminClient, NewTopic
+
+
+admin_client = KafkaAdminClient(
+    bootstrap_servers="guard3.westeurope.cloudapp.azure.com:29092", 
+    client_id='testi1'
+)
+
+topics = []
+with open("mytopics.txt") as file:
+    for l in file:
+        topics.append(l.strip())
+
+###topics = ['Berlin', 'Milano', 'Sydney', 'Moscow']
+
+topic_list  = []
+for listitem in topics:
+    print (listitem)
+        
+    topic_list = []
+    topic_list.append(NewTopic(name=listitem, num_partitions=1, replication_factor=3))
+    admin_client.create_topics(new_topics=topic_list, validate_only=False)
+
