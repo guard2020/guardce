@@ -1,0 +1,104 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: guard-starter
+  namespace: guardce
+  labels:
+    app: guard-starter
+    app.kubernetes.io/component: guard-starter
+    app.kubernetes.io/instance: guard-starter
+    app.kubernetes.io/name: guard-starter
+    app.kubernetes.io/part-of: guard
+  annotations:
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: guard-starter
+    deploymentconfig: guard-starter
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: guard-starter
+  namespace: guardce
+  labels:
+    app: guard-starter
+    app.kubernetes.io/component: guard-starter
+    app.kubernetes.io/instance: guard-starter
+    app.kubernetes.io/name: guard-starter
+    app.kubernetes.io/part-of: guard-starter
+  annotations:
+spec:
+  host: guard-starter-guardce.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: akhq
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None
+---
+kind: DeploymentConfig
+version: apps.openshift.io/v1
+#apiVersion: apps/v1
+field: serviceAccountName rest-api-edit
+metadata:
+  name: guard-starter
+  namespace: guardce
+  labels:
+    app: guard-starter
+    app.kubernetes.io/component: guard-starter
+    app.kubernetes.io/instance: guard-starter
+    app.kubernetes.io/name: guard-starter
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime: guard-starter
+    app.openshift.io/runtime-namespace: guardce
+    app.openshift.io/runtime-version: latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guard-starter
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: guard-starter
+        deploymentconfig: guard-starter
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+    spec:
+      containers:
+        - name: guard-starter
+          image: 'guard2020/guard-starter:latest'
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: rest-api-edit
+      serviceAccount: rest-api-edit
+      dnsPolicy: ClusterFirst
+      securityContext:
+        runAsUser: 1000
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+

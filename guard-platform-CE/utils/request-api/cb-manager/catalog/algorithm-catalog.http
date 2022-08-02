@@ -1,0 +1,48 @@
+@uri = catalog/algorithm
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": ["id"]
+}
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": [],
+    "where": {
+        "equals": {
+            "target": "id",
+            "expr": "cnit-ml"
+        }
+    }
+}
+
+###
+
+POST {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+< ./db-cat-algorithm.json
+
+###
+
+PUT {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+< ./db-cat-algorithm.json
+
+###
+
+DELETE {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "where": {
+        "equals": {
+            "target": "partner",
+            "expr": "cnit"
+        }
+    }
+}

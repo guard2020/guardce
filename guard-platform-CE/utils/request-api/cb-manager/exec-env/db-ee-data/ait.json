@@ -1,0 +1,15 @@
+[
+    {
+        "id": "network-manager",
+        "partner": "ait",
+        "type_id": "application",
+        "description": "Network Manager",
+        "hostname": "10.0.0.7",
+        "enabled": true,
+        "lcp": {
+            "port": 4000,
+            "https": false
+        },
+        "stage": "production"
+    }
+]

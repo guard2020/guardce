@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  logstash:
+    image: guard/aaa/logstash:vanilla
+    build:
+      context: logstash_oauth
+    container_name: aa_module-logstash
+    environment:
+      OAUTH_SERVER_BASE_URI: "https://idp:9443/oauth2/"
+      OAUTH_SERVER_TOKEN_ENDPOINT_PATH: "/token"
+      OAUTH_SERVER_INTROSPECTION_ENDPOINT_PATH: "/introspect"
+      OAUTH_SERVER_CLIENT_ID: "kafka-broker"
+      OAUTH_SERVER_CLIENT_SECRET: "yGC8KxKYYQ_q1UbTBAwxivThaZIa"
+      OAUTH_SERVER_GRANT_TYPE: "client_credentials"
+      OAUTH_SERVER_SCOPES: "kafka:cluster:kafka-cluster:cluster_action"
+      OAUTH_SERVER_ACCEPT_UNSECURE_SERVER: "true"
+      OAUTH_SERVER_ENFORCE: "false"

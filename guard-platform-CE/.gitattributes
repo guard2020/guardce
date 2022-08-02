@@ -1,0 +1,2 @@
+*.csv filter=lfs diff=lfs merge=lfs -text
+core_framework/security_services/algo1.2/src/resources/TCP_1/data/Wednesday-workingHours.pcap_ISCX.csv filter=lfs diff=lfs merge=lfs -text

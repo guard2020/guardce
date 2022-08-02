@@ -1,0 +1,25 @@
+{
+    "id": "dev@user-vm",
+    "operations": [
+        {
+            "actions": [
+                {
+                    "id": "test",
+                    "run": "ls -al",
+                    "output_format": "plain"
+                },
+                {
+                    "id": "ls"
+                }
+            ]
+        },
+        {
+            "parameters": [
+                {
+                    "id": "param-yaml-2",
+                    "value": "polling:\n   interval: 10"
+                }
+            ]
+        }
+    ]
+}

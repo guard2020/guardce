@@ -1,0 +1,146 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql
+  namespace: guardce
+  labels:
+    app: mysql
+    app.kubernetes.io/component: mysql
+    app.kubernetes.io/instance: mysql
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: guard
+spec:
+  ports:
+    - name: 3306-tcp
+      protocol: TCP
+      port: 3306
+      targetPort: 3306
+    - name: 33060-tcp
+      protocol: TCP
+      port: 33060
+      targetPort: 33060
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: mysql
+    deploymentconfig: mysql
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: mysql
+  namespace: guardce
+  labels:
+    app: mysql
+    app.kubernetes.io/component: mysql
+    app.kubernetes.io/instance: mysql
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: guard
+  annotations:
+    openshift.io/host.generated: 'true'
+spec:
+  host: mysql-guardce.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: mysql
+    weight: 100
+  port:
+    targetPort: 3306-tcp
+  wildcardPolicy: None
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: mysql
+  namespace: guardce
+data:
+  MYSQL_DATABASE: security_dashboard
+  MYSQL_PASSWORD: rootguard2021
+  MYSQL_ROOT_PASSWORD: securerootpassword
+  MYSQL_USER: sduser
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql-1
+  creationTimestamp: null
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  selector: {}
+  resources:
+    requests:
+      storage: 10Mi
+  volumeMode: Filesystem
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    alpha.image.policy.openshift.io/resolve-names: '*'
+    deployment.kubernetes.io/revision: '2'
+    openshift.io/generated-by: OpenShiftWebConsole
+  name: mysql
+  namespace: guardce
+  labels:
+    app: mysql
+    app.kubernetes.io/component: mysql
+    app.kubernetes.io/instance: mysql
+    app.kubernetes.io/name: mysql
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime: mysql
+    app.openshift.io/runtime-namespace: guardce
+    app.openshift.io/runtime-version: latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mysql
+        deploymentconfig: mysql
+    spec:
+      volumes:
+        - name: mysql-1
+          persistentVolumeClaim:
+            claimName: mysql-1
+      containers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: mysql
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+            - containerPort: 33060
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mysql-1
+              mountPath: /var/lib/mysql
+          terminationMessagePolicy: File
+          envFrom:
+            - configMapRef:
+                name: mysql
+          image: pierluca1/mysql:latest
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+---
+

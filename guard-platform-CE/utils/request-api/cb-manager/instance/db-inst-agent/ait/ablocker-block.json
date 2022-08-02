@@ -1,0 +1,15 @@
+[
+    {
+        "id": "ablocker@network-manager",
+        "operations": [
+            {
+                "actions": [
+                    {
+                        "id": "block",
+                        "ip": "22.22.22.22"
+                    }
+                ]
+            }
+        ]
+    }
+]

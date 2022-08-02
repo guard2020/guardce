@@ -1,0 +1,18 @@
+[
+    {
+        "id": "dpi-malware-finder-1",
+        "endpoint": "12.3.4.5:9999"
+    },
+    {
+        "id": "actc-resource-monitoring-1",
+        "endpoint": "192.157.1.2:9999"
+    },
+    {
+        "id": "apg-resource-monitor-1",
+        "endpoint": "192.157.1.2:9991"
+    },
+    {
+        "id": "p&p-resource-monitor-1",
+        "endpoint": "192.157.11.2:8999"
+    }
+]

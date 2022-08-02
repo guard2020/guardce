@@ -1,0 +1,49 @@
+@uri = type/exec-env
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": ["id"],
+    "where": {
+        "equals": {
+            "target": "partner",
+            "expr": "cnit"
+        }
+    }
+}
+
+###
+
+POST {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "id": "container-lxc",
+    "name": "Container LXC"
+}
+
+###
+
+PUT {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    
+}
+
+###
+
+DELETE {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "where": {
+        "equals": {
+            "target": "partner",
+            "expr": "cnit"
+        }
+    }
+}

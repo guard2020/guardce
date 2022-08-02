@@ -1,0 +1,73 @@
+{
+    "id": "metricbeat",
+    "partner": "cnit",
+    "parameters": [
+        {
+            "id": "system-enabled",
+            "type": "boolean",
+            "example": true,
+            "description": "Enable/disable the collection of the system data",
+            "config": {
+                "schema": "yaml",
+                "source": "/opt/guard/metricbeat/modules.d/system.yml",
+                "path": [
+                    "0",
+                    "enabled"
+                ]
+            }
+        },
+        {
+            "id": "system-period",
+            "type": "time-duration",
+            "example": "10s",
+            "description": "Period to collect the system data",
+            "config": {
+                "schema": "yaml",
+                "source": "/opt/guard/metricbeat/modules.d/system.yml",
+                "path": [
+                    "0",
+                    "period"
+                ]
+            }
+        }
+    ],
+    "resources": [
+        {
+            "id": "config-file",
+            "description": "Configuration file to collect log system data",
+            "config": {
+                "path": "/opt/guard/metricbeat/modules.d/system.yml"
+            },
+            "example": "https://gitlab.com/guard2/guard-platform/-/blob/developmentCNIT/local_sidercars/monitoring/metricbeat/settings/7.8.0/modules.d/system.yml"
+        }
+    ],
+    "actions": [
+        {
+            "id": "init",
+            "config": {
+                "cmd": "/opt/guard/commands/metricbeat/init.sh"
+            }
+        },
+        {
+            "id": "start",
+            "status": "started",
+            "config": {
+                "cmd": "/opt/guard/commands/metricbeat/start.sh",
+                "daemon": true
+            }
+        },
+        {
+            "id": "stop",
+            "status": "stopped",
+            "config": {
+                "cmd": "/opt/guard/commands/metricbeat/stop.sh"
+            }
+        },
+        {
+            "id": "health",
+            "config": {
+                "cmd": "/opt/guard/commands/metricbeat/health.sh"
+            }
+        }
+    ]
+}

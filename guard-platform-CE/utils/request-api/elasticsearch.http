@@ -1,0 +1,65 @@
+@index=aminer-statusinfo-2022.06.08
+
+### Info
+GET {{elasticsearch_endpoint}}/?pretty HTTP/1.1
+
+### Health
+GET {{elasticsearch_endpoint}}/_cat/health?v&pretty HTTP/1.1
+
+### Nodes
+GET {{elasticsearch_endpoint}}/_cat/nodes?v&pretty HTTP/1.1
+
+### Indeces
+GET {{elasticsearch_endpoint}}/_cat/indices?v&health=yellow&pretty HTTP/1.1
+
+### Index definition
+GET {{elasticsearch_endpoint}}/{{index}} HTTP/1.1
+
+### Index data
+GET {{elasticsearch_endpoint}}/{{index}}/_search HTTP/1.1
+
+### Create index
+PUT {{elasticsearch_endpoint}}/{{index}} HTTP/1.1
+
+{
+   "mappings": {
+      "properties": {
+         "value": {
+            "type": "object",
+            "properties": {
+               "value": {
+                  "type": "text"
+               }
+            }
+         }
+      }
+   }
+}
+
+### Delete index
+DELETE {{elasticsearch_endpoint}}/{{index}} HTTP/1.1
+
+### Get Mapping of index
+GET {{elasticsearch_endpoint}}/{{index}}/_mapping
+
+### Pipeline
+GET {{elasticsearch_endpoint}}/_ingest/pipeline
+
+### Cluster health
+GET {{elasticsearch_endpoint}}/_cluster/health?pretty
+
+### Cluster state
+GET {{elasticsearch_endpoint}}/_cluster/state?pretty
+
+### Cluster stats
+GET {{elasticsearch_endpoint}}/_cluster/stats?pretty
+
+### Cluster settings
+GET {{elasticsearch_endpoint}}/_cluster/settings?pretty
+
+### Shard
+GET {{elasticsearch_endpoint}}/_cat/shards?v&h=n,index,shard,prirep,state,sto,sc,unassigned.reason,unassigned.details&s=sto,index
+
+###
+
+GET {{elasticsearch_endpoint}}/_cat/indices

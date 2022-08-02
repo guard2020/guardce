@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  service_google_oauth:
+    image: guard/aaa/service_google_oauth:latest
+    container_name: aa_module-service_google_oauth
+    build:
+      context: ./service_google_oauth
+      dockerfile: Dockerfile
+    ports:
+      - 15001:5000

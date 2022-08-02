@@ -1,0 +1,73 @@
+@uri = exec-env
+
+###
+
+@id = urn:lcp:wolfsburg-management.lab.fiware.org
+
+GET {{cb_manager_endpoint}}/{{uri}}/{{id}} HTTP/1.1
+
+###
+
+@select = "id", "lcp"
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": [{{select}}]
+}
+
+###
+
+@select =
+@operator = regexp
+@target = partner
+@expr = cnit
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": [{{select}}],
+    "where": {
+        "{{operator}}": {
+            "target": "{{target}}",
+            "expr": "{{expr}}"
+        }
+    }
+}
+
+###
+
+POST {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+< ./db-ee-data/8bells.json
+< ./db-ee-data/ait.json
+< ./db-ee-data/cnit.json
+< ./db-ee-data/dummy.json
+< ./db-ee-data/forth.json
+< ./db-ee-data/nask.json
+< ./db-ee-data/wob.jsonn
+
+###
+
+PUT {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    
+}
+
+###
+
+@operator = equals
+@target = partner
+@expr = cnit
+
+DELETE {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "where": {
+        "{{operator}}": {
+            "target": "{{target}}",
+            "expr": "{{expr}}"
+        }
+    }
+}

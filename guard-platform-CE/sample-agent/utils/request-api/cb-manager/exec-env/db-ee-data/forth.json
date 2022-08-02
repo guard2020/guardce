@@ -1,0 +1,29 @@
+[
+    {
+        "id": "frontend-old",
+        "partner": "forth",
+        "type_id": "application",
+        "description": "FrontEnd",
+        "hostname": "139.91.70.90",
+        "enabled": true,
+        "lcp": {
+            "port": 33664,
+            "https": false
+        },
+        "stage": "production"
+    },
+    {
+        "id": "frontend",
+        "partner": "forth",
+        "type_id": "application",
+        "description": "FrontEnd",
+        "hostname": "guard-test-department-0.maggiolicloud.it",
+        "enabled": true,
+        "lcp": {
+            "port": 443,
+            "endpoint": "vuln-agent",
+            "https": true
+        },
+        "stage": "production"
+    }
+]

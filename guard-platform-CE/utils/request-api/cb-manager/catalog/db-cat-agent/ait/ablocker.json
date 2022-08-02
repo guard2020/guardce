@@ -1,0 +1,18 @@
+{
+    "id": "ablocker",
+    "partner": "ait",
+    "actions": [
+        {
+            "id": "block",
+            "config": {
+                "cmd": "sudo /usr/local/sbin/block.sh {ip}"
+            }
+        },
+        {
+            "id": "unblock",
+            "config": {
+                "cmd": "sudo /usr/local/sbin/unblock.sh {ip}"
+            }
+        }
+    ]
+}

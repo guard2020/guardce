@@ -1,0 +1,40 @@
+version: '3.5'
+
+services:
+  guard-dashboard:
+    build:
+      context: .
+    image: 'guard:ui'
+    container_name: guard-dashboard
+    user: 'www-data'
+    ports:
+      - 84:8080
+      - 85:4443
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - ./certs/:/etc/ssl/certs/:ro
+    networks:
+      backend:
+        aliases:
+          - guard-dashboard
+  db:
+    image: mysql:5.7
+    container_name: db
+    #restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=securerootpassword
+      - MYSQL_DATABASE=security_dashboard
+      - MYSQL_USER=sduser
+      - MYSQL_PASSWORD=rootguard2021
+    ports:
+      - "3307:3306"
+    networks:
+      backend:
+        aliases:
+          - db
+networks:
+  backend:
+    name: backend-network

@@ -1,0 +1,93 @@
+[
+    {
+        "id": "filebeat@user-vm",
+        "exec_env_id": "user-vm",
+        "agent_catalog_id": "filebeat",
+        "status": "stopped",
+        "partner": "cnit"
+    },
+    {
+        "id": "metricbeat@user-vm",
+        "exec_env_id": "user-vm",
+        "agent_catalog_id": "metricbeat",
+        "status": "stopped",
+        "partner": "cnit"
+    },
+    {
+        "id": "packetbeat@user-vm",
+        "exec_env_id": "user-vm",
+        "agent_catalog_id": "packetbeat",
+        "status": "stopped",
+        "partner": "cnit"
+    },
+    {
+        "id": "termux-api@mobile-phone",
+        "exec_env_id": "mobile-phone",
+        "agent_catalog_id": "termux-api",
+        "status": "stopped",
+        "partner": "cnit"
+    },
+    {
+        "id": "pgafilter@backend-prod",
+        "exec_env_id": "backend-prod",
+        "agent_catalog_id": "pgafilter",
+        "status": "stopped",
+        "partner": "nask"
+    },
+    {
+        "id": "pgafilter@backend-test",
+        "exec_env_id": "backend-test",
+        "agent_catalog_id": "pgafilter",
+        "status": "stopped",
+        "partner": "nask"
+    },
+    {
+        "id": "pgafilter@backend-backup",
+        "exec_env_id": "backend-backup",
+        "agent_catalog_id": "pgafilter",
+        "status": "stopped",
+        "partner": "nask"
+    },
+    {
+        "id": "guard-vdpi@web-server",
+        "exec_env_id": "web-server",
+        "agent_catalog_id": "guard-vdpi",
+        "status": "stopped",
+        "partner": "8bells"
+    },
+    {
+        "id": "aminer@network-manager",
+        "exec_env_id": "network-manager",
+        "agent_catalog_id": "aminer",
+        "status": "stopped",
+        "partner": "ait"
+    },
+    {
+        "id": "chirpstack-kafka@chirpstack-kafka",
+        "exec_env_id": "chirpstack-kafka",
+        "agent_catalog_id": "chirpstack-kafka",
+        "status": "stopped",
+        "partner": "wob"
+    },
+    {
+        "id": "vuln-scanner@frontend",
+        "exec_env_id": "frontend",
+        "agent_catalog_id": "vuln-scanner",
+        "status": "stopped",
+        "partner": "forth"
+    },
+    {
+        "id": "dev@user-vm",
+        "exec_env_id": "user-vm",
+        "agent_catalog_id": "dev",
+        "status": "stopped",
+        "partner": "cnit"
+    },
+    {
+        "id": "dev@mobile-phone",
+        "exec_env_id": "mobile-phone",
+        "agent_catalog_id": "dev",
+        "status": "stopped",
+        "partner": "cnit"
+    }
+]

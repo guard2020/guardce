@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+# Cert-Manager
+- namespaces/cert-manager.yaml
+- cert-manager/crd.yaml
+- cert-manager/release.yaml
+# Ingress
+- kube-system/nginx-ingress/release.yaml
+#operators
+- namespaces/operator.yaml
+- operator/postgres/release.yaml
+- operator/redis/crd.yaml
+- operator/redis/release.yaml
+- operator/kafka/release.yaml

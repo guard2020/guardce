@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  producer_example:
+    image: guard/aaa/producer_example:latest
+    container_name: aa_module-producer_example
+    build:
+      context: producer_example
+    command: ./dockerize -wait https://idp:10443 -skip-tls-verify -timeout 600s java -jar producer.jar
+    environment:
+      KAFKA_BROKERS: "kafka1:9093"
+      CLIENT_ID: "producer_example"
+      KAFKA_SECURITY_PROTOCOL: "SASL_SSL"
+      KAFKA_SSL_KEYSTORE_LOCATION: "/var/private/ssl/producer_example.jks"
+      KAFKA_SSL_KEYSTORE_PASSWORD: "javacaps"
+      KAFKA_SSL_KEY_PASSWORD: "javacaps"
+      KAFKA_SSL_TRUSTSTORE_LOCATION: "/var/private/ssl/truststore.jks"
+      KAFKA_SSL_TRUSTSTORE_PASSWORD: "javacaps"
+      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ""
+      OAUTH_SERVER_BASE_URI: "https://idp:10443/oauth2/"
+      OAUTH_SERVER_TOKEN_ENDPOINT_PATH: "/token"
+      OAUTH_SERVER_INTROSPECTION_ENDPOINT_PATH: "/introspect"
+      OAUTH_SERVER_CLIENT_ID: "kafka-producer-example"
+      OAUTH_SERVER_CLIENT_SECRET: "iV8vTaWP_OH4pxBGoNVOV4rZOQ4a"
+      OAUTH_SERVER_GRANT_TYPE: "client_credentials"
+      OAUTH_SERVER_SCOPES: "kafka:topic:test:describe kafka:topic:test:write kafka:topic:test:create"
+      OAUTH_SERVER_ACCEPT_UNSECURE_SERVER: "true"
+    depends_on:
+      - kafka1
+      - idp

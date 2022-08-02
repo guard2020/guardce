@@ -1,0 +1,17 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: chirpstack-as
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: guard-cluster
+spec:
+  topicName: chirpstack_as
+  partitions: 10
+  replicas: 2
+  config:
+    retention.ms: 7200000
+    segment.bytes: 1073741824
+    message.format.version: "2.6"
+ 
+

@@ -1,0 +1,7 @@
+[
+    {
+        "id": "cnit-ml-1",
+        "algorithm_catalog_id": "cnit-ml",
+        "endpoint": "10.0.0.7:9999"
+    }
+]

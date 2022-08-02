@@ -1,0 +1,9 @@
+[
+    {
+        "agent_catalog_id": "ablocker",
+        "exec_env_id": "network-manager",
+        "id": "ablocker@network-manager",
+        "partner": "ait",
+        "status": "stopped"
+    }
+]

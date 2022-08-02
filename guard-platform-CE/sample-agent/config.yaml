@@ -1,0 +1,9 @@
+# cat config.yaml
+kafka:
+  bootstrap-servers: guard3.westeurope.cloudapp.azure.com:29092
+  group-id: agent1
+  topic: network-data
+log:
+  format: '%(message)s'
+  level: INFO
+

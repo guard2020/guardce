@@ -1,0 +1,18 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cert-kafka
+  namespace: kafka
+  labels:
+    use-nginx-solver: "true"
+spec:
+  dnsNames:
+  - kafka-bootstrap.guard.heisenbug.net
+  - kafka-0.guard.heisenbug.net
+  - kafka-1.guard.heisenbug.net
+  - kafka-2.guard.heisenbug.net
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  secretName: cert-kafka

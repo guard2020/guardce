@@ -1,0 +1,13 @@
+{
+    "id": "pgafilter@pgafilter-gcloud",
+    "operations": [
+        {
+            "actions": [
+                {
+                    "id": "status",
+                    "output_format": "lines"
+                }
+            ]
+        }
+    ]
+}

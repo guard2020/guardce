@@ -1,0 +1,34 @@
+{
+    "id": "logstash",
+    "partner": "cnit",
+    "parameters": [],
+    "actions": [
+        {
+            "id": "init",
+            "config": {
+                "cmd": "/opt/guard/commands/logstash/init.sh"
+            }
+        },
+        {
+            "id": "start",
+            "status": "started",
+            "config": {
+                "cmd": "/opt/guard/commands/logstash/start.sh",
+                "daemon": true
+            }
+        },
+        {
+            "id": "stop",
+            "status": "stopped",
+            "config": {
+                "cmd": "/opt/guard/commands/logstash/stop.sh"
+            }
+        },
+        {
+            "id": "health",
+            "config": {
+                "cmd": "/opt/guard/commands/logstash/health.sh"
+            }
+        }
+    ]
+}

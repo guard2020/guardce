@@ -1,0 +1,58 @@
+[
+    {
+        "id": "cnit-ml",
+        "name": "CNIT Machine Learning",
+        "description": "Feature Selection Evaluation towards a Lightweight Deep Learning DDoS Detector",
+        "partner": "cnit",
+        "parameters": [
+            {
+                "id": "kafka-bootstrap-servers",
+                "description": "Kafka bootstrap servers",
+                "type": "string",
+                "example": "localhost:9092"
+            },
+            {
+                "id": "kafka-topic",
+                "description": "Kafka topic",
+                "type": "string",
+                "example": "network-data"
+            },
+            {
+                "id": "kafka-group-id",
+                "description": "Kafka group id",
+                "type": "string",
+                "example": "test-id"
+            }
+        ],
+        "actions": [
+            {
+                "id": "start",
+                "description": "Start the algorithm"
+            },
+            {
+                "id": "stop",
+                "description": "Stop the algorithm"
+            },
+            {
+                "id": "restart",
+                "description": "Restart the algorithm"
+            },
+            {
+                "id": "status",
+                "description": "Status the algorithm"
+            },
+            {
+                "id": "autorestart",
+                "description": "Start the algorithm with automatic restart is the configuration changed"
+            },
+            {
+                "id": "log-level",
+                "description": "Set the level of log messages to show"
+            },
+            {
+                "id": "log-format",
+                "description": "Set the format of the log-messages"
+            }
+        ]
+    }
+]

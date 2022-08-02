@@ -1,0 +1,39 @@
+package org.drools.example
+import eu.smartcontroller.guard.demo.controller.KafkaProducerController
+import eu.smartcontroller.guard.demo.model.contextBroker.ContextBrokerUpdateAgentResponse
+import eu.smartcontroller.guard.demo.model.Rulefile2
+import eu.smartcontroller.guard.demo.model.aminer.AMinerOutput
+import eu.smartcontroller.guard.demo.cnitml.CnitMLOutput
+import java.util.concurrent.TimeUnit
+
+
+rule "Rulefile" 
+when 
+$rulefile: Rulefile2() 
+then 
+String agentId = "pgafilter@130.251.17.130";
+ContextBrokerUpdateAgentResponse response = $rulefile.sendRulefilecontentToContextBroker(agentId); 
+KafkaProducerController.logger.info("sendRulefilecontentToContextBroker method is called. Response: " + response.toString());
+end
+
+// Triggers unBlockIpRequest()
+rule "unBlockIpRequestCnitML"
+when
+    $cnitMLOutput: CnitMLOutput($unblock:=unblock, unblock=="yes")
+then
+    String agentId = "pgafilter@130.251.17.130";
+    TimeUnit.SECONDS.sleep(120);
+    String response = $cnitMLOutput.unBlockIpRequest(agentId);
+    KafkaProducerController.logger.info("unBlockIpRequest method is called. Response: " + response);
+end
+
+// Triggers unBlockIpRequest()
+rule "unBlockIpRequestAMiner"
+when
+    $aMinerOutput: AMinerOutput($unblock:=unblock, unblock=="yes")
+then
+    String agentId = "ablocker@network-manager";
+    TimeUnit.SECONDS.sleep(120);
+    String response = $aMinerOutput.unBlockIpRequest(agentId);
+    KafkaProducerController.logger.info("unBlockIpRequest method is called. Response: " + response);
+end

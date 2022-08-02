@@ -1,0 +1,37 @@
+### GUARD Platform (c) 2020
+###
+### agent:      aminer          guard-vdpi  lora-agent  pgafilter
+### exec_env:   network-manager web-server  lora        backend-prod
+### type
+###   exec_env: bare-metal  container-docker    container-k8s   vm  cloud   application gateway mobile
+###   network_link: multi-pnt   network-slice   pnt2pnt wifi    hosted
+
+@exec_env = network-manager
+@network_link_type = hosted
+
+### Connections of an exec-env
+GET {{cb_manager_endpoint}}/{{connection_uri}}
+
+{
+    "select": [],
+    "where": {
+        "equals": {
+            "target": "exec_env_id",
+            "expr": "{{exec_env}}"
+        }
+    }
+}
+
+### Connections of exec-envs with a specific network link type
+
+GET {{cb_manager_endpoint}}/{{connection_uri}}
+
+{
+    "select": [],
+    "where": {
+        "reg_exp": {
+            "target": "network_link_id",
+            "expr": "{{network_link_type}}@.*"
+        }
+    }
+}

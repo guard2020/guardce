@@ -1,0 +1,20 @@
+{
+  "id": "Agent-Italtel",
+  "description": "Simple Agent for demo",
+  "partner": "Italtel",
+  "type": "AgentType",
+  "actions": [
+    {
+      "id": "start",
+      "status": "started",
+      "cmd": "python /opt/guard/agent/simulate_data.py",
+      "daemon": true
+    },
+    {
+      "id": "stop",
+      "status": "stopped",
+      "cmd": "pkill -f \"^python.*simulate_data\""
+    }
+  ],
+  "resources": []
+}

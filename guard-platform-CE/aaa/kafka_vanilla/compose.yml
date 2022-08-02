@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  kafka:
+    image: guard/aaa/base_kafka:vanilla
+    build:
+      context: kafka_vanilla
+      args:
+        ZOOKEEPER_CONTAINER_NAME: aa_module-zookeeper
+    container_name: aa_module-kafka
+    expose:
+      - 9092
+    command: bin/kafka-server-start.sh config/server.properties
+  zookeeper:
+    image: guard/aaa/base_kafka:vanilla
+    container_name: aa_module-zookeeper
+    expose:
+      - 2181
+    command: bin/zookeeper-server-start.sh config/zookeeper.properties

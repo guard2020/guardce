@@ -1,0 +1,12 @@
+[
+    {
+        "hostname": "ehealth-app-dep1.uc2.guard-project.eu",
+        "id": "root-ehealth-app-dep1.uc2.guard-project.eu",
+        "lcp": {
+            "https": false,
+            "port": 80
+        },
+        "type_id": "bare-metal",
+        "enabled": true
+    }
+]

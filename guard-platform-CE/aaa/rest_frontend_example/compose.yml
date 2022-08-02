@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  rest_frontend_example:
+    image: guard/aaa/rest_frontend_example:latest
+    container_name: aa_module-rest_frontend_example
+    build:
+      context: ./rest_frontend_example
+      dockerfile: Dockerfile
+    ports:
+      - 15000:5000

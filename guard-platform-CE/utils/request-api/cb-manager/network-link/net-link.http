@@ -1,0 +1,50 @@
+@uri = network-link
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": ["id"]
+}
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": ["id", "partner", "description", "discovered"],
+    "where": {
+        "equals": {
+            "target": "partner",
+            "expr": "cnit"
+        }
+    }
+}
+
+###
+
+POST {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+< ./db-nl-data.json
+
+###
+
+PUT {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    
+}
+
+###
+
+DELETE {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+# {
+#     "where": {
+#         "equals": {
+#             "target": "id",
+#             "expr": "lcp:mobility-portal-lcp:chirpstack-webservice"
+#         }
+#     }
+# }

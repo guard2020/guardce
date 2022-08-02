@@ -1,0 +1,111 @@
+package org.drools.example 
+
+import eu.smartcontroller.guard.demo.model.*
+import eu.smartcontroller.guard.demo.controller.KafkaProducerController
+import eu.smartcontroller.guard.demo.SpringBootKafkaAppApplication
+import eu.smartcontroller.guard.demo.model.securityPolicies.kafkamessage2.VulnerabilityDescription
+import eu.smartcontroller.guard.demo.model.securityPolicies.TotalVulnerabilityScore
+
+// calculate the vulnerability score for each vulnerability
+rule "calculateEachVulnerabilityScore"
+salience 80
+when
+    $vulnerabilityDescription: VulnerabilityDescription($name:=name, $cvss_base:=cvss_base, $qod:=qod, $score:=score, modificationStatus==false)
+then
+    float qod = (float)$qod/100;
+    //System.out.println("qod" + qod);
+    float score = Float.parseFloat($cvss_base);
+    KafkaProducerController.logger.info("VulnerabilityScore of " + $name + " is: " + score);
+    modify($vulnerabilityDescription){setScore(score)};
+    modify($vulnerabilityDescription){setModificationStatus(true)};
+    //KafkaProducerController.logger.info("vulnerabilityDescription: " + $vulnerabilityDescription);
+end
+
+// calculate the total quantitative vulnerability score
+rule "calculateTotalQuantitativeVulnerabilityScore"
+salience 70
+when
+    Number( $totalQuantVulScore: floatValue ) from accumulate(
+       VulnerabilityDescription($score:=score),
+       //average($score)
+       sum($score)
+    )
+    $tvs: TotalVulnerabilityScore($quantitativeTotalVulnerabilityScore:=quantitativeTotalVulnerabilityScore, quantitativeTotalVulnerabilityScore!=$totalQuantVulScore)
+then
+    KafkaProducerController.logger.info("Total Vulnerability Score is " + $totalQuantVulScore);
+    modify($tvs){setQuantitativeTotalVulnerabilityScore($totalQuantVulScore)}
+    //KafkaProducerController.logger.info("TotalVulnerabilityScore: " + $tvs);
+end
+
+rule "calculateTotalQualitativeVulnerabilityScoreCritical"
+salience 69
+when
+    $vd: VulnerabilityDescription($name:=name, $score:=score, score>8.9)
+    $tvs: TotalVulnerabilityScore($qualitativeTotalVulnerabilityScore:=qualitativeTotalVulnerabilityScore, qualitativeTotalVulnerabilityScore!="Critical")
+then
+    modify($tvs){setQualitativeTotalVulnerabilityScore("Critical")};
+    KafkaProducerController.logger.info("Qualitative TotalVulnerabilityScore is set to: " + $tvs.getQualitativeTotalVulnerabilityScore());
+end
+
+rule "calculateTotalQualitativeVulnerabilityScoreHigh"
+salience 68
+when
+    $vd: VulnerabilityDescription($name:=name, $score:=score, score<8.9, score>6.9)
+    $tvs: TotalVulnerabilityScore($qualitativeTotalVulnerabilityScore:=qualitativeTotalVulnerabilityScore, qualitativeTotalVulnerabilityScore!="Critical", qualitativeTotalVulnerabilityScore!="High")
+then
+    modify($tvs){setQualitativeTotalVulnerabilityScore("High")};
+    KafkaProducerController.logger.info("Qualitative TotalVulnerabilityScore is set to: " + $tvs.getQualitativeTotalVulnerabilityScore());
+end
+
+rule "calculateTotalQualitativeVulnerabilityScoreMedium"
+salience 67
+when
+    $vd: VulnerabilityDescription($name:=name, $score:=score, score<6.9, score>3.9)
+    $tvs: TotalVulnerabilityScore($qualitativeTotalVulnerabilityScore:=qualitativeTotalVulnerabilityScore, qualitativeTotalVulnerabilityScore!="Critical", qualitativeTotalVulnerabilityScore!="High", qualitativeTotalVulnerabilityScore!="Medium")
+then
+    modify($tvs){setQualitativeTotalVulnerabilityScore("Medium")};
+    KafkaProducerController.logger.info("Qualitative TotalVulnerabilityScore is set to: " + $tvs.getQualitativeTotalVulnerabilityScore());
+end
+
+rule "calculateTotalQualitativeVulnerabilityScoreLow"
+salience 66
+when
+    $vd: VulnerabilityDescription($name:=name, $score:=score, score<3.9, score!=0)
+    $tvs: TotalVulnerabilityScore($qualitativeTotalVulnerabilityScore:=qualitativeTotalVulnerabilityScore, qualitativeTotalVulnerabilityScore!="Critical", qualitativeTotalVulnerabilityScore!="High", qualitativeTotalVulnerabilityScore!="Medium", qualitativeTotalVulnerabilityScore!="Low")
+then
+    modify($tvs){setQualitativeTotalVulnerabilityScore("Low")};
+    KafkaProducerController.logger.info("Qualitative TotalVulnerabilityScore is set to: " + $tvs.getQualitativeTotalVulnerabilityScore());
+end
+
+// calculate the total qualitative vulnerability score
+rule "calculateTotalQualitativeVulnerabilityScoreNone"
+salience 65
+when
+    $vd: VulnerabilityDescription($name:=name, $score:=score, score==0.0)
+    $tvs: TotalVulnerabilityScore($qualitativeTotalVulnerabilityScore:=qualitativeTotalVulnerabilityScore, qualitativeTotalVulnerabilityScore!="Critical", qualitativeTotalVulnerabilityScore!="High", qualitativeTotalVulnerabilityScore!="Medium", qualitativeTotalVulnerabilityScore!="Low", qualitativeTotalVulnerabilityScore!="None")
+then
+    modify($tvs){setQualitativeTotalVulnerabilityScore("None")};
+    KafkaProducerController.logger.info("Qualitative TotalVulnerabilityScore is set to: " + $tvs.getQualitativeTotalVulnerabilityScore());
+end
+
+// publish the total vulnerability score
+rule "publishTotalVulnerabilityScore"
+salience 50
+when
+    $tvs: TotalVulnerabilityScore()
+then
+    KafkaProducerController.logger.info("Rule publishTotalVulnerabilityScore");
+    KafkaProducerController.logger.info("TotalVulnerabilityScore: " + $tvs);
+    KafkaProducerController.publishVulnerabilityScore($tvs);
+    retract($tvs);
+end
+
+// retract facts from memory
+rule "retractVulnerabilityDescriptions"
+salience 40
+when
+    $vd: VulnerabilityDescription($name:=name, modificationStatus==true)
+then
+    KafkaProducerController.logger.info($name + " is retracted.");
+    retract($vd);
+end

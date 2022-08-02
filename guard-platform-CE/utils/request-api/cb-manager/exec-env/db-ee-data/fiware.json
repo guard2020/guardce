@@ -1,0 +1,15 @@
+[
+    {
+        "id": "urn:lcp:wolfsburg-management.lab.fiware.org",
+        "type_id": "bare-metal",
+        "enabled": true,
+        "hostname": "wolfsburg-management.lab.fiware.org",
+        "lcp": {
+            "port": 443,
+            "https": true,
+            "sons": [
+                "urn:lcp:behave-tests"
+            ]
+        }
+    }
+]

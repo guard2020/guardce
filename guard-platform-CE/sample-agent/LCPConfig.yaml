@@ -1,0 +1,38 @@
+agent_types:
+- actions:
+  - cmd: python /opt/guard/agent/simulate_data.py
+    daemon: true
+    id: start
+    status: started
+  - cmd: pkill -f "^python.*simulate_data"
+    id: stop
+    status: stopped
+  description: Simple Agent for demo
+  id: Agent-Italtel
+  partner: Italtel
+  resources: []
+  type: AgentType
+deployment:
+  cpus: 4
+  hostname: 2be16e7139a0
+  id: f8b3007a-0af5-4112-8f2c-410671719e8b
+  networkInterfaces:
+  - IPv4Addresses:
+    - 172.20.0.8/16
+    IPv6Addresses: []
+    MacAddress: 02:42:ac:14:00:08
+    deviceType: ethernet
+    id: nwiface:eth0
+    mtu: 1500
+    name: eth0
+  operatingSystem: Debian GNU/Linux 11
+  ram: 16402496
+  type: DockerContainer
+lcp:
+  description: Guard Agent
+  exec_env_type: container-docker
+  id: agent-exec
+  name: Agent-Italtel
+  type: LCPDescription
+  url: http://10.0.1.4:4100
+type: container-docker

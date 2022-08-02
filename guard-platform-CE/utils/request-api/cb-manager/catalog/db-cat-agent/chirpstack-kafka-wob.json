@@ -1,0 +1,27 @@
+{
+    "id": "chirpstack-kafka",
+    "partner": "wob",
+    "actions": [
+        {
+            "id": "start",
+            "status": "started",
+            "config": {
+                "cmd": "curl -X POST http://localhost:8000/api/lcp/start"
+            }
+        },
+        {
+            "id": "stop",
+            "status": "stopped",
+            "config": {
+                "cmd": "curl -X POST http://localhost:8000/api/lcp/stop"
+            }
+        },
+        {
+            "id": "restart",
+            "status": "started",
+            "config": {
+                "cmd": "curl -X POST http://localhost:8000/api/lcp/restart"
+            }
+        }
+    ]
+}

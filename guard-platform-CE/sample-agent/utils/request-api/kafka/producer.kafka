@@ -1,0 +1,6 @@
+PRODUCER test-json
+topic: data
+{
+    "type": "test",
+    "tag": "log"
+}

@@ -1,0 +1,15 @@
+#!/bin/bash
+### Usage ./guard_builder/tag-version repository_name
+
+if [ "$#" -ne 1 ]; then
+    echo "Usage: ./guard_builder/tag-version repository_name"
+    exit 0
+fi
+
+#docker images > ./guard_builder/lista_immagini
+while IFS=' ' read -r pkg vers col3 col4 col5
+do 
+    echo "$pkg":"$vers"
+    docker tag "$pkg":"$vers" "$1"/"$pkg":latest
+    #docker push "$1"/"$pkg":latest
+done < ./guard_builder/lista_immagini

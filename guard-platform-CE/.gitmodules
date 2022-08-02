@@ -1,0 +1,12 @@
+[submodule "local_sidercars/log_data_agents/logdata-anomaly-miner"]
+	path = local_sidercars/log_data_agents/logdata-anomaly-miner
+	url = https://github.com/ait-aecid/logdata-anomaly-miner.git
+[submodule "core_framework/parser_generator/aecid-parsergenerator"]
+	path = core_framework/parser_generator/aecid-parsergenerator
+	url = https://github.com/ait-aecid/aecid-parsergenerator.git
+[submodule "core_framework/context_broker/cb-manager/src"]
+	path = core_framework/context_broker/cb-manager/src
+	url = https://oauth2:glpat-RKKmjgnQL9u-RwKDWwyL@gitlab.com/guard-repositories/cb-manager.git
+[submodule "local_sidercars/local_control_management/lcp/src"]
+	path = local_sidercars/local_control_management/lcp/src
+	url = https://oauth2:glpat-RKKmjgnQL9u-RwKDWwyL@gitlab.com/guard-repositories/lcp.git

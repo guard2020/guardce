@@ -1,0 +1,77 @@
+[
+    {
+        "id": "user-vm>hosted@digit-cyber",
+        "exec_env_id": "user-vm",
+        "network_link_id": "hosted@digit-cyber"
+    },
+    {
+        "id": "user-vm>cnit-network-slice",
+        "exec_env_id": "user-vm",
+        "network_link_id": "cnit-network-slice"
+    },
+    {
+        "id": "mobile-phone>cnit-network-slice",
+        "exec_env_id": "mobile-phone",
+        "network_link_id": "cnit-network-slice"
+    },
+    {
+        "id": "simulation-model-tool>hosted@alpha-service",
+        "exec_env_id": "simulation-model-tool",
+        "network_link_id": "hosted@alpha-service"
+    },
+    {
+        "id": "frontend>hosted@digit-cyber",
+        "exec_env_id": "frontend",
+        "network_link_id": "hosted@digit-cyber"
+    },
+    {
+        "id": "backend-prod>hosted@alpha-service",
+        "exec_env_id": "backend-prod",
+        "network_link_id": "hosted@alpha-service"
+    },
+    {
+        "id": "backend-test>hosted@alpha-service",
+        "exec_env_id": "backend-test",
+        "network_link_id": "hosted@alpha-service"
+    },
+    {
+        "id": "backend-backup>hosted@digit-cyber",
+        "exec_env_id": "backend-backup",
+        "network_link_id": "hosted@digit-cyber"
+    },
+    {
+        "id": "fronted2backend-prod",
+        "exec_env_id": "frontend",
+        "network_link_id": "frontend-backend"
+    },
+    {
+        "id": "backend-prod2frontend",
+        "exec_env_id": "backend-prod",
+        "network_link_id": "frontend-backend"
+    },
+    {
+        "id": "web-server>hosted@vision-tech",
+        "exec_env_id": "web-server",
+        "network_link_id": "hosted@vision-tech"
+    },
+    {
+        "id": "network-manager>hosted@vision-tech",
+        "exec_env_id": "network-manager",
+        "network_link_id": "hosted@vision-tech"
+    },
+    {
+        "id": "digit-cyber>cloud-federation",
+        "exec_env_id": "digit-cyber",
+        "network_link_id": "cloud-federation"
+    },
+    {
+        "id": "vision-tech>cloud-federation",
+        "exec_env_id": "vision-tech",
+        "network_link_id": "cloud-federation"
+    },
+    {
+        "id": "chirpstack-kafka>wifi@vision-tech",
+        "exec_env_id": "chirpstack-kafka",
+        "network_link_id": "wifi@vision-tech"
+    }
+]

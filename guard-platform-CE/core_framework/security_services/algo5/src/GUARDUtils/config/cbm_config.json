@@ -1,0 +1,7 @@
+{
+	"cb-manager" : {
+		"host" : "13.93.35.207",
+		"port" : 5000,
+		"scheme" : "http"
+	}
+}

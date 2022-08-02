@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+  rest_backend_example:
+    image: guard/aaa/rest_backend_example:latest
+    container_name: aa_module-rest_backend_example
+    build:
+      # TODO: use underscores
+      context: ./rest_backend_example
+      dockerfile: Dockerfile

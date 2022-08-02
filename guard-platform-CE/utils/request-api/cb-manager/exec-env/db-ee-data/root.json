@@ -1,0 +1,9 @@
+{
+    "id": "root",
+    "type_id": "root",
+    "hostname": "",
+    "lcp": {
+        "port": 4000,
+        "https": false
+    }
+}

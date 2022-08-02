@@ -1,0 +1,41 @@
+[
+    {
+        "id": "backend-prod",
+        "partner": "nask",
+        "type_id": "application",
+        "description": "BackEnd",
+        "hostname": "35.193.65.139",
+        "enabled": true,
+        "lcp": {
+            "port": 4000,
+            "https": false
+        },
+        "stage": "production"
+    },
+    {
+        "id": "backend-test",
+        "partner": "nask",
+        "type_id": "application",
+        "description": "BackEnd",
+        "hostname": "35.193.65.139",
+        "enabled": true,
+        "lcp": {
+            "port": 4444,
+            "https": false
+        },
+        "stage": "testing"
+    },
+    {
+        "id": "backend-backup",
+        "partner": "nask",
+        "type_id": "vm",
+        "description": "BackEnd",
+        "hostname": "20.52.36.121",
+        "enabled": true,
+        "lcp": {
+            "port": 4000,
+            "https": false
+        },
+        "stage": "backup"
+    }
+]

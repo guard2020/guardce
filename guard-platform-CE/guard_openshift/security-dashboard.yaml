@@ -1,0 +1,150 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: security-dashboard
+  namespace: guardce
+  labels:
+    app: security-dashboard
+    app.kubernetes.io/component: security-dashboard
+    app.kubernetes.io/instance: security-dashboard
+    app.kubernetes.io/name: security-dashboard
+    app.kubernetes.io/part-of: guard
+spec:
+  ports:
+    - name: 85-tcp
+      protocol: TCP
+      port: 85
+      targetPort: 4443
+    - name: 84-tcp
+      protocol: TCP
+      port: 84
+      targetPort: 8080
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    app: security-dashboard
+    deploymentconfig: security-dashboard
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: security-dashboard
+  namespace: guardce
+  labels:
+    app: security-dashboard
+    app.kubernetes.io/component: security-dashboard
+    app.kubernetes.io/instance: security-dashboard
+    app.kubernetes.io/name: security-dashboard
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime-version: guardce
+spec:
+  host: security-dashboard-guardce.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: security-dashboard
+    weight: 100
+  port:
+    targetPort: 84-tcp
+  wildcardPolicy: None
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: security-dashboard
+  namespace: guardce
+data:
+  CB_API: 'http://cb-manager.guardce.svc:5000'
+  SC_API: 'http://smart-controller.guardce.svc:9000/gfg'
+  ELASTICSEARCH_URL: 'http://es-cluster.guardce.svc:9200'
+  KIBANA_URL: 'http://kibana-guardce.apps.ocp4.italtel.com'
+  DB_CONNECTION: 'mysql'
+  DB_HOST: 'mysql.guardce.svc'
+  DB_PORT: '3306'
+  DB_DATABASE: 'security_dashboard'
+  DB_USERNAME: 'sduser'
+  DB_PASSWORD: 'rootguard2021'
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: security-dashboard-tls
+  namespace: guardce
+  labels:
+    app: security-dashboard
+    app.kubernetes.io/component: security-dashboard
+    app.kubernetes.io/instance: security-dashboard
+    app.kubernetes.io/name: security-dashboard
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime-version: guardce
+spec:
+  host: security-dashboard-tls-guardce.apps.ocp4.italtel.com
+  to:
+    kind: Service
+    name: security-dashboard
+    weight: 100
+  port:
+    targetPort: 85-tcp
+  wildcardPolicy: None
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: security-dashboard
+  namespace: guardce
+  labels:
+    app: security-dashboard
+    app.kubernetes.io/component: security-dashboard
+    app.kubernetes.io/instance: security-dashboard
+    app.kubernetes.io/name: security-dashboard
+    app.kubernetes.io/part-of: guard
+    app.openshift.io/runtime: security-dashboard
+    app.openshift.io/runtime-namespace: guardce
+    app.openshift.io/runtime-version: latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: security-dashboard
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: security-dashboard
+        deploymentconfig: security-dashboard
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+    spec:
+      containers:
+        - name: security-dashboard
+          image: guard2020/guard-dashboard:latest
+          ports:
+            - containerPort: 4443
+              protocol: TCP
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: security-dashboard
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext:
+        runAsUser: 33
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+---
+
+---

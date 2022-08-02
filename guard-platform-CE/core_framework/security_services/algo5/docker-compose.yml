@@ -1,0 +1,41 @@
+version: '2'
+services:
+  algo5:
+    container_name: algo5_container
+    build: .
+    volumes:
+      - /opt/scan_reports:/opt/algo5/Vulnerability/reports
+    tty: true
+    stdin_open: false
+    networks:
+      - algo5_net
+    environment:
+        KAFKA_CONFIG_BOOTSTRAP_SERVERS: guard3.westeurope.cloudapp.azure.com:49092
+        KAFKA_CONFIG_CLIENT_ID: algo1.2
+        KAFKA_CONFIG_SECURITY_PROTOCOL: SASL_SSL
+        KAFKA_CONFIG_SSL_CAFILE: ./truststore.pem
+        KAFKA_CONFIG_SASL_MECHANISM: OAUTHBEARER
+        OAUTH2_INSTANCE_1_CLIENT_ID: XXOSSeamgNef3945snnxrAxKIt0a
+        OAUTH2_INSTANCE_1_SECRET: 5CsFBAp80bZamkEfeR5hJd7_HZca
+        OAUTH2_INSTANCE_1_TOKEN_URI: https://guard3.westeurope.cloudapp.azure.com:10443/oauth2/token
+        OAUTH2_INSTANCE_1_IDP_TLS: ./truststore.pem
+        OAUTH2_INSTANCE_1_SCOPES: "kafka:topic:chirpstack_as:describe kafka:topic:chirpstack_as:write kafka:topic:chirpstack_as:create kafka:topic:__consumer_offsets:describe"
+        OAUTH2_INSTANCE_2_CLIENT_ID: XXOSSeamgNef3945snnxrAxKIt0b
+        OAUTH2_INSTANCE_2_SECRET: 5CsFBAp80bZamkEfeR5hJd7_HZcb
+        OAUTH2_INSTANCE_2_TOKEN_URI: https://guard3.westeurope.cloudapp.azure.com:10443/oauth2/token
+        OAUTH2_INSTANCE_2_IDP_TLS: ./truststore.pem
+        OAUTH2_INSTANCE_2_SCOPES: "kafka:topic:chirpstack_as:describe kafka:topic:chirpstack_as:write kafka:topic:chirpstack_as:create kafka:topic:chirpstack_as:read"
+        OAUTH2_INSTANCE_3_CLIENT_ID: XXOSSeamgNef3945snnxrAxKIt0c
+        OAUTH2_INSTANCE_3_SECRET: 5CsFBAp80bZamkEfeR5hJd7_HZcc
+        OAUTH2_INSTANCE_3_TOKEN_URI: https://guard3.westeurope.cloudapp.azure.com:10443/oauth2/token
+        OAUTH2_INSTANCE_3_IDP_TLS: ./truststore.pem
+        OAUTH2_INSTANCE_3_SCOPES: "kafka:topic:chirpstack_as:describe kafka:topic:chirpstack_as:write kafka:topic:chirpstack_as:create kafka:topic:chirpstack_as:read"
+  openvas:
+    container_name: openvas
+    image: mikesplain/openvas:9
+    networks:
+      - algo5_net
+    tty: true
+    stdin_open: false
+networks:
+  algo5_net:

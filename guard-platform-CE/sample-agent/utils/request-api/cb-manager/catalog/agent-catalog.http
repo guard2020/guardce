@@ -1,0 +1,70 @@
+@uri = catalog/agent
+
+###
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+###
+
+@select = "id", "partner", "resources"
+@operator = equals
+@target = partner
+@expr = cnit
+
+GET {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "select": [{{select}}],
+    "where": {
+        "{{operator}}": {
+            "target": "{{target}}",
+            "expr": "{{expr}}"
+        }
+    }
+}
+
+###
+
+POST {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+< ./db-cat-agent/cnit/dev.json
+# < ./db-cat-agent/cnit/filebeat.json
+# < ./db-cat-agent/cnit/logstash.json
+# < ./db-cat-agent/cnit/metricbeat.json
+# < ./db-cat-agent/cnit/packetbeat.json
+# < ./db-cat-agent/cnit/termux-api.json
+# < ./db-cat-agent/8bells-vdpi.json
+# < ./db-cat-agent/aminer-ait.json
+# < ./db-cat-agent/chirpstack-kafka-wob.json
+# < ./db-cat-agent/pgafilter-nask.json
+# < ./db-cat-agent/vuln_scanner-forth.json
+
+###
+
+PUT {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+< ./db-cat-agent/fiware-filebeat_sshd.json
+
+###
+
+@operator = equals
+@target = partner
+@expr = cnit
+
+DELETE {{cb_manager_endpoint}}/{{uri}} HTTP/1.1
+
+{
+    "where": {
+        "{{operator}}": {
+            "target": "{{target}}",
+            "expr": "{{expr}}"
+        }
+    }
+}
+
+###
+#@id = filebeat_nginx@wolfsburg-management.lab.fiware.org
+
+DELETE {{cb_manager_endpoint}}/{{uri}}/{{id}} HTTP/1.1
+
+###

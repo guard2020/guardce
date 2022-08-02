@@ -1,0 +1,164 @@
+[
+  {
+    "name": "sp01",
+    "description": "Security Pipeline with agents for network monitoring",
+    "status": "started",
+    "created_at": "1615798572",
+    "updated_at": "1615798597",
+    "user": "synyo",
+    "agent": "logstash",
+    "agent_instances": [
+      {
+        "id": "filebeat@user-vm",
+        "agent_catalog_id": "filebeat",
+        "exec_env_id": "user-vm",
+        "status": "stopped"
+      },
+      {
+        "id": "uard-vdpi@web-server",
+        "agent_catalog_id": "guard-vdpi",
+        "exec_env_id": "web-server",
+        "status": "stopped"
+      },
+      {
+        "id": "pgafilter@backend-test",
+        "agent_catalog_id": "pgafilter",
+        "exec_env_id": "backend-test",
+        "status": "stopped"
+      }
+    ],
+    "agent_config": [
+      {
+        "agent_id": "logstash",
+        "parameters": [
+          {
+            "config": {
+              "path": [
+                "packetbeat",
+                "interfaces",
+                "device"
+              ],
+              "schema": "yaml",
+              "source": "/opt/guard/packetbeat/packetbeat.yml"
+            },
+            "description": "The network device to capture traffic from (you can specify any for the device)",
+            "example": "eth0",
+            "id": "interface",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+],
+{
+  "id": "sp05",
+  "description": "This is a test Pipeline",
+  "status": "stopped",
+  "created_at": "1610699765",
+  "updated_at": "1615800989",
+  "user": "synyo",
+  "agents": [
+    {
+      "id": "filebeat@user-vm",
+      "agent_catalog_id": "filebeat",
+      "exec_env_id": "user-vm",
+      "status": "stopped"
+    },
+    {
+      "id": "uard-vdpi@web-server",
+      "agent_catalog_id": "guard-vdpi",
+      "exec_env_id": "web-server",
+      "status": "stopped"
+    },
+    {
+      "id": "pgafilter@backend-test",
+      "agent_catalog_id": "pgafilter",
+      "exec_env_id": "backend-test",
+      "status": "stopped"
+    }
+  ],
+  "agent_config": [
+    {
+      "agent_id": "logstash",
+      "parameters": [
+        {
+          "code": 200,
+          "data": {
+            "path": [
+              "0",
+              "enabled"
+            ],
+            "schema": "yaml",
+            "source": "/opt/guard/filebeat/config/log.yml",
+            "value": "true"
+          },
+          "error": false,
+          "id": "log-enabled",
+          "status": "OK",
+          "timestamp": "1607531616",
+          "value": {
+            "new": true,
+            "old": false
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "sec02541",
+  "description": "GUARD Security Pipeline",
+  "status": "started",
+  "created_at": "1610699765",
+  "updated_at": "1615800989",
+  "user": "guard_user",
+  "agents": [
+    {
+      "id": "aminer@network-manager",
+      "agent_catalog_id": "aminer",
+      "exec_env_id": "network-manager",
+      "status": "stopped"
+    },
+    {
+      "id": "metricbeat@user-vm",
+      "agent_catalog_id": "metricbeat",
+      "exec_env_id": "user-vm",
+      "status": "stopped"
+    },
+    {
+      "id": "pgafilter@backend-prod",
+      "agent_catalog_id": "pgafilter",
+      "exec_env_id": "backend-prod",
+      "status": "started"
+    }
+  ],
+  "agent_config": [
+    {
+      "agent_id": "logstash",
+      "parameters": [
+        {
+          "code": 200,
+          "data": {
+            "path": [
+              "0",
+              "enabled"
+            ],
+            "schema": "yaml",
+            "source": "/opt/guard/filebeat/config/log.yml",
+            "value": "true"
+          },
+          "error": false,
+          "id": "log-enabled",
+          "status": "OK",
+          "timestamp": "1607531616",
+          "value": {
+            "new": true,
+            "old": false
+          }
+        }
+      ]
+    }
+  ]
+}
+]

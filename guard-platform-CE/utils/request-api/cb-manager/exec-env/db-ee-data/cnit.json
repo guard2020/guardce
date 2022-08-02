@@ -1,0 +1,67 @@
+[
+    {
+        "id": "mobile-phone",
+        "partner": "cnit",
+        "type_id": "mobile",
+        "description": "Mobile Phone (Android)",
+        "hostname": "localhost",
+        "enabled": true,
+        "lcp": {
+            "port": 4321,
+            "https": false
+        },
+        "stage": "development"
+    },
+    {
+        "id": "user-container",
+        "partner": "cnit",
+        "type_id": "container-k8s",
+        "description": "User Container",
+        "hostname": "localhost",
+        "enabled": true,
+        "lcp": {
+            "port": 7890,
+            "https": false
+        },
+        "stage": "development"
+    },
+    {
+        "id": "simulation-model-tool",
+        "partner": "cnit",
+        "type_id": "application",
+        "description": "Simulation Modelling Tool",
+        "hostname": "192.168.0.172",
+        "enabled": false,
+        "lcp": {
+            "port": 4000,
+            "https": false
+        },
+        "stage": "development"
+    },
+    {
+        "id": "raspberry-pi-1",
+        "partner": "cnit",
+        "type_id": "raspberry",
+        "description": "Raspberry PI1 for IoT",
+        "hostname": "localhost",
+        "enabled": true,
+        "lcp": {
+            "port": 1234,
+            "https": false
+        },
+        "stage": "development"
+    },
+    {
+        "id": "raspberry-pi-2",
+        "partner": "cnit",
+        "type_id": "raspberry",
+        "description": "Raspberry PI2 for IoT",
+        "hostname": "localhost",
+        "enabled": true,
+        "lcp": {
+            "port": 7654,
+            "https": false
+        },
+        "stage": "development"
+    }
+]

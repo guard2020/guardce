@@ -1,0 +1,156 @@
+# ##############################################################################
+### To use this docker-compose file you have to
+### initialise the following environment variables in file .env:
+### (value are examples):
+###
+### RELEASE_DIR=guard-platform
+###
+#############################
+##############################################################################
+version: '3.6'
+services:
+  
+  idp:
+    image: idm
+    build: 
+      context: ${RELEASE_DIR}/aaa/identity_provider
+      dockerfile: ./Dockerfile 
+    container_name: aa_module-idp
+    ports:
+      - ${IDP_PORT}:10443
+    tty: true
+    restart: unless-stopped
+
+  kafka1:
+    image: kafka_confluent:oauth
+    build:
+      context: ${RELEASE_DIR}/aaa/kafka_oauth
+      dockerfile: ../kafka_confluent/Dockerfile
+    hostname: kafka1
+    ports:
+      - "${KAFKA_PORT_1}:${KAFKA_PORT_1}"
+      - "${KAFKA_PORT_INT_1}:${KAFKA_PORT_INT_1}"
+      - "${KAFKA_PORT_TLS_1}:${KAFKA_PORT_TLS_1}"
+      - "${KAFKA_PORT_SASL_1}:${KAFKA_PORT_SASL_1}"
+    command: /etc/confluent/docker/dockerize -wait https://idp:10443 -skip-tls-verify -timeout 600s /etc/confluent/docker/run     
+    depends_on:
+      - idp
+    restart: unless-stopped
+
+  security-dashboard:
+    image: 'guard-dashboard:latest'
+    build:
+      context: ${RELEASE_DIR}/core_framework/security_dashboard/guard_docker
+    container_name: guard-dashboard
+    user: 'www-data'
+    ports:
+      - 84:8080
+      - 85:4443    
+    volumes:
+      - ${VOLUME_DIR}/dashboard/certs/:/etc/ssl/certs/:ro
+    restart: unless-stopped
+  
+   
+  algo5:
+    image: algo5:latest
+    container_name: algo5
+    build: ${RELEASE_DIR}/core_framework/security_services/algo5
+    volumes:
+      - /opt/scan_reports:/opt/algo5/Vulnerability/reports
+    tty: true
+    stdin_open: false
+    networks:
+      - algo5_net
+
+    
+  algo1.2:
+    container_name: algo1.2
+    network_mode: "host"
+    image: algo1.2:$TAG2
+    ports:
+      - "7000:7000"
+    expose: 
+        - 7000
+    build:
+      context: ${RELEASE_DIR}/core_framework/security_services/algo1.2      
+      dockerfile: src/Dockerfile
+    restart: unless-stopped
+  
+  blockchain-connector:
+    build: ${RELEASE_DIR}/core_framework/security_services/algo4/blockchain-connector
+    restart: unless-stopped
+    container_name: blockchain-connector
+    environment:
+      - PEERS_USER_PRIVATE_KEY_PATH=/crypto-materials/priv_sk
+      - PEERS_USER_CERTIFICATE_PATH=/crypto-materials/cert.pem
+      - PEER_TLSCA_PEM_PATH=/crypto-materials/peers-tlsca-cert.pem
+      - ORDERER_TLSCA_PEM_PATH=/crypto-materials/orderers-tlsca-cert.pem
+      - ORDERERS_URLS=orderer1.germanywestcentral.cloudapp.azure.com:7050,orderer2.germanywestcentral.cloudapp.azure.com:7050,orderer3.germanywestcentral.cloudapp.azure.com:7050
+      - PEER_URLS=peer1.germanywestcentral.cloudapp.azure.com:8050,peer2.germanywestcentral.cloudapp.azure.com:8050,peer3.germanywestcentral.cloudapp.azure.com:8050
+    ports:
+      - "${BC_CONN_PORT}:8080"
+    volumes:
+      - blockchain-connector-data:/crypto-materials
+
+  risk-assessment:    
+    container_name: risk-assessment-algo
+    image: risk-assessment:latest
+    build:
+      context: ${RELEASE_DIR}/core_framework/risk_assessment_algo/riskAssessment_v5
+      dockerfile: Dockerfile
+    restart: unless-stopped
+
+#  To Do: cp ~/guard-platform-v3.0/local_sidercars/log_data_agents/logdata-anomaly-miner/source/root/etc/aminer/template_config.yml ~/guard-platform-v3.0/local_sidercars/log_data_agents/logdata-anomaly-miner/source/root/etc/aminer/config.yml
+#         cp ~/guard-platform-v3.0/local_sidercars/log_data_agents/logdata-anomaly-miner/source/root/etc/aminer/conf-available/generic/ApacheAccessModel.py ~/guard-platform-v3.0/local_sidercars/log_data_agents/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled/
+
+  logdata-anomaly-miner:    
+    container_name: logdata-anomaly-miner
+    network_mode: "host"
+    image: logdata-anomaly-miner:latest
+    build:
+      context: ${RELEASE_DIR}/local_sidercars/log_data_agents/logdata-anomaly-miner
+      dockerfile: Dockerfile
+    volumes:
+      - ~/${RELEASE_DIR}/local_sidercars/log_data_agents/logdata-anomaly-miner/source/root/etc/aminer/:/etc/aminer
+    restart: unless-stopped
+
+
+  security-controller:    
+    container_name: security-controller
+    network_mode: "host"
+    image: security-controller:$TAG2
+    build:
+      #context: ${RELEASE_DIR}/core_framework/security_controller/spring-boot-kafka-app
+      #context: ../smart/guard-platform/core_framework/security_controller/spring-boot-kafka-app
+      #context: ../smart/guard-platform/core_framework/security_controller/spring-boot-kafka-app/scAlgosTestAllPolicies12/scAlgosTestAllPolicies/spring-boot-kafka-app
+      context: ../pier/guard-platform/core_framework/security_controller/spring-boot-kafka-app
+      dockerfile: Dockerfile
+    ports:
+      - 9000:9000
+    depends_on:
+      - cb-manager
+      - kafka1
+    restart: unless-stopped    
+
+  guard-agent:
+    image: guard-agent:latest
+    container_name: agent
+    build: ./sample-agent
+
+
+volumes: 
+  blockchain-connector-data:
+    driver: local
+    driver_opts:
+       o: bind
+       type: none
+       device: $PWD/${RELEASE_DIR}/core_framework/security_services/algo4/blockchain-connector/test-blockchain-connector-data
+    
+networks:
+  backend:
+    name: backend-network  
+  elastic:
+    driver: bridge
+  algo5_net:
+    
+    

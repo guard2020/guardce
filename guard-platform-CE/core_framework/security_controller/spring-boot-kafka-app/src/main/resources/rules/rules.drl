@@ -1,0 +1,130 @@
+package rules
+ 
+import eu.smartcontroller.guard.demo.model.*
+import eu.smartcontroller.guard.demo.service.DroolsEngineService
+import eu.smartcontroller.guard.demo.controller.KafkaProducerController
+import eu.smartcontroller.guard.demo.model.contextBroker.ContextBrokerUpdateAgentResponse
+import eu.smartcontroller.guard.demo.model.agents.Agent
+import eu.smartcontroller.guard.demo.model.algorithms.AlgorithmInstance
+import eu.smartcontroller.guard.demo.model.algorithms.Algorithm
+import eu.smartcontroller.guard.demo.SpringBootKafkaAppApplication
+import eu.smartcontroller.guard.demo.model.algorithms.AlgorithmCNITMLResponse
+import java.util.ArrayList
+
+// queries
+query "getObjectsOfPipelines"
+    $result: Pipeline()
+end
+
+query "getObjectsOfAgents"
+    $result: Agent()
+end
+
+query "getObjectsOfAlgorithmInstances"
+    $result: AlgorithmInstance()
+end
+
+
+//Rules to manage Algorithms
+
+// Every "notUpdated" algorithm of a pipeline triggers executeCommand().
+// Its status becomes "updated".
+rule "AlgorithmExecuteCommand"
+when
+    $pipeline: Pipeline($algorithmInstances:=algorithmInstances)
+    $algorithmInstance: AlgorithmInstance(scStatus=="notUpdated", $id:=id, $service:=service, $kafkaTopic:=kafkaTopic, $containerName:=containerName) from $algorithmInstances
+then
+    String response = $algorithmInstance.executeScript($service, $id, $kafkaTopic, $pipeline.getStatus(), $containerName);
+    modify($algorithmInstance){setScStatus("updated")}
+    KafkaProducerController.logger.info("executeScript method of " + $algorithmInstance.getId() + " algorithm instance is called. Response: " + response);
+end
+
+
+//Rules to manage Agents
+
+// Every "notUpdated" agent of a pipeline triggers sendUpdateRequestToContextBroker().
+// Its status becomes "updated".
+rule "UpdateAgentInstance"
+when
+    $pipeline: Pipeline($agents:=agents)
+    $agent: Agent(scStatus=="notUpdated") from $agents
+then
+    ContextBrokerUpdateAgentResponse response = $agent.sendUpdateRequestToContextBroker();
+    insert(response);
+    modify($agent){setScStatus("updated")}
+    KafkaProducerController.logger.info("sendUpdateRequestToContextBroker method of " + $agent.getId() + " agent instance is called. Response: " + response.toString());
+    KafkaProducerController.logger.info("sendUpdateRequestToContextBroker method of " + $agent.getId() + " agent instance is called.");
+end
+
+
+// Rules to update the local repo
+
+// If there is an agent of a pipeline that is not successfully updated
+// the pipeline is retracted and its status in the internal pipeline array becomes "notUpdated".
+rule "StartStopPipelineUnsuccessfullyAgent"
+when
+    $pipeline: Pipeline($uuid:=uuid, status!="notUpdated")
+    $agent: Agent($agentId:=agent_catalog_id, $uuid:=pipelineUuid)
+    $response1: ContextBrokerUpdateAgentResponse($agentId:=subjectUuid, code!=200)
+then
+    KafkaProducerController.logger.info("Agent " + $agent.getId() + " of pipeline " + $pipeline.getId() + " - " + $pipeline.getUuid() + " failed to be updated.");
+    retract($pipeline);
+    KafkaProducerController.logger.info("Pipeline " + $pipeline.getId() + " - " + $pipeline.getUuid() + " is retracted");
+    SpringBootKafkaAppApplication.pipelineArray.updatePipelineStatus($pipeline.getId(), "notUpdated");
+end
+
+// Every pipeline that i) has status=start
+// and ii) all of its agents have ContextBrokerUpdateAgentResponses with code=200
+// is considered that has been started (status=started).
+// The status in the internal pipeline array is updated and the pipeline is retracted from the working memory
+rule "StartPipeline"
+when
+    $pipeline: Pipeline(status=="start", $agents:=agents)
+    forall( $agent:Agent($agentId:=agent_catalog_id) from $agents
+        ContextBrokerUpdateAgentResponse($agentId:=subjectUuid, code==200)
+    )
+then
+    KafkaProducerController.logger.info("All agent instances of pipeline " + $pipeline.getId() + " - " + $pipeline.getUuid() + " have been successfully updated.");
+    retract($pipeline);
+    KafkaProducerController.logger.info("Pipeline " + $pipeline.getId() + " - " + $pipeline.getUuid() + " is retracted");
+    SpringBootKafkaAppApplication.pipelineArray.updatePipelineStatus($pipeline.getId(), "started");
+end
+
+// Every pipeline that i) has status=stop
+// and ii) all of its agents have ContextBrokerUpdateAgentResponses with code=200
+// is considered that has been stopped (status=stopped).
+// The status in the internal pipeline array is updated and the pipeline is retracted from the working memory
+rule "StopPipeline"
+when
+    $pipeline2: Pipeline($id:=id, status=="stop", $agents:=agents)
+    forall( $agent:Agent($agentId:=agent_catalog_id) from $agents
+        ContextBrokerUpdateAgentResponse($agentId:=subjectUuid, code==200)
+    )
+then
+    KafkaProducerController.logger.info("All agent instances of pipeline " + $pipeline2.getId()+ " - " + $pipeline2.getUuid() + "have been successfully updated.");
+    retract($pipeline2);
+    KafkaProducerController.logger.info("Pipeline " + $pipeline2.getId() + " - " + $pipeline2.getUuid() + " is retracted");
+    SpringBootKafkaAppApplication.pipelineArray.updatePipelineStatus($pipeline2.getId(), "stopped");
+end
+
+// if there is no pipeline that an agent belongs to
+// then retract the agent
+rule "RetractAgentInstances"
+when
+    not $pipeline: Pipeline($uuid:=uuid)
+    $agent: Agent($uuid:=pipelineUuid, scStatus=="updated")
+then
+    retract($agent);
+    KafkaProducerController.logger.info("Agent " + $agent.getId() + " of pipeline " + $agent.getPipelineUuid() + " is retracted");
+end
+
+// if there is no pipeline that an algorithm belongs to
+// then retract the algorithm
+rule "RetractAlgorithmInstances"
+when
+    not $pipeline: Pipeline($uuid:=uuid)
+    $algorithmInstance: AlgorithmInstance($uuid:=pipelineUuid, scStatus=="updated")
+then
+    retract($algorithmInstance);
+    KafkaProducerController.logger.info("AlgorithmInstance " + $algorithmInstance.getId() + " of pipeline " + $algorithmInstance.getPipelineUuid() + " is retracted");
+end

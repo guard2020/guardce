@@ -1,0 +1,489 @@
+LearnMode: False
+AminerUser: 'aminer'
+AminerGroup: 'aminer'
+Log.Encoding: 'latin-1'
+LogResourceList:
+        - 'unix:///var/lib/amqtt/aminer.sock'
+        - 'unix:///var/lib/akafka/aminer.sock'
+        #- 'file:///home/ubuntu/uplinkframes.log'
+        #- 'file:///home/ubuntu/weblogs.log'
+        #- 'file:///home/ubuntu/data/wobcom-web-attack.log'
+        #- 'file:///home/ubuntu/data/wobcom-web-apache.log'
+        #- 'file:///home/ubuntu/data/casting-weblogs-train.txt'
+        #- 'file:///home/ubuntu/data/chirpstack.logs'
+        #- 'file:///home/ubuntu/data/chirpstack-train.logs'
+        #- 'file:///home/ubuntu/data/test.txt'
+        #- 'file:///home/ubuntu/data/casting-01-weblogs.txt'
+        #- 'file:///home/ubuntu/data/casting-01-chirpstack.logs'
+        #- 'file:///home/ubuntu/data/casting-weblogs-apache.txt'
+        #- 'file:///home/ubuntu/data/wobcom-web-train.log'
+        #- 'file:///home/ubuntu/data/demo.log'
+        #- 'file:///home/ubuntu/data/train.log'
+Parser:
+        - id: index_model
+          type: VariableByteDataModelElement
+          name: 'index'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+        - id: type_model
+          type: VariableByteDataModelElement
+          name: 'type'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+        - id: id_model
+          type: VariableByteDataModelElement
+          name: 'id'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+        - id: message_model
+          type: VariableByteDataModelElement
+          name: 'message'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+        - id: score_model_float
+          type: DecimalFloatValueModelElement
+          name: 'score_message'
+        - id: score_model_null
+          type: FixedDataModelElement
+          name: 'score_null'
+          args: 'null'
+        - id: score_model
+          type: FirstMatchModelElement
+          name: 'score'
+          args:
+            - score_model_float
+            - score_model_null
+        - id: pid_model
+          type: DecimalIntegerValueModelElement
+          name: 'pid'
+        - id: g12id_model
+          type: DecimalIntegerValueModelElement
+          name: 'g12id'
+        - id: uid_model
+          type: DecimalIntegerValueModelElement
+          name: 'uid'
+        - id: level_model
+          type: DecimalIntegerValueModelElement
+          name: 'level'
+        - id: ip_model
+          type: IpAddressDataModelElement
+          name: 'ip'
+        - id: port_model
+          type: DecimalIntegerValueModelElement
+          name: 'port'
+        - id: streams_model
+          type: VariableByteDataModelElement
+          name: 'streams'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+        - id: g12s_model
+          type: VariableByteDataModelElement
+          name: 'g12s'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+        - id: appname_model
+          type: VariableByteDataModelElement
+          name: 'appname'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+        - id: facilityn_model
+          type: DecimalIntegerValueModelElement
+          name: 'facilityn'
+        - id: g12n_model
+          type: VariableByteDataModelElement
+          name: 'g12n'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+        - id: facility_model
+          type: VariableByteDataModelElement
+          name: 'facility'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'
+        - id: timestamp_model
+          type: DateTimeModelElement
+          name: 'timestamp'
+          date_format: '%Y-%m-%d %H:%M:%S.%f'
+        - id: sort_model
+          type: DecimalIntegerValueModelElement
+          name: 'sort'
+        - id: gateway_model
+          type: VariableByteDataModelElement
+          name: 'gateway_id'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~='
+        - id: string_model
+          type: VariableByteDataModelElement
+          name: 'string'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~='
+        - id: payload_model
+          type: VariableByteDataModelElement
+          name: 'string'
+          args: ' !"#$%&*+,-./0123456789:;<>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~='
+        - id: freq_model
+          type: DecimalIntegerValueModelElement
+          name: 'frequency'
+          value_sign_type: 'optional'
+        - id: int_model
+          type: DecimalIntegerValueModelElement
+          name: 'int'
+          value_sign_type: 'optional'
+        - id: float_model
+          type: DecimalFloatValueModelElement
+          name: 'float'
+          value_sign_type: 'optional'
+        - id: null_model
+          type: FixedDataModelElement
+          name: 'null'
+          args: 'null'
+        - id: none_model
+          type: FixedDataModelElement
+          name: 'None'
+          args: 'None'
+        - id: nn_model
+          type: FirstMatchModelElement
+          name: 'nn'
+          args:
+            - null_model
+            - none_model
+        - id: space
+          type: FixedDataModelElement
+          name: 'space'
+          args: ' '
+        #- id: http_model
+        #  type: HTTPLogModel
+        #  name: 'http'
+        - id: ts
+          type: DateTimeModelElement
+          name: 'ts'
+          date_format: '[%Y-%m-%dT%H:%M:%S.%fZ] '
+        - id: floatts_float
+          type: DateTimeModelElement
+          name: 'floatts'
+          date_format: '%s.%f'
+        - id: floatts_int
+          type: DateTimeModelElement
+          name: 'floatts'
+          date_format: '%s'
+        - id: floatts_model
+          type: FirstMatchModelElement
+          name: "floatts"
+          args:
+            - floatts_float
+            - floatts_int
+        - id: method
+          type: DelimitedDataModelElement
+          name: 'method'
+          #args: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.:-/()[]{}!$%=<?*+_\\"'
+          delimiter: ' '
+          consume_delimiter: true
+        - id: apistr
+          type: FixedDataModelElement
+          name: 'apistr'
+          args: '/api/internal/search?search='
+        - id: apirequest
+          type: DelimitedDataModelElement
+          name: 'request'
+          delimiter: '&limit='
+          consume_delimiter: false
+        - id: limit
+          type: DelimitedDataModelElement
+          name: 'limit'
+          delimiter: ' '
+          consume_delimiter: false
+        - id: otherrequest
+          type: DelimitedDataModelElement
+          name: 'otherrequest'
+          delimiter: ' '
+          consume_delimiter: false
+        - id: api
+          type: SequenceModelElement
+          name: 'api'
+          args:
+            - apistr
+            - apirequest
+            - limit
+        - id: request
+          type: FirstMatchModelElement
+          name: 'request'
+          args:
+            - api
+            - otherrequest
+        - id: remainder
+          type: DelimitedDataModelElement
+          name: 'http_remainder'
+          #args: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.:-/()[]{}!$%=<?*+_\\"'
+          delimiter: '\n'
+          consume_delimiter: true
+        - id: stuff
+          type: DelimitedDataModelElement
+          name: 'stuff'
+          delimiter: ' '
+          consume_delimiter: true
+        - id: host
+          type: DelimitedDataModelElement
+          name: 'host'
+          delimiter: '"'
+          consume_delimiter: false
+        - id: quotes
+          type: FixedDataModelElement
+          name: 'quotes'
+          args: '"'
+        - id: apache
+          type: SequenceModelElement
+          name: 'http'
+          args:
+            - ts
+            - method
+            - request
+            - space
+            - stuff
+            - stuff
+            - stuff
+            - stuff
+            - stuff
+            - stuff
+            - stuff
+            - stuff
+            - stuff
+            - stuff
+            - quotes
+            - host
+            - remainder
+              #- method
+              #- request
+              #- remainder
+        - id: other_line
+          type: DelimitedDataModelElement
+          name: 'other'
+          delimiter: '\n'
+          consume_delimiter: true
+        - id: empty_line
+          type: FixedDataModelElement
+          name: 'newline'
+          args: '\n'
+        - id: whatever_line
+          type: VariableByteDataModelElement
+          name: 'whatever'
+          args: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.:-/()[]{}!$%=<?*+_\\" '
+        - id: http_model2
+          type: FirstMatchModelElement
+          name: 'log'
+          args:
+            - apache
+            - empty_line
+            - other_line
+            - whatever_line
+        - id: any
+          type: AnyByteDataModelElement
+          name: 'any'
+        - id: model
+          start: True
+          type: JsonModelElement
+          name: 'parser'
+          optional_key_prefix: '_'
+          key_parser_dict:
+            "_phy_payload": payload_model
+            "_tx_info":
+              "_frequency": freq_model
+              "_gateway_id": ALLOW_ALL
+              "_power": ALLOW_ALL
+              "_board": ALLOW_ALL
+              "_timing": ALLOW_ALL
+              "_context": ALLOW_ALL
+              "_TimingInfo":
+                "_DelayTimingInfo":
+                  "_delay":
+                    "_seconds": ALLOW_ALL
+              "_ModulationInfo":
+                "_LoraModulationInfo":
+                  "_bandwidth": int_model
+                  "_spreading_factor": int_model
+                  "_code_rate": string_model
+                  "_polarization_inversion": ALLOW_ALL
+            "_rx_info":
+              "_gateway_id": gateway_model
+              "_time":
+                "_seconds": int_model
+                "_nanos": int_model
+              "_time_since_gps_epoch":
+                "_seconds": int_model
+                "_nanos": int_model
+              "_rssi": int_model
+              "_lora_snr": float_model
+              "_channel": int_model
+              "_board": int_model
+              "_rf_chain": int_model
+              "_location":
+                "_latitude": float_model
+                "_longitude": float_model
+                "_altitude": int_model
+                "_source": int_model
+              "_FineTimestamp": nn_model
+              "_context": string_model
+              "_uplink_id": string_model
+              "_crc_status": int_model
+            "_gateway_id": ALLOW_ALL
+            "_ip": ALLOW_ALL
+            "_stats_id": ALLOW_ALL
+            "_applicationID": ALLOW_ALL
+            "_applicationName": ALLOW_ALL
+            "_deviceName": ALLOW_ALL
+            "_devEUI": ALLOW_ALL
+            "_rxInfo":
+              - ALLOW_ALL
+            "_txInfo":
+              "_frequency": ALLOW_ALL
+              "_dr": ALLOW_ALL
+            "_adr": ALLOW_ALL
+            "_fCnt": ALLOW_ALL
+            "_fPort": ALLOW_ALL
+            "_data": ALLOW_ALL
+            "_token": ALLOW_ALL
+            "_downlink_id": ALLOW_ALL
+            "_items":
+              - ALLOW_ALL
+            "_tx_packets_received": ALLOW_ALL
+            "_tx_packets_emitted": ALLOW_ALL
+            "_margin": ALLOW_ALL
+            "_externalPowerSource": ALLOW_ALL
+            "_batteryLevel": ALLOW_ALL
+            "_batteryLevelUnavailable": ALLOW_ALL
+            "_type": ALLOW_ALL
+            "_error": ALLOW_ALL
+            "_rx_packets_received": ALLOW_ALL
+            "_rx_packets_received_ok": ALLOW_ALL
+            "_@timestamp": floatts_model
+            "_timestamp": timestamp_model
+            "_log": http_model2
+            "_stream": ALLOW_ALL
+            "_level": ALLOW_ALL
+            "_msg": ALLOW_ALL
+            "_message": ALLOW_ALL
+            "_time": ALLOW_ALL
+            "_kubernetes":
+              "_pod_name": ALLOW_ALL
+              "_namespace_name": ALLOW_ALL
+              "_pod_id": ALLOW_ALL
+              "_labels":
+                "_app": ALLOW_ALL
+                "_chart": ALLOW_ALL
+                "_heritage": ALLOW_ALL
+                "_install.operator.istio.io/owning-resource": ALLOW_ALL
+                "_istio": ALLOW_ALL
+                "_istio.io/rev": ALLOW_ALL
+                "_operator.istio.io/component": ALLOW_ALL
+                "_pod-template-hash": ALLOW_ALL
+                "_release": ALLOW_ALL
+                "_service.istio.io/canonical-name": ALLOW_ALL
+                "_service.istio.io/canonical-revision": ALLOW_ALL
+                "_sidecar.istio.io/inject": ALLOW_ALL
+                "_controller-revision-hash": ALLOW_ALL
+                "_k8s-app": ALLOW_ALL
+                "_pod-template-generation": ALLOW_ALL
+                "_app.kubernetes.io/instance": ALLOW_ALL
+                "_app.kubernetes.io/managed-by": ALLOW_ALL
+                "_app.kubernetes.io/name": ALLOW_ALL
+                "_statefulset.kubernetes.io/pod-name": ALLOW_ALL
+                "_addonmanager.kubernetes.io/mode": ALLOW_ALL
+                "_kubernetes.io/cluster-service": ALLOW_ALL
+                "_app.kubernetes.io/version": ALLOW_ALL
+                "_app.kubernetes.io/component": ALLOW_ALL
+                "_application": ALLOW_ALL
+                "_cluster-name": ALLOW_ALL
+                "_spilo-role": ALLOW_ALL
+                "_team": ALLOW_ALL
+                "_app.kubernetes.io/part-of": ALLOW_ALL
+                "_name": ALLOW_ALL
+                "_helm.sh/chart": ALLOW_ALL
+                "_role": ALLOW_ALL
+                "_control-plane": ALLOW_ALL
+                "_prometheus": ALLOW_ALL
+                "_jobLabel": ALLOW_ALL
+              "_annotations":
+                "_cni.projectcalico.org/podIP": ALLOW_ALL
+                "_prometheus.io/path": ALLOW_ALL
+                "_prometheus.io/port": ALLOW_ALL
+                "_prometheus.io/scrape": ALLOW_ALL
+                "_sidecar.istio.io/inject": ALLOW_ALL
+                "_checksum/config": ALLOW_ALL
+                "_checksum/config-emails": ALLOW_ALL
+                "_checksum/google-secret": ALLOW_ALL
+                "_checksum/secret": ALLOW_ALL
+                "_scheduler.alpha.kubernetes.io/critical-pod": ALLOW_ALL
+                "_checksum/luascripts": ALLOW_ALL
+                "_checksum/repositories": ALLOW_ALL
+                "_checksum/sc-dashboard-provider-config": ALLOW_ALL
+                "_checksum/dashboards-json-config": ALLOW_ALL
+                "_status": ALLOW_ALL
+                "_kubectl.kubernetes.io/restartedAt": ALLOW_ALL
+              "_host": ALLOW_ALL
+              "_container_name": ALLOW_ALL
+              "_docker_id": ALLOW_ALL
+              "_container_hash": ALLOW_ALL
+              "_container_image": ALLOW_ALL
+Input:
+        json_format: True
+        multi_source: False
+        timestamp_paths:
+          - "/parser/timestamp"
+          - "/parser/floatts/floatts"
+Analysis:
+        - type: 'ParserCount'
+          #paths:
+                  #- "/parser/accesslog/fm/seq/path"
+                  #- '/parser/accesslog/time_model/time'
+                  #- '/parser/rx_info/gateway_id'
+          report_interval: 10
+          output_event_handlers:
+         #   - statusq
+            - stpe
+        - type: 'CharsetDetector'
+          paths:
+            - "/parser/log/http/request/api/request"
+          learn_mode: False
+          output_logline: True #False
+          output_event_handlers:
+            - mqe
+            - stpe
+        - type: 'EntropyDetector'
+          paths:
+            - "/parser/log/http/request/api/request"
+          prob_thresh: 0.03
+          learn_mode: False
+          output_logline: True #False
+          output_event_handlers:
+            - mqe
+            - stpe
+          #- type: 'NewMatchPathValueDetector'
+          #id: 'Gateway_ID_value'
+          #persistence_id: 'Gateway_ID'
+          #paths: ["/parser/rx_info/gateway_id"]
+          #learn_mode: True
+          # - type: 'NewMatchPathValueDetector'
+          #id: 'Test'
+          #persistence_id: 'test'
+          #paths: ["/parser/log"]
+          #learn_mode: True
+        - type: 'ValueRangeDetector'
+          paths: ["/parser/tx_info/frequency"]
+          persistence_id: 'Frequency'
+          output_logline: True #False
+          learn_mode: False
+          #- type: 'NewMatchPathValueComboDetector'
+          #persistence_id: 'Combo_request'
+          #paths:
+          #  - "/parser/accesslog/fm/seq/path"
+          #  - "/parser/accesslog/method"
+          #learn_mode: True
+        - type: 'NewMatchPathDetector'
+          id: 'nmpd'
+          output_logline: True #False
+          learn_mode: True
+          suppress: true
+        - type: 'VerboseUnparsedAtomHandler'
+          id: 'suah'
+          suppress: false #true
+EventHandlers:
+        - id: "stpe"
+          json: true
+          type: "StreamPrinterEventHandler"
+        - id: 'mqe'
+          json: True
+          topic: 'aminer-alerts' # 'aminer' # aminer-alerts
+          cfgfile: '/etc/kafka/kafka-client.conf'
+          type: 'KafkaEventHandler'
+        #- id: 'statusq'
+        #  json: True
+        #  topic: 'aminer'
+        #  cfgfile: '/etc/aminer/kafka-client.conf'
+        #  type: 'KafkaEventHandler'

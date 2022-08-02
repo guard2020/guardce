@@ -1,0 +1,54 @@
+{
+    "id": "aminer",
+    "partner": "ait",
+    "parameters": [
+        {
+            "id": "input-verbose",
+            "type": "boolean",
+            "example": "True",
+            "description": "Enable the verbosity of the input",
+            "config": {
+                "schema": "yaml",
+                "source": "<absolute path of the template_config.yml>",
+                "path": [
+                    "Input",
+                    "Verbose"
+                ]
+            }
+        }
+    ],
+    "actions": [
+        {
+            "id": "start",
+            "status": "started",
+            "config": {
+                "cmd": "sudo systemctl start aminer.service"
+            }
+        },
+        {
+            "id": "status",
+            "config": {
+                "cmd": "sudo systemctl status aminer.service"
+            }
+        },
+        {
+            "id": "stop",
+            "status": "stopped",
+            "config": {
+                "cmd": "sudo systemctl stop aminer.service"
+            }
+        },
+        {
+            "id": "<insert here the id of the action>",
+            "config": {
+                "cmd": "sudo aminerremotecontrol --Exec \"change_attribute_of_registered_analysis_component(analysis_context, 'NewMatchPathValueComboDetector', 'auto_include_flag', False)\""
+            }
+        },
+        {
+            "id": "<insert here the id of the action>",
+            "config": {
+                "cmd": "sudo /usr/local/sbin/aminerwrapper.sh {config}"
+            }
+        }
+    ]
+}

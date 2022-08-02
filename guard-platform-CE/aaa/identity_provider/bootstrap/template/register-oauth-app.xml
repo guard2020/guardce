@@ -1,0 +1,21 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://org.apache.axis2/xsd" xmlns:xsd1="http://dto.oauth.identity.carbon.wso2.org/xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xsd:registerOAuthApplicationData>
+         <xsd:application>
+            <xsd1:OAuthVersion>OAuth-2.0</xsd1:OAuthVersion>
+            <xsd1:applicationAccessTokenExpiryTime>3600</xsd1:applicationAccessTokenExpiryTime>
+            <xsd1:applicationName>${SP_NAME}</xsd1:applicationName>
+            <xsd1:callbackUrl>${CALLBACK_URL}</xsd1:callbackUrl>
+            <xsd1:grantTypes>authorization_code implicit password client_credentials refresh_token urn:ietf:params:oauth:grant-type:jwt-bearer</xsd1:grantTypes>
+            <xsd1:oauthConsumerKey>${OAUTH_KEY}</xsd1:oauthConsumerKey>
+            <xsd1:oauthConsumerSecret>${OAUTH_SECRET}</xsd1:oauthConsumerSecret>
+            <xsd1:pkceMandatory>false</xsd1:pkceMandatory>
+            <xsd1:pkceSupportPlain>true</xsd1:pkceSupportPlain>
+            <xsd1:refreshTokenExpiryTime>84000</xsd1:refreshTokenExpiryTime>
+            <xsd1:userAccessTokenExpiryTime>3600</xsd1:userAccessTokenExpiryTime>
+            <xsd1:tokenType>JWT</xsd1:tokenType>
+         </xsd:application>
+      </xsd:registerOAuthApplicationData>
+   </soapenv:Body>
+</soapenv:Envelope>

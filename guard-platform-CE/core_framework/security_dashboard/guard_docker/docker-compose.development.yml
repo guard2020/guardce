@@ -1,0 +1,34 @@
+version: "3.5"
+
+services:
+  echo-server:
+    container_name: echo-server
+    image: ealen/echo-server:0.5.1
+    ports:
+      - 5000:80
+      - 9093:80
+      - 9000:80
+    networks:
+      backend:
+        aliases:
+          - echo-server
+  guard-dashboard:
+    deploy:
+      replicas: 0
+    depends_on:
+      - echo-server
+    user: $USER
+    command: php artisan serve --host 0.0.0.0
+    ports:
+      - 8080:8000
+    volumes:
+      - ./public_html/.env.development:/var/www/html/.env
+      - ./public_html/public/app.js:/var/www/html/public/app.js
+      # - ./public_html/resources:/var/www/html/resources/
+
+  db:
+    volumes:
+      - data:/var/lib/mysql
+
+volumes:
+  data:
