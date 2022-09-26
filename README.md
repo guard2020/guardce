@@ -32,8 +32,7 @@ git clone https://github.com/guard2020/guardce.git
 cp guard_cloud/.env .
 cp guard_cloud/docker-compose-cloud-min.yml .
 ```
-4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
-Be sure to have installed docker-compose > v2.x
+4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged. Be sure to have installed docker-compose > v2.x
 6) To create required volumes run following instructions. The {VOLUME_DIR} defined in .env will be the root directory (eg: /opt/guard).
 ```console
 cd <INSTALL_DIR>/guardce/guard_cloud/volumes
@@ -90,8 +89,7 @@ git clone https://github.com/guard2020/guardce.git
 cp guard_cloud/.env .
 cp guard_cloud/docker-compose-cloud.yml .
 ```
-4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
-Be sure to have installed docker-compose > v2.x and jre (sudo apt-get install default-jre)
+4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged. Be sure to have installed docker-compose > v2.x and jre (sudo apt-get install default-jre)
 5) Run 
 ```console
 cd <INSTALL_DIR>/guardce/guard_cloud/volumes
