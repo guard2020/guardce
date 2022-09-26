@@ -52,7 +52,7 @@ cp ./gen_certs.sh $VOLUME_DIR/kafka-cluster-ssl/secrets
 cd $VOLUME_DIR/kafka-cluster-ssl/secrets
 chmod 755 $VOLUME_DIR/kafka-cluster-ssl/secrets/gen_certs.sh
 ./gen_certs.sh $GUARD_SERVER $GUARD_SERVER_ADDRESS
-
+cp ./secrets/* $VOLUME_DIR/kafka-cluster-ssl/secrets
 
 mkdir -p $VOLUME_DIR/certs
 chmod 777 $VOLUME_DIR/certs
