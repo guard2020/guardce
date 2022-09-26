@@ -33,7 +33,8 @@ cp guard_cloud/.env .
 cp guard_cloud/docker-compose-cloud-min.yml .
 ```
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
-5) To create required volumes run following instructions. The {VOLUME_DIR} defined in .env will be the root directory (eg: /opt/guard).
+5) Be sure to have installed jre (sudo apt install default-jre) for keytool!!!
+6) To create required volumes run following instructions. The {VOLUME_DIR} defined in .env will be the root directory (eg: /opt/guard).
 ```console
 cd <INSTALL_DIR>/guardce/guard_cloud/volumes
 sudo bash ./build-volumes-min.sh
