@@ -33,7 +33,7 @@ cp guard_cloud/.env .
 cp guard_cloud/docker-compose-cloud-min.yml .
 ```
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
-5) Be sure to have installed jre (sudo apt install default-jre) for keytool!!!
+Be sure to have installed docker-compose > v2.x
 6) To create required volumes run following instructions. The {VOLUME_DIR} defined in .env will be the root directory (eg: /opt/guard).
 ```console
 cd <INSTALL_DIR>/guardce/guard_cloud/volumes
@@ -48,9 +48,8 @@ sudo sysctl -w vm.max_map_count=262144
 ```console
 cd <INSTALL_DIR>/guardce
 sudo docker-compose -f docker-compose-cloud-min.yml up -d [service] 
-
-Your USER must be in Docker group!
 ```
+Your USER must be in Docker group!
 > You can check the health of containers connecting to Portainer (port 19000) and eventually check the logs of all containers.
 8) If all is OK and all containers are running, start final configuration
 ```console
@@ -92,6 +91,7 @@ cp guard_cloud/.env .
 cp guard_cloud/docker-compose-cloud.yml .
 ```
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged.
+Be sure to have installed docker-compose > v2.x and jre (sudo apt-get install default-jre)
 5) Run 
 ```console
 cd <INSTALL_DIR>/guardce/guard_cloud/volumes
@@ -106,9 +106,8 @@ sudo sysctl -w vm.max_map_count=262144
 ```console
 cd <INSTALL_DIR>/guardce
 docker-compose -f docker-compose-cloud-std.yml up -d [service]
-
-Your USER must be in Docker group!
 ```
+Your USER must be in Docker group!
 > You can check the health of containers connecting to portainer (port 19000) and eventually check the logs.
 8) If all is OK and all containers are running, start final configuration
 ```console
