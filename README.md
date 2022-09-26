@@ -103,7 +103,7 @@ sudo sysctl -w vm.max_map_count=262144
 7) Start the framework:
 ```console
 cd <INSTALL_DIR>/guardce
-docker-compose -f docker-compose-cloud.yml up -d [service]
+docker-compose -f docker-compose-cloud-std.yml up -d [service]
 ```
 > You can check the health of containers connecting to portainer (port 19000) and eventually check the logs.
 8) If all is OK and all containers are running, start final configuration
