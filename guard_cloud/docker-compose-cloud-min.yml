@@ -101,11 +101,6 @@ services:
             docker-kafka-server:
               properties:
                 bootstrap.servers: "kafka1:${KAFKA_PORT_INT_1}"
-              schema-registry:
-                url: "http://schema-registry:8085"
-              connect:
-                - name: "connect"
-                  url: "http://connect:8083"
     ports:
       - ${AKHQ_PORT}:${AKHQ_PORT_INT}
     links:
