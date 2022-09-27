@@ -110,7 +110,7 @@ Your USER must be in Docker group!
 8) If all is OK and all containers are running, start final configuration
 ```console
 cd <INSTALL_DIR>/guardce/guard_cloud
-bash ./start_config.sh'
+bash ./start_config.sh
 ```
 Now the framework is ready to work!!!
 
