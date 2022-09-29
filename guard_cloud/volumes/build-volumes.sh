@@ -32,7 +32,7 @@ mkdir -p $VOLUME_DIR/elastic/data03
 chmod 777 $VOLUME_DIR/elastic/data03
 mkdir -p $VOLUME_DIR/dashboard/certs
 chmod 777 $VOLUME_DIR/dashboard/certs
-cp ./secrets/dashboard/* $VOLUME_DIR/dashboard/certs
+cp -r secrets/dashboard/* $VOLUME_DIR/dashboard/certs
 
 mkdir -p $VOLUME_DIR/alert
 sed  -i -e "s/hosts:X/hosts: $GUARD_SERVER_ADDRESS:$ELASTIC_PORT_1/" ../alert/config.yaml
@@ -42,18 +42,19 @@ cp ../alert/config.yaml $VOLUME_DIR/alert
 mkdir -p $VOLUME_DIR/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled
 chmod 777 $VOLUME_DIR/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled
 cp ../Aminer/config.yml $VOLUME_DIR/logdata-anomaly-miner/source/root/etc/aminer
-cp ../Aminer/ApacheAccessModel.py v/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled
+cp ../Aminer/ApacheAccessModel.py $VOLUME_DIR/logdata-anomaly-miner/source/root/etc/aminer/conf-enabled
 
 mkdir -p $VOLUME_DIR/scan_reports
 chmod 777 $VOLUME_DIR/scan_reports
 
 mkdir -p $VOLUME_DIR/kafka-cluster-ssl/secrets
 chmod 777 $VOLUME_DIR/kafka-cluster-ssl/secrets
-cp ./gen_certs.sh $VOLUME_DIR/kafka-cluster-ssl/secrets
-cp ./secrets/* $VOLUME_DIR/kafka-cluster-ssl/secrets
+ls
+cp gen_cert.sh $VOLUME_DIR/kafka-cluster-ssl/secrets
+cp -r secrets/* $VOLUME_DIR/kafka-cluster-ssl/secrets
 cd $VOLUME_DIR/kafka-cluster-ssl/secrets
-chmod 755 $VOLUME_DIR/kafka-cluster-ssl/secrets/gen_certs.sh
-./gen_certs.sh $GUARD_SERVER $GUARD_SERVER_ADDRESS
+chmod 755 $VOLUME_DIR/kafka-cluster-ssl/secrets/gen_cert.sh
+./gen_cert.sh $GUARD_SERVER $GUARD_SERVER_ADDRESS
 
 
 mkdir -p $VOLUME_DIR/certs
