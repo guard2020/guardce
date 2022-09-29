@@ -30,8 +30,9 @@ mkdir -p $VOLUME_DIR/elastic/data02
 chmod 777 $VOLUME_DIR/elastic/data02
 mkdir -p $VOLUME_DIR/elastic/data03
 chmod 777 $VOLUME_DIR/elastic/data03
-mkdir -p $VOLUME_DIR/security_dashboard/guard_docker/run/var
-chmod 777 $VOLUME_DIR/security_dashboard/guard_docker/run/var
+mkdir -p $VOLUME_DIR/dashboard/certs
+chmod 777 $VOLUME_DIR/dashboard/certs
+cp ./secrets/dashboard/* $VOLUME_DIR/dashboard/certs
 
 mkdir -p $VOLUME_DIR/alert
 sed  -i -e "s/hosts:X/hosts: $GUARD_SERVER_ADDRESS:$ELASTIC_PORT_1/" ../alert/config.yaml
