@@ -90,12 +90,12 @@ cp guard_cloud/.env .
 cp guard_cloud/docker-compose-cloud-std.yml .
 ```
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged. Please update also {RELEASE_DIR}.Be sure to have installed docker-compose > v2.x and jre (sudo apt-get install default-jre)
-5) Run 
+5) Run to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard). 
 ```console
 cd <INSTALL_DIR>/guardce/guard_cloud/volumes
 sudo bash ./build-volumes.sh
 ```
-       to create required volumes. The {VOLUME_DIR} will be the root directory (eg: /opt/guard).
+       
 6) For elasticsearch, you need to run:
 ```console
 sudo sysctl -w vm.max_map_count=262144
