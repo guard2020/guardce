@@ -49,7 +49,7 @@ chmod 777 $VOLUME_DIR/scan_reports
 
 mkdir -p $VOLUME_DIR/kafka-cluster-ssl/secrets
 chmod 777 $VOLUME_DIR/kafka-cluster-ssl/secrets
-ls
+
 cp gen_cert.sh $VOLUME_DIR/kafka-cluster-ssl/secrets
 cp -r secrets/* $VOLUME_DIR/kafka-cluster-ssl/secrets
 cd $VOLUME_DIR/kafka-cluster-ssl/secrets
