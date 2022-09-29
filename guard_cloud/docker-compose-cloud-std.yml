@@ -267,11 +267,6 @@ services:
             docker-kafka-server:
               properties:
                 bootstrap.servers: "kafka1:9092"
-              schema-registry:
-                url: "http://schema-registry:8085"
-              connect:
-                - name: "connect"
-                  url: "http://connect:8083"
     ports:
       - 19100:8080
     links:
@@ -376,10 +371,7 @@ services:
     environment:
       ELASTICSEARCH_URL: http://es01:9200
       ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
-    volumes:
-      - ${VOLUME_DIR}/kibana/certs:/etc/kibana/config/certs/
-      - ${VOLUME_DIR}/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-    networks:
+     networks:
       - elastic
       
   cb-manager:    
@@ -419,12 +411,12 @@ services:
       - APP_NAME="GUARD Security Dashboard"
       - APP_ENV=local
       - APP_KEY=base64:EJRQ64KELsuW29GsBrqX5SI+7lktUytqkDdjevwKFWY=
-      - APP_DEBUG=false
+      - APP_DEBUG=true
       - APP_URL=http://localhost
-      - CB_API=http://10.0.0.7:5000
-      - SC_API=http://10.0.0.7:9000/gfg
-      - ELASTICSEARCH_URL=http://10.0.0.7:9200
-      - KIBANA_URL=https://guard3.westeurope.cloudapp.azure.com:5601
+      - CB_API=http://${GUARD_SERVER_ADDRESS}:${CB_MAN_PORT}
+      - SC_API=http://${GUARD_SERVER_ADDRESS}:9000/gfg
+      - ELASTICSEARCH_URL=http://${GUARD_SERVER_ADDRESS}:${ELASTIC_PORT_1}
+      - KIBANA_URL=http://${GUARD_SERVER}:${KIBANA_PORT}
       - DB_CONNECTION=mysql
       - DB_HOST=db
       - DB_PORT=3306
@@ -437,7 +429,7 @@ services:
       - QUEUE_CONNECTION=sync
       - SESSION_DRIVER=file
       - SESSION_LIFETIME=120
-      - MIX_DATA_TRACKING_API_URL=http://10.0.0.7:4001
+      - MIX_DATA_TRACKING_API_URL=http://${GUARD_SERVER_ADDRESS}:4001
     links:
       - mysql-db
     depends_on:
@@ -449,6 +441,11 @@ services:
   mysql-db:
     image: ${GUARD_REPOSITORY}/mysql:latest
     container_name: mysql-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=securerootpassword
+      - MYSQL_DATABASE=security_dashboard
+      - MYSQL_USER=sduser
+      - MYSQL_PASSWORD=rootguard2021
     volumes:
       - ~/${RELEASE_DIR}/core_framework/security_dashboard/guard_docker/run/var:/var/lib/mysql
     ports:
@@ -458,7 +455,6 @@ services:
         aliases:
           - db
     restart: unless-stopped
-
 
   openvas:
     image: mikesplain/openvas
@@ -506,7 +502,7 @@ services:
     container_name: logdata-anomaly-miner
     image: ${GUARD_REPOSITORY}/logdata-anomaly-miner:latest
     volumes:
-      - ~/${RELEASE_DIR}/local_sidercars/log_data_agents/logdata-anomaly-miner/source/root/etc/aminer/:/etc/aminer
+       - ${VOLUME_DIR}/logdata-anomaly-miner/source/root/etc/aminer/:/etc/aminer
     restart: unless-stopped
 
   alert-aggregation-generator:    
