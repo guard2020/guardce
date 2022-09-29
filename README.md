@@ -87,7 +87,7 @@ git clone https://github.com/guard2020/guardce.git
 3) Please copy the following files in this directory:
 ```console
 cp guard_cloud/.env .
-cp guard_cloud/docker-compose-cloud.yml .
+cp guard_cloud/docker-compose-cloud-std.yml .
 ```
 4) Edit .env file. You have to set the {GUARD_SERVER} variable with your external IP address or DNS and {GUARD_SERVER_ADDRESS} with your internal IP address. All other values can be unchanged. Please update also {RELEASE_DIR}.Be sure to have installed docker-compose > v2.x and jre (sudo apt-get install default-jre)
 5) Run 
