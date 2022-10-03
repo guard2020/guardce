@@ -385,7 +385,7 @@ services:
       - CB_MAN_HOST=0.0.0.0
       - CB_MAN_PORT=5000
       - CB_MAN_HTTPS=false
-      - CB_MAN_AUTH_ENABLED=true
+      - CB_MAN_AUTH_ENABLED=false
       - CB_MAN_AUTH_HEADER_PREFIX=GUARD
       - CB_MAN_AUTH_SECRET_KEY=guard-secret-key
       - CB_MAN_HEARTBEAT_TIMEOUT=10s
