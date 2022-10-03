@@ -111,7 +111,17 @@ Your USER must be in Docker group!
 cd <INSTALL_DIR>/guardce/guard_cloud
 bash ./start_ini.sh
 ```
-Now the framework is ready to work!!!
+9) Now you can connect to the Security Dashboard (port 84).
+10) How to create the new pipeline
+* Go to in Service Topology page and then click on Discover New Service Chain. 
+* Insert your internal IP Address and port 4100. 
+* After a few seconds, in page Security Pipeline you'll find a pipeline, that you can start and stop as well.
+* The agent generates some IP traffic simulating a DDos attack.
+* In page Threat Notification will be shown the attaks! 
+
+> For any further help or info, please e-mail us at guard.project@italtel.com
+
+> This video will help you step-by-step with the framework's deployment:  https://youtu.be/PZ2g-pKoJko (Attention, some commands are different! Please check with above steps!)
 
 
 ## How to run GUARD PLATFORM on openshift platform
