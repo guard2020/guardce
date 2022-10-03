@@ -411,7 +411,7 @@ services:
       - APP_NAME="GUARD Security Dashboard"
       - APP_ENV=local
       - APP_KEY=base64:EJRQ64KELsuW29GsBrqX5SI+7lktUytqkDdjevwKFWY=
-      - APP_DEBUG=true
+      - APP_DEBUG=false
       - APP_URL=http://localhost
       - CB_API=http://${GUARD_SERVER_ADDRESS}:${CB_MAN_PORT}
       - SC_API=http://${GUARD_SERVER_ADDRESS}:9000/gfg
