@@ -283,8 +283,8 @@ services:
       KAFKA_PORT: ${KAFKA_PORT_INT_1}
       ELASTIC_PORT: ${ELASTIC_PORT_1}
     volumes:
-    - ~/${RELEASE_DIR}/centralized_svc/logstash-guard/config:/usr/share/logstash/config/
-    - ~/${RELEASE_DIR}/centralized_svc/logstash-guard/pipeline:/usr/share/logstash/pipeline
+    - ${VOLUME_DIR}/logstash-guard/config:/usr/share/logstash/config/
+    - ${VOLUME_DIR}/logstash-guard/pipeline:/usr/share/logstash/pipeline
     - ${VOLUME_DIR}/logstash-cb/file-output:/var/logstash-file-output
     expose:
     - "9001"
@@ -371,7 +371,7 @@ services:
     environment:
       ELASTICSEARCH_URL: http://es01:9200
       ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
-     networks:
+    networks:
       - elastic
       
   cb-manager:    
