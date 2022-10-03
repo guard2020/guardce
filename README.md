@@ -68,7 +68,7 @@ sudo bash ./start_ini.sh
 > This video will show you step-by-step the framework's deployment:  https://youtu.be/PZ2g-pKoJko
 
 ## How to run GUARD PLATFORM on cloud machine (Standard Edition) - Require at least 32Gb RAM, 8 VCPU and 100Gb storage on disk
-### This is only a pre-release, not all yet is working!!!!
+
 1) Download and unzip the repo in a directory <INSTALL_DIR> where you have rights with sudoers user.
 ```console 
 cd <INSTALL_DIR>
