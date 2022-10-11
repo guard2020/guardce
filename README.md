@@ -125,7 +125,7 @@ bash ./start_ini.sh
 
 
 ## How to run GUARD PLATFORM on openshift platform
-### This is only a pre-release, not all is yet working!!!!
+
 Please before take a look on Volumes part.
 
 ```console
